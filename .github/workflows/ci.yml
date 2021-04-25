@@ -1,0 +1,57 @@
+name: Continuous Integration
+
+on: [push, workflow_dispatch]
+
+jobs:  
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 15.14.0
+      - uses: actions/checkout@master
+      - uses: actions/cache@v2
+        id: save-deps
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Dependencies
+        if: steps.save-deps.outputs.cache-hit != 'true'
+        uses: CultureHQ/actions-yarn@master
+        with:
+          args: install
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 15.14.0
+      - uses: actions/checkout@master
+      - uses: actions/cache@v2
+        id: save-deps
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - uses: CultureHQ/actions-yarn@master
+        with:
+          args: workspace qutex lint
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 15.14.0
+      - uses: actions/checkout@master
+      - uses: actions/cache@v2
+        id: save-deps
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - uses: CultureHQ/actions-yarn@master
+        with:
+          args: workspace qutex test
