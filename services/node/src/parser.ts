@@ -11,7 +11,7 @@ export class Parser extends Bot {
         } else if (messageData.personId) {
             destination.toPersonId = messageData.personId;
         } else {
-            destination.toRoomId = messageData.roomId;
+            destination.roomId = messageData.roomId;
         }
         return { rawCommand: messageData.text, destination: destination };
     }

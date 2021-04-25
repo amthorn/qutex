@@ -4,7 +4,8 @@
         "project": "tsconfig.json"
     },
     "ignorePatterns": [
-        "jest.config.js"
+        "jest.config.js",
+        "coverage/*"
     ],
     "env": {
         "es6": true
@@ -155,30 +156,5 @@
         "@typescript-eslint/space-before-function-paren": "warn",
         "@typescript-eslint/space-infix-ops": "warn",
         "@typescript-eslint/triple-slash-reference": "off"
-        //     "func-names": "off",
-        //     "no-constant-condition": "warn",
-        //     "no-param-reassign": "off",
-        //     "no-restricted-syntax": "off",
-        //     "no-continue": "off",
-        //     "no-label-var": "off",
-        //     "no-void": "off",
-        //     "no-undefined": "off",
-        //     "@typescript-eslint/camelcase": "off",
-        //     "@typescript-eslint/prefer-optional-chain": "error",
-        //     "@typescript-eslint/prefer-for-of": "error",
-        //     "@typescript-eslint/no-use-before-define": "off",
-        //     "@typescript-eslint/no-unused-vars": [
-        //         "error",
-        //         {
-        //             "argsIgnorePattern": "^_",
-        //             "varsIgnorePattern": "^_",
-        //             "args": "after-used",
-        //             "ignoreRestSiblings": true
-        //         }
-        //     ],
-        //     "@typescript-eslint/no-var-requires": "warn",
-        //     "@typescript-eslint/interface-name-prefix": "off",
-        //     "@typescript-eslint/require-await": "off",
-        //     "@typescript-eslint/explicit-function-return-type": "warn"
     }
 }

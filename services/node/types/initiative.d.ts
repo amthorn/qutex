@@ -1,5 +1,5 @@
 interface Destination {
-    toRoomId?: Uuid;
+    roomId?: Uuid;
     toPersonId?: Uuid;
     toPersonEmail?: Email;
 }
