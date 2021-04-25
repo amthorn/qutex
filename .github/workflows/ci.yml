@@ -52,10 +52,7 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - uses: CultureHQ/actions-yarn@master
-        with:
-          args: --cwd services/node test
-      - uses: tanmen/jest-reporter@v1
+      - uses: ziishaned/jest-reporter-action@v0.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          result-file: ./services/node/result.json
+          test-command: "yarn --cwd services/node test"

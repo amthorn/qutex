@@ -3,5 +3,5 @@ build/
 secrets.env
 .history
 *.log
-results.json
+result.json
 coverage/
