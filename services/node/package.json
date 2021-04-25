@@ -1,0 +1,63 @@
+{
+  "name": "qutex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "types": "src/@types/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "start:dev": "NODE_ENV=development nodemon",
+    "build": "rimraf build && tsc",
+    "start": "yarn build && NODE_ENV=production && node build/index.js",
+    "lint": "eslint .",
+    "qa": "yarn lint && yarn test",
+    "start:dev-bot": "yarn stop:ngrok; yarn start:ngrok && ts-node src/bin/startup.ts",
+    "start:ngrok": "ts-node src/bin/ngrok.ts &",
+    "stop:ngrok": "ps aux | grep ngrok | grep -v grep | grep -v yarn | awk '{print $2}' | xargs kill -9"
+  },
+  "keywords": [
+    "queue",
+    "mutex",
+    "semaphores"
+  ],
+  "author": "Ava Thorn",
+  "license": "ISC",
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": ".ts,.js,.d.ts",
+    "ignore": [],
+    "exec": "ts-node src/index.ts"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-typescript"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "@types/axios": "^0.14.0",
+    "@types/express": "^4.16.1",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.41",
+    "axios": "^0.21.1",
+    "babel-jest": "^26.0.22",
+    "eslint": "^7.25.0",
+    "mrm-task-npm-docker": "^1.2.0",
+    "ngrok": "^4.0.1",
+    "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.5.5",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "jest": "^26.6.3",
+    "webex": "^1.119.4"
+  }
+}

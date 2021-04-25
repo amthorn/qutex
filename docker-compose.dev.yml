@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+    node:
+        build: 
+            context: ./services/node
+        command: start:dev
+        env_file:
+            - secrets.env
+        volumes: 
+            - ./services/node/src:/app/src
+            - ./services/node/tsconfig.json:/app/tsconfig.json
+            - ./services/node/package.json:/app/package.json

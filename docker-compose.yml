@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+    node:
+        image: qutex_node:latest
+        ports:
+            - 3000:3000
