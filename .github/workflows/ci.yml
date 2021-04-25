@@ -24,7 +24,6 @@ jobs:
   lint:
     needs: setup
     runs-on: ubuntu-latest
-    working-directory: ./services/node
     steps:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
@@ -42,7 +41,6 @@ jobs:
   test:
     needs: setup
     runs-on: ubuntu-latest
-    working-directory: ./services/node
     steps:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
