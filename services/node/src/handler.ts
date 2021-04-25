@@ -14,19 +14,15 @@ export class Handler extends Bot {
     }
 
     public async handle (request: Request): Promise<void> {
-        return this.bot.people.get('me').then((me: WebexPerson): void => {
-            // Don't do anything if the bot is receiving a hook from its own message.
-            if (me.id !== request.body.data.personId) {
-                this.parse(request).then((initiative: Initiative) => {
-                    this.controller.relax(initiative);
-                });
-            }
-        }).catch(() => {
-            return;
-        });
+        const me = await Bot.bot.people.get('me');
+        // Don't do anything if the bot is receiving a hook from its own message.
+        if (me.id !== request.body.data.personId) {
+            const initiative = await this.parse(request);
+            await this.controller.relax(initiative);
+        }
     }
 
     private async parse (request: Request): Promise<Initiative> {
-        return this.parser.parse(request);
+        return await this.parser.parse(request);
     }
 }

@@ -15,7 +15,7 @@ const MOCK_REQUEST = {
         'status': 'active',
         'actorId': 'Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mNWIzNjE4Ny1jOGRkLTQ3MjctOGIyZi1mOWM0NDdmMjkwNDY',
         'data': {
-            // 'id': 'Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTJkYjNiZTAtNDNiZC0xMWU2LThhZTktZGQ1YjNkZmM1NjVk',
+            'id': 'Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTJkYjNiZTAtNDNiZC0xMWU2LThhZTktZGQ1YjNkZmM1NjVk',
             'roomId': 'Y2lzY29zcGFyazovL3VzL1JPT00vYmJjZWIxYWQtNDNmMS0zYjU4LTkxNDctZjE0YmIwYzRkMTU0',
             'personId': 'Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mNWIzNjE4Ny1jOGRkLTQ3MjctOGIyZi1mOWM0NDdmMjkwNDY',
             'personEmail': 'ava@example.com',
@@ -24,6 +24,19 @@ const MOCK_REQUEST = {
     }
 } as Request;
 
-test('handler does basic return', async () => {
-    await expect(new Handler().handle(MOCK_REQUEST)).resolves.toEqual(undefined);
+test('handler appropriately checks message contents with no matching command', async () => {
+    expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+    expect(Handler.bot.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+});
+test('handler appropriately checks message contents and sends response for get status', async () => {
+    Handler.bot.messages.get.mockImplementation(() => ({ text: 'get status', personId: 'mockPersonId' }));
+    expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+    expect(Handler.bot.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+    expect(Handler.bot.messages.create).toHaveBeenCalledWith({
+        toPersonId: 'mockPersonId',
+        markdown: 'STATUS: Thank you for asking, nobody really asks anymore. I guess I\'m okay, I just have a ' +
+            'lot going on, you know? I\'m supposed to be managing all the queues for people and it\'s so hard ' +
+            'because I have to be constantly paying attention to everything at all hours of the day, I get ' +
+            'no sleep and my social life has plumetted. But I guess I\'m:\n\n200 OK'
+    });
 });
