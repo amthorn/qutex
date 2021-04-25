@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "src/@types/index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage --json --outputFile=result.json --testLocationInResults",
     "start:dev": "NODE_ENV=development nodemon",
     "build": "rimraf build && tsc",
     "start": "yarn build && NODE_ENV=production && node build/index.js",

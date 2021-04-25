@@ -55,3 +55,7 @@ jobs:
       - uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/node test
+      - uses: tanmen/jest-reporter@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-file: ./services/node/result.json
