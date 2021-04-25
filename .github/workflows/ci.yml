@@ -20,7 +20,7 @@ jobs:
         if: steps.save-deps.outputs.cache-hit != 'true'
         uses: CultureHQ/actions-yarn@master
         with:
-          args: install
+          args: --cwd services/node install
   lint:
     needs: setup
     runs-on: ubuntu-latest
@@ -37,7 +37,7 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - uses: CultureHQ/actions-yarn@master
         with:
-          args: workspace qutex lint
+          args: --cwd services/node lint
   test:
     needs: setup
     runs-on: ubuntu-latest
@@ -54,4 +54,4 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - uses: CultureHQ/actions-yarn@master
         with:
-          args: workspace qutex test
+          args: --cwd services/node test
