@@ -21,6 +21,8 @@ export class Handler extends Bot {
                     this.controller.relax(initiative);
                 });
             }
+        }).catch(() => {
+            return;
         });
     }
 

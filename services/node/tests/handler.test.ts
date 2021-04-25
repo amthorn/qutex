@@ -15,7 +15,7 @@ const MOCK_REQUEST = {
         'status': 'active',
         'actorId': 'Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mNWIzNjE4Ny1jOGRkLTQ3MjctOGIyZi1mOWM0NDdmMjkwNDY',
         'data': {
-            'id': 'Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTJkYjNiZTAtNDNiZC0xMWU2LThhZTktZGQ1YjNkZmM1NjVk',
+            // 'id': 'Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTJkYjNiZTAtNDNiZC0xMWU2LThhZTktZGQ1YjNkZmM1NjVk',
             'roomId': 'Y2lzY29zcGFyazovL3VzL1JPT00vYmJjZWIxYWQtNDNmMS0zYjU4LTkxNDctZjE0YmIwYzRkMTU0',
             'personId': 'Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mNWIzNjE4Ny1jOGRkLTQ3MjctOGIyZi1mOWM0NDdmMjkwNDY',
             'personEmail': 'ava@example.com',
@@ -25,5 +25,5 @@ const MOCK_REQUEST = {
 } as Request;
 
 test('handler does basic return', async () => {
-    expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+    await expect(new Handler().handle(MOCK_REQUEST)).resolves.toEqual(undefined);
 });

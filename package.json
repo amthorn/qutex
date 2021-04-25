@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "name": "qutex",
-  "workspaces": [
-    "services/*"
-  ]
-}

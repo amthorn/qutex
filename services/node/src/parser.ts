@@ -17,8 +17,13 @@ export class Parser extends Bot {
     }
     private async getMessageData (request: Request): Promise<WebexMessage> {
         const messageId = request.body.data.id;
-        return this.bot.messages.get(messageId).then((messageData: WebexMessage) => {
-            return messageData;
-        });
+        if (messageId) {
+            return this.bot.messages.get(messageId).then((messageData: WebexMessage) => {
+                return messageData;
+            });
+        } else {
+            // TODO: fix me
+            return { text: 'foo' } as WebexMessage;
+        }
     }
 }
