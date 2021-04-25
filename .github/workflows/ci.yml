@@ -5,7 +5,6 @@ on: [push, workflow_dispatch]
 jobs:
   setup:
     runs-on: ubuntu-latest
-    working-directory: ./services/node
     steps:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
@@ -15,7 +14,7 @@ jobs:
       - uses: actions/cache@v2
         id: save-deps
         with:
-          path: ~/.npm
+          path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - name: Install Dependencies
         if: steps.save-deps.outputs.cache-hit != 'true'
@@ -35,7 +34,7 @@ jobs:
       - uses: actions/cache@v2
         id: save-deps
         with:
-          path: ~/.npm
+          path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - uses: CultureHQ/actions-yarn@master
         with:
@@ -53,7 +52,7 @@ jobs:
       - uses: actions/cache@v2
         id: save-deps
         with:
-          path: ~/.npm
+          path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - uses: CultureHQ/actions-yarn@master
         with:
