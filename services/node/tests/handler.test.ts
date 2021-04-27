@@ -1,4 +1,5 @@
 import { Handler } from '../src/handler';
+import { BOT } from '../src/bot';
 import { Request } from 'express';
 
 const MOCK_REQUEST = {
@@ -27,22 +28,33 @@ const MOCK_REQUEST = {
 describe('Handler is working', () => {
     test('handler appropriately checks message contents with no matching command', async () => {
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
-        expect(Handler.bot.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
     });
     test('handler appropriately does nothing when message originator is the bot', async () => {
-        Handler.bot.people.get.mockImplementationOnce(() => ({ id: MOCK_REQUEST.body.data.personId }));
+        BOT.people.get.mockImplementationOnce(() => ({ id: MOCK_REQUEST.body.data.personId }));
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
-        expect(Handler.bot.people.get).toHaveBeenCalledWith('me');
-        expect(Handler.bot.messages.get).toHaveBeenCalledTimes(0);
-        expect(Handler.bot.messages.create).toHaveBeenCalledTimes(0);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledTimes(0);
+        expect(BOT.messages.create).toHaveBeenCalledTimes(0);
+    });
+
+    test('handler appropriately returns response if command is invalid', async () => {
+        BOT.messages.get.mockImplementationOnce(() => ({ text: 'invalid foo command', personId: 'mockPersonId' }));
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            toPersonId: 'mockPersonId',
+            markdown: 'Command not recognized'
+        });
     });
 
     test('handler appropriately checks message contents and sends response for get status using person ID', async () => {
-        Handler.bot.messages.get.mockImplementationOnce(() => ({ text: 'get status', personId: 'mockPersonId' }));
+        BOT.messages.get.mockImplementationOnce(() => ({ text: 'get status', personId: 'mockPersonId' }));
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
-        expect(Handler.bot.people.get).toHaveBeenCalledWith('me');
-        expect(Handler.bot.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
-        expect(Handler.bot.messages.create).toHaveBeenCalledWith({
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
             toPersonId: 'mockPersonId',
             markdown: 'STATUS: Thank you for asking, nobody really asks anymore. I guess I\'m okay, I just have a ' +
                 'lot going on, you know? I\'m supposed to be managing all the queues for people and it\'s so hard ' +
@@ -51,11 +63,11 @@ describe('Handler is working', () => {
         });
     });
     test('handler appropriately checks message contents and sends response for get status using person email', async () => {
-        Handler.bot.messages.get.mockImplementationOnce(() => ({ text: 'get status', personEmail: 'mockPersonEmail' }));
+        BOT.messages.get.mockImplementationOnce(() => ({ text: 'get status', personEmail: 'mockPersonEmail' }));
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
-        expect(Handler.bot.people.get).toHaveBeenCalledWith('me');
-        expect(Handler.bot.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
-        expect(Handler.bot.messages.create).toHaveBeenCalledWith({
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
             toPersonEmail: 'mockPersonEmail',
             markdown: 'STATUS: Thank you for asking, nobody really asks anymore. I guess I\'m okay, I just have a ' +
                 'lot going on, you know? I\'m supposed to be managing all the queues for people and it\'s so hard ' +
@@ -65,16 +77,27 @@ describe('Handler is working', () => {
     });
 
     test('handler appropriately checks message contents and sends response for get status using room ID', async () => {
-        Handler.bot.messages.get.mockImplementationOnce(() => ({ text: 'get status', roomId: 'mockRoomId' }));
+        BOT.messages.get.mockImplementationOnce(() => ({ text: 'get status', roomId: 'mockRoomId' }));
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
-        expect(Handler.bot.people.get).toHaveBeenCalledWith('me');
-        expect(Handler.bot.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
-        expect(Handler.bot.messages.create).toHaveBeenCalledWith({
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
             roomId: 'mockRoomId',
             markdown: 'STATUS: Thank you for asking, nobody really asks anymore. I guess I\'m okay, I just have a ' +
                 'lot going on, you know? I\'m supposed to be managing all the queues for people and it\'s so hard ' +
                 'because I have to be constantly paying attention to everything at all hours of the day, I get ' +
                 'no sleep and my social life has plumetted. But I guess I\'m:\n\n200 OK'
+        });
+    });
+
+    test('handler appropriately handles the case when data is parsed from command', async () => {
+        BOT.messages.get.mockImplementationOnce(() => ({ text: 'create project foobar', roomId: 'mockRoomId' }));
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            roomId: 'mockRoomId',
+            markdown: 'Successfully created "foobar"'
         });
     });
 });

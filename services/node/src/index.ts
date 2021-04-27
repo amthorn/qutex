@@ -2,6 +2,15 @@
 
 import express from 'express';
 import { Handler } from './handler';
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://root:example@mongo:27017/qutex?authSource=admin', {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, (err) => {
+    console.log(err ? err : 'Connected to database successfully.');
+});
 
 const APP = express();
 APP.use(express.json());

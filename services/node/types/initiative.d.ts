@@ -15,5 +15,12 @@ interface Initiative {
     rawCommand: string;
 
     destination: Destination;
+    
+    action?: Command;
+
+    /***********************************************************************************
+     * THIS IS THE ACTUAL PARSED DATA FROM THE COMMAND THAT WILL BE SENT TO THE ENGINE *
+     ***********************************************************************************/
+    data?: any;
 
 }

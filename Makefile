@@ -10,7 +10,7 @@ up:
 	
 .PHONY: logs
 logs:
-	docker logs -f qutex_node_1
+	docker-compose logs -f node
 
 .PHONY: up-prod
 up-prod:
@@ -19,8 +19,9 @@ up-prod:
 .PHONY: down
 down:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml down
+	docker volume rm qutex_mongo_volume
 
 .PHONY: test
 test:
-	${MAKE} build
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml run node test
+	yarn --cwd services/node test
+	

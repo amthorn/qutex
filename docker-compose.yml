@@ -4,3 +4,15 @@ services:
         image: qutex_node:latest
         ports:
             - 3000:3000
+    mongo:
+        image: mongo:4.4.5
+        restart: always
+        volumes:
+            - mongo_volume:/data/db
+        environment:
+            # TODO: change default username and password
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example      
+            MONGO_INITDB_DATABASE: qutex
+volumes:
+    mongo_volume:

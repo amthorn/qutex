@@ -1,7 +1,8 @@
 import { Request } from 'express';
-import { Bot } from './bot';
+import { BOT } from './bot';
+import Commands from './commands';
 
-export class Parser extends Bot {
+export class Parser {
     public async parse (request: Request): Promise<Initiative> {
         const messageData = await this.getMessageData(request);
         const destination: Destination = {};
@@ -13,10 +14,20 @@ export class Parser extends Bot {
         } else {
             destination.roomId = messageData.roomId;
         }
+
+        // Determine the appropriate action
+
+        for (const command of Commands) {
+            const data = await command.check(messageData.text);
+            if (data) {
+                return { rawCommand: messageData.text, destination: destination, action: command, data: data };
+            }
+        }
         return { rawCommand: messageData.text, destination: destination };
+
     }
     private async getMessageData (request: Request): Promise<WebexMessage> {
         const messageId = request.body.data.id;
-        return await Bot.bot.messages.get(messageId);
+        return await BOT.messages.get(messageId);
     }
 }

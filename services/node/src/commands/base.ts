@@ -1,9 +1,14 @@
-import { Settings } from '../settings';
 export abstract class CommandBase {
     public readonly COMMAND: string = '';
 
-    public check (command: string): boolean {
-        const doesMatchCaseFold = !Settings.CASE_SENSITIVE && command.toLowerCase() === this.COMMAND.toLowerCase();
-        return command === this.COMMAND || doesMatchCaseFold;
+    public async check (command: string): Promise<any> {
+        const template = new RegExp(this.COMMAND.replace(/\{(.*?):(.*?)\}/g, '(?<$1>$2)'));
+        const result = command.toLowerCase().match(template);
+        if (result !== null) {
+            return result.groups ? result.groups : true;
+        } else {
+            // Should not be reachable
+            return null;
+        }
     }
 }

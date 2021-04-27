@@ -1,5 +1,2 @@
 import Webex from 'webex';
-
-export class Bot {
-    public static bot = new Webex({ credentials: process.env.WEBEX_ACCESS_TOKEN });
-}
+export const BOT = new Webex({ credentials: process.env.WEBEX_ACCESS_TOKEN });

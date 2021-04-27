@@ -3,7 +3,7 @@ import { CommandBase } from '../base';
 export class Get extends CommandBase implements Command {
     public readonly COMMAND_TYPE: CommandType = CommandType.GET;
     public readonly COMMAND: string = 'get status';
-    public relax (): string {
+    public async relax (): Promise<string> {
         return 'STATUS: Thank you for asking, nobody really asks anymore. ' +
             'I guess I\'m okay, I just have a lot going on, you know? I\'m ' +
             'supposed to be managing all the queues for people and it\'s so ' +

@@ -1,20 +1,22 @@
 const enum CommandType {
     GET = 'get',
-    LIST = 'list'
+    LIST = 'list',
+    CREATE = 'create'
 
 }
 
 interface Command {
     /**
-     * This function should return a boolean which tells the caller
+     * This function should return an object of parse data.
+     * The existence of this object should tell the caller
      * whether this command applies to the given string parameter
      */
-    check: (command: string) => boolean;
+    check: (command: string) => Promise<any>;
 
     /**
      * This function should perform the action of the command
      */
-    relax: (initiative: Initiative) => string;
+    relax: (initiative: Initiative) => Promise<string>;
 
     /**
      * this property should determine what kind of command this is
