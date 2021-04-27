@@ -15,7 +15,7 @@ jobs:
         id: save-deps
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
       - name: Install Dependencies
         if: steps.save-deps.outputs.cache-hit != 'true'
         uses: CultureHQ/actions-yarn@master
@@ -34,7 +34,7 @@ jobs:
         id: save-deps
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
       - uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/node lint
@@ -51,7 +51,7 @@ jobs:
         id: save-deps
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
       - uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/node test
