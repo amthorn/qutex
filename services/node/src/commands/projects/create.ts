@@ -3,6 +3,7 @@ import { PROJECT_MODEL } from '../../models/project';
 
 export class Create extends CommandBase implements Command {
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
+    public readonly COMMAND_ACTION: string = 'create project';
     public readonly COMMAND: string = 'create project {name:[\\w\\s]+}';
     public async relax (initiative: Initiative): Promise<string> {
         // Make sure project doesn't exist

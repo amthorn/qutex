@@ -44,7 +44,9 @@ getUrl(RETRY_COUNT).then((url: string) => {
 
         Promise.all(promises).then(() => {
             WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'messages', event: 'created' }).then(() => {
-                console.log('Success');
+                WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'attachmentActions', event: 'created' }).then(() => {
+                    console.log('Success');
+                });
             });
         });
     });

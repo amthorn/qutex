@@ -3,6 +3,7 @@ import { PROJECT_MODEL } from '../../models/project';
 
 export class List extends CommandBase implements Command {
     public readonly COMMAND_TYPE: CommandType = CommandType.LIST;
+    public readonly COMMAND_ACTION: string = 'list projects';
     public readonly COMMAND: string = 'list projects';
     public async relax (): Promise<string> {
         const projects = await PROJECT_MODEL.find({}).exec();

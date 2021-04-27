@@ -1,7 +1,8 @@
 const enum CommandType {
     GET = 'get',
     LIST = 'list',
-    CREATE = 'create'
+    CREATE = 'create',
+    DELETE = 'delete'
 
 }
 
@@ -23,5 +24,6 @@ interface Command {
      * Possible commands are listed by the enum type CommandType
      */
     readonly COMMAND_TYPE: CommandType;
+    readonly COMMAND_ACTION: string;
 
 }

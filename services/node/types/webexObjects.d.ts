@@ -24,3 +24,13 @@ interface WebexMessage {
     personEmail: Email;
     created: DateTime;
 }
+
+interface WebexAttachmentAction {
+    id: Uuid;
+    type: string;
+    roomId: Uuid;
+    inputs: object;
+    personId: Uuid;
+    messageId: Uuid;
+    created: DateTime;
+}

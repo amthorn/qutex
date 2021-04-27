@@ -5,3 +5,4 @@ secrets.env
 *.log
 result.json
 coverage/
+.DS_Store

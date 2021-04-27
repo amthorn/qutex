@@ -4,7 +4,14 @@ import Commands from './commands';
 
 export class Parser {
     public async parse (request: Request): Promise<Initiative> {
-        const messageData = await this.getMessageData(request);
+        const messageId = request.body.data.id;
+        let messageData;
+        if (request.body.resource == 'attachmentActions') {
+            messageData = await BOT.attachmentActions.get(messageId);
+        } else { // if (request.body.resource == 'messages') {
+            messageData = await BOT.messages.get(messageId);
+        }
+
         const destination: Destination = {};
 
         if (messageData.personEmail) {
@@ -14,20 +21,24 @@ export class Parser {
         } else {
             destination.roomId = messageData.roomId;
         }
+        
+        const rawCommand = messageData.text ? messageData.text : this.normalize(messageData.inputs);
 
         // Determine the appropriate action
-
         for (const command of Commands) {
-            const data = await command.check(messageData.text);
+            const data = await command.check(rawCommand);
             if (data) {
-                return { rawCommand: messageData.text, destination: destination, action: command, data: data };
+                return { rawCommand: rawCommand, destination: destination, action: command, data: data };
             }
         }
-        return { rawCommand: messageData.text, destination: destination };
+        return { rawCommand: rawCommand, destination: destination };
 
     }
-    private async getMessageData (request: Request): Promise<WebexMessage> {
-        const messageId = request.body.data.id;
-        return await BOT.messages.get(messageId);
+    private normalize (data: any): any {
+        let result: any = {};
+        for (const key of Object.keys(data)) {
+            result[key.replace('_', '')] = data[key];
+        }
+        return result;
     }
 }

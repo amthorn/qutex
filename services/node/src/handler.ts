@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { Parser } from './parser';
 import { BOT } from './bot';
+import * as projectCard from './cards/project.json';
 
 export class Handler {
     private readonly parser: Parser;
@@ -18,7 +19,9 @@ export class Handler {
                 const result = await initiative.action.relax(initiative);
                 return await BOT.messages.create(Object.assign({ markdown: result }, initiative.destination));
             } else {
-                return await BOT.messages.create(Object.assign({ markdown: 'Command not recognized' }, initiative.destination));
+                // return await BOT.messages.create(Object.assign({ markdown: 'Command not recognized' }, initiative.destination));
+
+                return await BOT.messages.create(Object.assign(projectCard, initiative.destination));
             }
         }
     }

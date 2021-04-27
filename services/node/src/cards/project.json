@@ -1,0 +1,164 @@
+{
+    "markdown": "foo",
+    "attachments": [
+        {
+            "contentType": "application/vnd.microsoft.card.adaptive",
+            "content": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "ColumnSet",
+                        "columns": [
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "Image",
+                                        "style": "Person",
+                                        "url": "https://developer.webex.com/images/webex-teams-logo.png",
+                                        "size": "Medium",
+                                        "height": "50px"
+                                    }
+                                ],
+                                "width": "auto"
+                            },
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Qutex",
+                                        "weight": "Lighter",
+                                        "color": "Accent"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "weight": "Bolder",
+                                        "text": "Projects",
+                                        "wrap": true,
+                                        "color": "Light",
+                                        "size": "Large",
+                                        "spacing": "Small"
+                                    }
+                                ],
+                                "width": "stretch"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "Select what you want to do relating to Qutex Projects",
+                        "color": "Accent",
+                        "isSubtle": true,
+                        "fontType": "Default"
+                    },
+                    {
+                        "type": "ActionSet",
+                        "actions": [
+                            {
+                                "type": "Action.Submit",
+                                "data": {
+                                    "action": "list projects"
+                                },
+                                "style": "default",
+                                "title": "List"
+                            },
+                            {
+                                "type": "Action.ShowCard",
+                                "style": "positive",
+                                "title": "Create",
+                                "card": {
+                                    "type": "AdaptiveCard",
+                                    "body": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "Enter the name of the project you want to create",
+                                            "color": "Accent",
+                                            "isSubtle": true,
+                                            "fontType": "Default",
+                                            "separator": true,
+                                            "wrap": true
+                                        },
+                                        {
+                                            "id": "name",
+                                            "type": "Input.Text",
+                                            "placeholder": "Project Name"
+                                        },
+                                        {
+                                            "type": "ActionSet",
+                                            "actions": [
+                                                {
+                                                    "type": "Action.Submit",
+                                                    "data": {
+                                                        "action": "create project"
+                                                    },
+                                                    "style": "positive",
+                                                    "title": "Submit"
+                                                }
+                                            ],
+                                            "separator": true,
+                                            "horizontalAlignment": "Center",
+                                            "spacing": "Medium"
+                                        }
+                                    ],
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "version": "1.2"
+                                }
+                            },
+                            {
+                                "type": "Action.ShowCard",
+                                "title": "Delete",
+                                "card": {
+                                    "type": "AdaptiveCard",
+                                    "body": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "Enter the name of the project you want to delete",
+                                            "color": "Accent",
+                                            "isSubtle": true,
+                                            "fontType": "Default",
+                                            "separator": true,
+                                            "wrap": true
+                                        },
+                                        {
+                                            "id": "_name",
+                                            "type": "Input.Text",
+                                            "placeholder": "Project Name"
+                                        },
+                                        {
+                                            "type": "ActionSet",
+                                            "actions": [
+                                                {
+                                                    "type": "Action.Submit",
+                                                    "data": {
+                                                        "action": "delete project"
+                                                    },
+                                                    "style": "destructive",
+                                                    "title": "Submit"
+                                                }
+                                            ],
+                                            "separator": true,
+                                            "horizontalAlignment": "Center",
+                                            "spacing": "Medium"
+                                        }
+                                    ],
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "version": "1.2"
+                                },
+                                "data": {
+                                    "action": "delete project"
+                                },
+                                "style": "destructive"
+                            }
+                        ],
+                        "separator": true,
+                        "horizontalAlignment": "Center",
+                        "spacing": "Medium"
+                    }
+                ],
+                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                "version": "1.2"
+            }
+        }
+    ]
+}
