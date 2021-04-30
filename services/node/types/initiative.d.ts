@@ -4,7 +4,7 @@ interface Destination {
     toPersonEmail?: Email;
 }
 
-interface Initiative {
+interface IInitiative {
     /********************************************************
      * THIS IS THE RAW COMMAND PARSED FROM THE REQUEST      *
      *                                                      *
@@ -15,12 +15,15 @@ interface Initiative {
     rawCommand: string;
 
     destination: Destination;
-    
+
+    user: Person;
+
     action?: Command;
 
     /***********************************************************************************
      * THIS IS THE ACTUAL PARSED DATA FROM THE COMMAND THAT WILL BE SENT TO THE ENGINE *
      ***********************************************************************************/
-    data?: any;
+    data: Record<string, string>;
+    debug: boolean;
 
 }

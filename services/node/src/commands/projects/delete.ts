@@ -1,19 +1,22 @@
 import { CommandBase } from '../base';
-import { PROJECT_MODEL } from '../../models/project';
+import { PROJECT_MODEL, ProjectDocument } from '../../models/project';
 
-export class Delete extends CommandBase implements Command {
+export class Delete extends CommandBase implements ICommand {
     public readonly COMMAND_TYPE: CommandType = CommandType.DELETE;
-    public readonly COMMAND_ACTION: string = 'delete project';
-    public readonly COMMAND: string = 'delete project {name:[\\w\\s]+}';
-    public async relax (initiative: Initiative): Promise<string> {
+    public readonly COMMAND_BASE: string = 'project';
+    public readonly ARGS: string = '{name:[\\w\\s]+}';
+    public readonly DESCRIPTION: string = 'Deletes a target project';
+    public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
+    public async relax (initiative: IInitiative): Promise<string> {
         // Make sure project doesn't exist
-        return PROJECT_MODEL.find(initiative.data).then(async (existent) => {
-            if (existent.length === 0) {
-                return `A project with name "${initiative.data.name}" does not exist.`;
-            } else {
-                PROJECT_MODEL.deleteOne(initiative.data).exec();
-                return `Successfully deleted "${initiative.data.name}"`;
-            }
-        });
+        const existent = await PROJECT_MODEL.find({ name: initiative.data.name } as ProjectDocument).exec();
+        if (existent.length > 0 && this.authorized(existent[0], initiative.user)) {
+            PROJECT_MODEL.deleteOne(initiative.data).exec();
+            return `Successfully deleted "${initiative.data.name}"`;
+        } else if (existent.length === 0) {
+            return `A project with name "${initiative.data.name}" does not exist.`;
+        } else {
+            return 'You are not authorized to perform that action. Please ask an administrator.';
+        }
     }
 }

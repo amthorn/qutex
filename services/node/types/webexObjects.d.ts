@@ -1,8 +1,8 @@
-interface Webhook {
+interface IWebhook {
     id: string;
 }
 
-interface WebexPerson {
+interface IWebexPerson {
     id: string;
 }
 
@@ -15,7 +15,7 @@ type Uuid = string;
 type Email = string;
 type DateTime = string;
 
-interface WebexMessage {
+interface IWebexMessage {
     id: Uuid;
     roomId: Uuid;
     roomType: RoomType;
@@ -25,11 +25,11 @@ interface WebexMessage {
     created: DateTime;
 }
 
-interface WebexAttachmentAction {
+interface IWebexAttachmentAction {
     id: Uuid;
     type: string;
     roomId: Uuid;
-    inputs: object;
+    inputs: Record<string, unknown>;
     personId: Uuid;
     messageId: Uuid;
     created: DateTime;

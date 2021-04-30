@@ -34,7 +34,7 @@
                                     {
                                         "type": "TextBlock",
                                         "weight": "Bolder",
-                                        "text": "Projects",
+                                        "text": "Queues",
                                         "wrap": true,
                                         "color": "Light",
                                         "size": "Large",
@@ -47,7 +47,7 @@
                     },
                     {
                         "type": "TextBlock",
-                        "text": "Select what you want to do relating to Qutex Projects",
+                        "text": "Select what you want to do relating to Qutex Queues",
                         "color": "Accent",
                         "isSubtle": true,
                         "fontType": "Default"
@@ -58,7 +58,7 @@
                             {
                                 "type": "Action.Submit",
                                 "data": {
-                                    "action": "list projects"
+                                    "action": "list queues"
                                 },
                                 "style": "default",
                                 "title": "List"
@@ -72,7 +72,7 @@
                                     "body": [
                                         {
                                             "type": "TextBlock",
-                                            "text": "Enter the name of the project you want to create",
+                                            "text": "Enter the name of the queue you want to create",
                                             "color": "Accent",
                                             "isSubtle": true,
                                             "fontType": "Default",
@@ -82,7 +82,7 @@
                                         {
                                             "id": "createName",
                                             "type": "Input.Text",
-                                            "placeholder": "Project Name"
+                                            "placeholder": "Queue Name"
                                         },
                                         {
                                             "type": "ActionSet",
@@ -90,7 +90,7 @@
                                                 {
                                                     "type": "Action.Submit",
                                                     "data": {
-                                                        "action": "create project",
+                                                        "action": "create queue",
                                                         "_map": {
                                                             "createName": "name"
                                                         }
@@ -116,7 +116,7 @@
                                     "body": [
                                         {
                                             "type": "TextBlock",
-                                            "text": "Enter the name of the project you want to delete",
+                                            "text": "Enter the name of the queue you want to delete",
                                             "color": "Accent",
                                             "isSubtle": true,
                                             "fontType": "Default",
@@ -126,7 +126,7 @@
                                         {
                                             "id": "deleteName",
                                             "type": "Input.Text",
-                                            "placeholder": "Project Name"
+                                            "placeholder": "Queue Name"
                                         },
                                         {
                                             "type": "ActionSet",
@@ -134,7 +134,7 @@
                                                 {
                                                     "type": "Action.Submit",
                                                     "data": {
-                                                        "action": "delete project",
+                                                        "action": "delete queue",
                                                         "_map": {
                                                             "deleteName": "name"
                                                         }

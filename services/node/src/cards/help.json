@@ -1,0 +1,168 @@
+{
+    "markdown": "_",
+    "attachments": [
+        {
+            "contentType": "application/vnd.microsoft.card.adaptive",
+            "content": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "ColumnSet",
+                        "columns": [
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "Image",
+                                        "style": "Person",
+                                        "url": "https://raw.githubusercontent.com/amthorn/qutex/master/docs/logoSquareSmall.png",
+                                        "size": "Medium",
+                                        "height": "50px"
+                                    }
+                                ],
+                                "width": "auto"
+                            },
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Qutex",
+                                        "weight": "Lighter",
+                                        "color": "Accent"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "weight": "Bolder",
+                                        "text": "Help",
+                                        "wrap": true,
+                                        "color": "Light",
+                                        "size": "Large",
+                                        "spacing": "Small"
+                                    }
+                                ],
+                                "width": "stretch"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "ColumnSet",
+                        "columns": [
+                            {
+                                "type": "Column",
+                                "width": 35,
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Version:",
+                                        "weight": "Lighter",
+                                        "color": "Light",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Release Date:",
+                                        "color": "Light",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Author:",
+                                        "weight": "Lighter",
+                                        "color": "Light",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Support & Issues:",
+                                        "weight": "Lighter",
+                                        "color": "Light",
+                                        "spacing": "Small"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "Column",
+                                "width": 65,
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "",
+                                        "color": "Light",
+                                        "weight": "Lighter",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "",
+                                        "color": "Light",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "",
+                                        "color": "Light",
+                                        "weight": "Lighter",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "[Click here:)](https://www.github.com/amthorn/qutex/issues)",
+                                        "color": "Light",
+                                        "weight": "Lighter",
+                                        "spacing": "Small"
+                                    }
+                                ]
+                            }
+                        ],
+                        "spacing": "Padding",
+                        "horizontalAlignment": "Center"
+                    },
+                    {
+                        "type": "ActionSet",
+                        "actions": [
+                            {
+                                "type": "Action.ShowCard",
+                                "style": "default",
+                                "title": "Public",
+                                "card": {
+                                    "type": "AdaptiveCard",
+                                    "body": [],
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "version": "1.2"
+                                }
+                            },
+                            {
+                                "type": "Action.ShowCard",
+                                "style": "default",
+                                "title": "Admin",
+                                "card": {
+                                    "type": "AdaptiveCard",
+                                    "body": [],
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "version": "1.2"
+                                }
+                            },
+                            {
+                                "type": "Action.ShowCard",
+                                "style": "default",
+                                "title": "Superadmin",
+                                "card": {
+                                    "type": "AdaptiveCard",
+                                    "body": [],
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "version": "1.2"
+                                }
+                            }
+                        ],
+                        "separator": true,
+                        "horizontalAlignment": "Center",
+                        "spacing": "Medium"
+                    }
+                ],
+                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                "version": "1.2"
+            }
+        }
+    ]
+}

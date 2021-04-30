@@ -60,7 +60,9 @@
   },
   "dependencies": {
     "express": "^4.16.4",
+    "moment": "^2.29.1",
     "mongoose": "^5.12.5",
-    "webex": "^1.119.4"
+    "webex": "^1.119.4",
+    "winston": "^3.3.3"
   }
 }

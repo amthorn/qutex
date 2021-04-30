@@ -4,7 +4,8 @@ const TEST_PROJECT = {
     data: { name: 'foo' },
     rawCommand: 'create project foo',
     destination: { toPersonId: 'notReal' },
-    action: new Create()
+    action: new Create(),
+    debug: false
 };
 
 describe('Create project works appropriately', () => {

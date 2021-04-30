@@ -11,12 +11,7 @@ beforeAll(() => {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true
-    }, function (err) {
-        if (err) {
-            throw err;
-        }
-    }
-    );
+    });
 });
 
 afterEach(() => {
@@ -25,13 +20,13 @@ afterEach(() => {
       the collections in our mongoose connection and drop them.
     */
     for (const i in mongoose.connection.collections) {
-        mongoose.connection.collections[i].deleteMany(() => { });
+        mongoose.connection.collections[i].deleteMany({});
     }
 });
 
 afterAll(done => {
     for (const i in mongoose.connection.collections) {
-        mongoose.connection.collections[i].drop(() => { });
+        mongoose.connection.collections[i].drop();
     }
 
     mongoose.disconnect();

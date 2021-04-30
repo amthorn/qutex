@@ -34,7 +34,7 @@
                                     {
                                         "type": "TextBlock",
                                         "weight": "Bolder",
-                                        "text": "Projects",
+                                        "text": "Registration",
                                         "wrap": true,
                                         "color": "Light",
                                         "size": "Large",
@@ -47,7 +47,7 @@
                     },
                     {
                         "type": "TextBlock",
-                        "text": "Select what you want to do relating to Qutex Projects",
+                        "text": "Select what you want to do relating to Qutex Registration",
                         "color": "Accent",
                         "isSubtle": true,
                         "fontType": "Default"
@@ -58,21 +58,21 @@
                             {
                                 "type": "Action.Submit",
                                 "data": {
-                                    "action": "list projects"
+                                    "action": "show registration"
                                 },
                                 "style": "default",
-                                "title": "List"
+                                "title": "Show"
                             },
                             {
                                 "type": "Action.ShowCard",
                                 "style": "positive",
-                                "title": "Create",
+                                "title": "Register",
                                 "card": {
                                     "type": "AdaptiveCard",
                                     "body": [
                                         {
                                             "type": "TextBlock",
-                                            "text": "Enter the name of the project you want to create",
+                                            "text": "Enter the name of the project you want to register to this destination",
                                             "color": "Accent",
                                             "isSubtle": true,
                                             "fontType": "Default",
@@ -80,7 +80,7 @@
                                             "wrap": true
                                         },
                                         {
-                                            "id": "createName",
+                                            "id": "registerName",
                                             "type": "Input.Text",
                                             "placeholder": "Project Name"
                                         },
@@ -90,9 +90,9 @@
                                                 {
                                                     "type": "Action.Submit",
                                                     "data": {
-                                                        "action": "create project",
+                                                        "action": "register to project",
                                                         "_map": {
-                                                            "createName": "name"
+                                                            "registerName": "name"
                                                         }
                                                     },
                                                     "style": "positive",
@@ -107,51 +107,6 @@
                                     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
                                     "version": "1.2"
                                 }
-                            },
-                            {
-                                "type": "Action.ShowCard",
-                                "title": "Delete",
-                                "card": {
-                                    "type": "AdaptiveCard",
-                                    "body": [
-                                        {
-                                            "type": "TextBlock",
-                                            "text": "Enter the name of the project you want to delete",
-                                            "color": "Accent",
-                                            "isSubtle": true,
-                                            "fontType": "Default",
-                                            "separator": true,
-                                            "wrap": true
-                                        },
-                                        {
-                                            "id": "deleteName",
-                                            "type": "Input.Text",
-                                            "placeholder": "Project Name"
-                                        },
-                                        {
-                                            "type": "ActionSet",
-                                            "actions": [
-                                                {
-                                                    "type": "Action.Submit",
-                                                    "data": {
-                                                        "action": "delete project",
-                                                        "_map": {
-                                                            "deleteName": "name"
-                                                        }
-                                                    },
-                                                    "style": "destructive",
-                                                    "title": "Submit"
-                                                }
-                                            ],
-                                            "separator": true,
-                                            "horizontalAlignment": "Center",
-                                            "spacing": "Medium"
-                                        }
-                                    ],
-                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                                    "version": "1.2"
-                                },
-                                "style": "destructive"
                             }
                         ],
                         "separator": true,

@@ -36,7 +36,7 @@ async function getUrl (retries: number): Promise<string> {
 
 getUrl(RETRY_COUNT).then((url: string) => {
     console.log(`Creating webhook on: ${url}`);
-    WEBEX.webhooks.list({ max: 10 }).then((hooks: Webhook[]): void => {
+    WEBEX.webhooks.list({ max: 10 }).then((hooks: IWebhook[]): void => {
         const promises = [];
         for (const hook of hooks) {
             promises.push(WEBEX.webhooks.remove({ id: hook.id }));

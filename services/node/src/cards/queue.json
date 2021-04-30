@@ -1,0 +1,106 @@
+{
+    "markdown": "_",
+    "attachments": [
+        {
+            "contentType": "application/vnd.microsoft.card.adaptive",
+            "content": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "ColumnSet",
+                        "columns": [
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "Image",
+                                        "style": "Person",
+                                        "url": "https://raw.githubusercontent.com/amthorn/qutex/master/docs/logoSquareSmall.png",
+                                        "size": "Medium",
+                                        "height": "50px"
+                                    }
+                                ],
+                                "width": "auto"
+                            },
+                            {
+                                "type": "Column",
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Qutex",
+                                        "weight": "Lighter",
+                                        "color": "Accent"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "weight": "Bolder",
+                                        "text": "",
+                                        "wrap": true,
+                                        "color": "Light",
+                                        "size": "Large",
+                                        "spacing": "Small"
+                                    }
+                                ],
+                                "width": "stretch"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "Select what you want to do relating to this Qutex Queue",
+                        "color": "Accent",
+                        "isSubtle": true,
+                        "fontType": "Default"
+                    },
+                    {
+                        "type": "ActionSet",
+                        "actions": [
+                            {
+                                "type": "Action.ShowCard",
+                                "style": "positive",
+                                "title": "Show Queue",
+                                "card": {
+                                    "type": "AdaptiveCard",
+                                    "body": [
+                                        {
+                                            "type": "TextBlock",
+                                            "weight": "Bolder",
+                                            "text": "TODO:",
+                                            "wrap": true,
+                                            "color": "Light",
+                                            "size": "Large",
+                                            "spacing": "Small"
+                                        }
+                                    ],
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "version": "1.2"
+                                }
+                            },
+                            {
+                                "type": "Action.Submit",
+                                "data": {
+                                    "action": "add me"
+                                },
+                                "style": "default",
+                                "title": "Add Me"
+                            },
+                            {
+                                "type": "Action.Submit",
+                                "data": {
+                                    "action": "remove me"
+                                },
+                                "style": "default",
+                                "title": "Remove Me"
+                            }
+                        ],
+                        "separator": true,
+                        "horizontalAlignment": "Center",
+                        "spacing": "Medium"
+                    }
+                ],
+                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                "version": "1.2"
+            }
+        }
+    ]
+}
