@@ -1,5 +1,6 @@
 import { CommandBase } from '../base';
 import { BOT } from '../../bot';
+import { Auth } from '../../enum';
 import * as projectCard from '../../cards/project.json';
 
 export class Card extends CommandBase implements ICommand {
@@ -8,7 +9,7 @@ export class Card extends CommandBase implements ICommand {
     public readonly DESCRIPTION: string = 'Shows the card relating to Qutex Projects';
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public async relax (initiative: IInitiative): Promise<string> {
-        await BOT.messages.create(Object.assign(projectCard, initiative.destination));
+        await BOT.messages.create({ ...projectCard, ...initiative.destination });
         return '';
     }
 }

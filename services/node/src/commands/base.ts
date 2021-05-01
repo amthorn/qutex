@@ -1,9 +1,10 @@
 import { ProjectDocument, PROJECT_MODEL } from '../models/project';
 import { PersonDocument, PERSON_MODEL } from '../models/person';
 import { REGISTRATION_MODEL } from '../models/registration';
-import { LOGGER } from '../index';
+import { LOGGER } from '../logger';
+import { Auth } from '../enum';
 import moment from 'moment';
-export class CommandBase {
+export abstract class CommandBase {
     public COMMAND_BASE?: string;
     public COMMAND_TYPE?: CommandType;
     public ARGS?: string;
@@ -81,6 +82,13 @@ export class CommandBase {
             return `User "${user.displayName}" was not found in queue "${queueObject.name}"`;
         } else {
             queueObject.members.splice(idx, 1);
+
+            // If we removed the person at the head of the queue and
+            // there are more people in the queue
+            if (queueObject.members.length > 0 && idx === 0) {
+                const head = queueObject.members[0];
+                head.atHeadTime = new Date();
+            }
             return queueObject;
         }
     }
@@ -119,11 +127,11 @@ export class CommandBase {
         return null;
     }
     public authorized (project: ProjectDocument, person: IPerson): boolean {
-        LOGGER.debug(`Authorizing: "${person.displayName}" with "${project.name}"`);
+        LOGGER.debug(`Authorizing: "${person.id}" with "${project.name}"`);
         LOGGER.debug(`Authorization Restriction: ${this.AUTHORIZATION}`);
         LOGGER.debug(`Project Admins: ${project.admins}`);
         if (this.AUTHORIZATION === Auth.PROJECT_ADMIN) {
-            return project.admins.map(i => i.displayName).includes(person.displayName);
+            return project.admins.map(i => i.id).includes(person.id);
         } else if (this.AUTHORIZATION === Auth.SUPER_ADMIN) {
             // TODO:
             return false;

@@ -1,5 +1,3 @@
-import { CommandBase } from './base';
-
 import { Get as GetStatus } from './status/get';
 
 import { Card as HelpCard } from './help/card';
@@ -65,4 +63,4 @@ export default [
     new QueueCard(),
     new AddMe(),
     new RemoveMe()
-] as CommandBase[];
+] as ICommand[];

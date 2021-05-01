@@ -6,7 +6,11 @@ const TEST_PROJECT = {
     rawCommand: 'create project foo',
     destination: { toPersonId: 'notReal' },
     action: new Create(),
-    debug: false
+    debug: false,
+    user: {
+        id: 'fooId',
+        displayName: 'foo display name'
+    }
 };
 
 describe('List project works appropriately', () => {

@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { BOT } from './bot';
 import Commands from './commands';
-import { LOGGER } from './index';
+import { LOGGER } from './logger';
 
 export class Parser {
     public async parse (request: Request): Promise<IInitiative> {
@@ -12,7 +12,7 @@ export class Parser {
         } else { // if (request.body.resource == 'messages') {
             messageData = await BOT.messages.get(messageId);
         }
-
+        
         const person = await BOT.people.get(request.body.data.personId);
         const user = { id: request.body.data.personId, displayName: person.displayName };
 

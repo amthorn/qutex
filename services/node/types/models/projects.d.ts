@@ -3,6 +3,7 @@ interface IProject {
     /**
      * This is the currently set implicit queue.
      */
-    currentQueue: IQueue;
+    currentQueue: string;
+    admins: IPerson[];
     queues: IQueue[];
 }

@@ -1,5 +1,6 @@
 import { CommandBase } from '../base';
 import { PROJECT_MODEL } from '../../models/project';
+import { Auth } from '../../enum';
 import { REGISTRATION_MODEL } from '../../models/registration';
 
 export class Operation extends CommandBase implements ICommand {

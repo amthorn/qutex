@@ -1,5 +1,6 @@
 import { CommandBase } from '../base';
 import { BOT } from '../../bot';
+import { Auth } from '../../enum';
 import * as queueCard from '../../cards/queue.json';
 
 export class Card extends CommandBase implements ICommand {
@@ -18,7 +19,7 @@ export class Card extends CommandBase implements ICommand {
         card.attachments[0].content.body[0].columns[1].items[1].text = `Queue ${queue.name}`;
         // TODO: put contents of the queue in the show card section
 
-        await BOT.messages.create(Object.assign(queueCard, initiative.destination));
+        await BOT.messages.create({ ...queueCard, ...initiative.destination });
         return '';
     }
 }

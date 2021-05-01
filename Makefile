@@ -23,5 +23,9 @@ down:
 
 .PHONY: test
 test:
-	yarn --cwd services/node test
+	yarn --cwd services/node test --silent
+
+.PHONY: lint
+lint:
+	yarn --cwd services/node lint
 	

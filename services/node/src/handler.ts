@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Parser } from './parser';
 import { BOT } from './bot';
-import { LOGGER } from './index';
+import { LOGGER } from './logger';
 
 export class Handler {
     private readonly parser: Parser;
@@ -15,6 +15,7 @@ export class Handler {
             const me = await BOT.people.get('me');
             // Don't do anything if the bot is receiving a hook from its own message.
             if (me.id !== request.body.data.personId) {
+                LOGGER.debug(request.body);
                 const initiative = await this.parse(request);
                 let result = null;
                 if (initiative.action) {
@@ -24,7 +25,7 @@ export class Handler {
                 }
                 if (result) {
                     await this.handleDebug(initiative, request, result);
-                    return await BOT.messages.create(Object.assign({ markdown: result }, initiative.destination));
+                    return await BOT.messages.create({ markdown: result, ...initiative.destination });
                 }
             }
         } catch (e) {
@@ -46,7 +47,7 @@ export class Handler {
                 'initiative': initiative,
                 'result': result
             }, null, 2)}\n\`\`\``;
-            return await BOT.messages.create(Object.assign({ markdown: debugData }, initiative.destination));
+            return await BOT.messages.create({ markdown: debugData, ...initiative.destination });
         }
     }
 

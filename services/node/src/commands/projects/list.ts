@@ -1,5 +1,6 @@
 import { CommandBase } from '../base';
 import { PROJECT_MODEL } from '../../models/project';
+import { Auth } from '../../enum';
 
 export class List extends CommandBase implements ICommand {
     public readonly COMMAND_TYPE: CommandType = CommandType.LIST;

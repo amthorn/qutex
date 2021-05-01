@@ -1,4 +1,5 @@
 import { CommandBase } from '../base';
+import { Auth } from '../../enum';
 
 export class Get extends CommandBase implements ICommand {
     public readonly COMMAND_TYPE: CommandType = CommandType.GET;

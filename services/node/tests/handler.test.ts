@@ -31,7 +31,7 @@ describe('Handler is working', () => {
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
     });
     test('handler appropriately does nothing when message originator is the bot', async () => {
-        BOT.people.get.mockImplementationOnce(() => ({ id: MOCK_REQUEST.body.data.personId }));
+        BOT.people.get.mockReturnValueOnce({ id: MOCK_REQUEST.body.data.personId });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledTimes(0);
@@ -39,9 +39,13 @@ describe('Handler is working', () => {
     });
 
     test('handler appropriately returns response if command is invalid', async () => {
-        BOT.messages.get.mockImplementationOnce(() => ({ text: 'invalid foo command', personId: 'mockPersonId' }));
+        BOT.messages.get.mockReturnValueOnce({ text: 'invalid foo command', personId: 'mockPersonId' });
+        BOT.people.get.mockReturnValue({ id: MOCK_REQUEST.body.data.personId, displayName: 'mockDisplayName' });
+        BOT.people.get.mockReturnValue({ id: 'whateverId', displayName: 'mockDisplayName' });
+
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.people.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.personId);
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
         expect(BOT.messages.create).toHaveBeenCalledWith({
             toPersonId: 'mockPersonId',
@@ -50,7 +54,7 @@ describe('Handler is working', () => {
     });
 
     test('handler appropriately checks message contents and sends response for get status using person ID', async () => {
-        BOT.messages.get.mockImplementationOnce(() => ({ text: 'get status', personId: 'mockPersonId' }));
+        BOT.messages.get.mockReturnValueOnce({ text: 'get status', personId: 'mockPersonId' });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
@@ -63,7 +67,7 @@ describe('Handler is working', () => {
         });
     });
     test('handler appropriately checks message contents and sends response for get status using person email', async () => {
-        BOT.messages.get.mockImplementationOnce(() => ({ text: 'get status', personEmail: 'mockPersonEmail' }));
+        BOT.messages.get.mockReturnValueOnce({ text: 'get status', personEmail: 'mockPersonEmail' });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
@@ -77,7 +81,7 @@ describe('Handler is working', () => {
     });
 
     test('handler appropriately checks message contents and sends response for get status using room ID', async () => {
-        BOT.messages.get.mockImplementationOnce(() => ({ text: 'get status', roomId: 'mockRoomId' }));
+        BOT.messages.get.mockReturnValueOnce({ text: 'get status', roomId: 'mockRoomId' });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
@@ -91,7 +95,7 @@ describe('Handler is working', () => {
     });
 
     test('handler appropriately handles the case when data is parsed from command', async () => {
-        BOT.messages.get.mockImplementationOnce(() => ({ text: 'create project foobar', roomId: 'mockRoomId' }));
+        BOT.messages.get.mockReturnValueOnce({ text: 'create project foobar', roomId: 'mockRoomId' });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);

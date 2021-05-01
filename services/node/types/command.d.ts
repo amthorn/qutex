@@ -25,6 +25,11 @@ interface ICommand {
      * This function should perform the action of the command
      */
     relax: (initiative: Initiative) => Promise<string>;
+    /**
+     * This is a helper property which is implemented on the base class that can construct
+     * the value of the target command
+     */
+    command: string;
 
     /**
      * this property should determine what kind of command this is

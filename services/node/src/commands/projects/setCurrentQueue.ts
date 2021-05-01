@@ -1,4 +1,5 @@
 import { CommandBase } from '../base';
+import { Auth } from '../../enum';
 
 export class SetCurrentQueue extends CommandBase implements ICommand {
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;

@@ -1,5 +1,6 @@
 import { CommandBase } from '../base';
 import { BOT } from '../../bot';
+import { Auth } from '../../enum';
 import * as queuesCard from '../../cards/queues.json';
 
 export class Card extends CommandBase implements ICommand {
@@ -13,7 +14,7 @@ export class Card extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
-        await BOT.messages.create(Object.assign(queuesCard, initiative.destination));
+        await BOT.messages.create({ ...queuesCard, ...initiative.destination });
         return '';
     }
 }

@@ -20,13 +20,13 @@ afterEach(() => {
       the collections in our mongoose connection and drop them.
     */
     for (const i in mongoose.connection.collections) {
-        mongoose.connection.collections[i].deleteMany({});
+        mongoose.connection.collections[i].deleteMany(() => { }); // eslint-disable-line
     }
 });
 
 afterAll(done => {
     for (const i in mongoose.connection.collections) {
-        mongoose.connection.collections[i].drop();
+        mongoose.connection.collections[i].drop(() => { }); //eslint-disable-line
     }
 
     mongoose.disconnect();
