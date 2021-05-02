@@ -52,7 +52,7 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
-      - run: sudo docker compose -f docker-compose.yml -f docker-compose.dev.yml up mongo --build -d
+      - run: sudo docker-compose -f docker-compose.yml -f docker-compose.dev.yml up mongo --build -d
       - uses: wbari/start-mongoDB@v0.2
         with:
           mongoDBVersion: 4.4.5
