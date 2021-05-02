@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml build
+	docker compose -f docker-compose.yml -f docker-compose.pipeline.yml -f docker-compose.dev.yml build
 	
 .PHONY: build-prod
 build-prod:
@@ -8,7 +8,7 @@ build-prod:
 
 .PHONY: up
 up:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+	docker compose -f docker-compose.yml -f docker-compose.pipeline.yml -f docker-compose.dev.yml up --build -d
 	yarn --cwd services/node start:dev-bot
 	
 .PHONY: logs
@@ -21,7 +21,7 @@ up-prod:
 
 .PHONY: down
 down:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml down
+	docker compose -f docker-compose.yml -f docker-compose.pipeline.yml -f docker-compose.dev.yml down
 	docker volume rm qutex_mongo_volume
 
 .PHONY: test
