@@ -52,8 +52,10 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
-      - run: sudo docker-compose -f docker-compose.yml -f docker-compose.pipeline.yml up --build -d mongo
-      - run: sudo docker ps
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.3.0
+        with:
+          mongodb-version: 4.4.5
       - uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/node test --silent
