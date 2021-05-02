@@ -7,7 +7,7 @@ beforeAll(async () => {
       start it up using the test url and database name
       provided by the node runtime ENV
     */
-    await mongoose.connect('mongodb://root:example@localhost:27017/qutex?authSource=admin', {
+    await mongoose.connect('mongodb://localhost:27017', {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true
