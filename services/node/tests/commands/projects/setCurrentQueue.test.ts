@@ -1,7 +1,7 @@
 import { SetCurrentQueue } from '../../../src/commands/projects/setCurrentQueue';
 import { List } from '../../../src/commands/queues/list';
 import { PROJECT_MODEL } from '../../../src/models/project';
-import { createProject, createQueue, TEST_REGISTRATION, TEST_PROJECT } from '../../util';
+import { CREATE_PROJECT, CREATE_QUEUE, TEST_REGISTRATION, TEST_PROJECT } from '../../util';
 import * as settings from '../../../src/settings.json';
 
 const TEST_INITIATIVE = {
@@ -23,18 +23,18 @@ describe('Setting the current queue on a project works appropriately', () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
     });
     test('Setting the current queue to nonexistent queue', async () => {
-        const project = await createProject();
+        const project = await CREATE_PROJECT();
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
-        await createQueue(project);
+        await CREATE_QUEUE(project);
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
         const message = `Queue "${TEST_INITIATIVE.data.name}" does not exist on project "${TEST_PROJECT.name}"`;
         expect(await new SetCurrentQueue().relax(TEST_INITIATIVE)).toEqual(message);
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
     });
     test('Setting the current queue to the same queue it is already set as', async () => {
-        const project = await createProject();
+        const project = await CREATE_PROJECT();
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
-        await createQueue(project);
+        await CREATE_QUEUE(project);
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
         expect(await new SetCurrentQueue().relax({
             ...TEST_INITIATIVE,
@@ -44,9 +44,9 @@ describe('Setting the current queue on a project works appropriately', () => {
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
     });
     test('Setting the current queue in a valid setting', async () => {
-        const project = await createProject();
+        const project = await CREATE_PROJECT();
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
-        const queue = await createQueue(project, 'QNAME');
+        const queue = await CREATE_QUEUE(project, 'QNAME');
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
         expect(await new SetCurrentQueue().relax({
             ...TEST_INITIATIVE,
@@ -57,7 +57,7 @@ describe('Setting the current queue on a project works appropriately', () => {
         expect(await new List().relax({
             ...TEST_INITIATIVE,
             data: {},
-            rawCommand: `list queues`
+            rawCommand: 'list queues'
         })).toEqual(`List of queues in project "PNAME" are:
 
 1. DEFAULT

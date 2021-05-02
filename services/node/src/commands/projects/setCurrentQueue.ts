@@ -15,7 +15,7 @@ export class SetCurrentQueue extends CommandBase implements ICommand {
         if (targetQueues.length === 0) {
             return `Queue "${initiative.data.name.toUpperCase()}" does not exist on project "${project.name}"`;
         } else if (project.currentQueue === initiative.data.name.toUpperCase()) {
-            return `Current queue is already set to "${initiative.data.name.toUpperCase()}"`
+            return `Current queue is already set to "${initiative.data.name.toUpperCase()}"`;
         } else {
             project.currentQueue = targetQueues[0].name;
 

@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 export const LOGGER = createLogger({
-    level: process.env.NODE_ENV === 'production' ? 'info' : (process.argv.indexOf('--silent') >= 0 ? 'silent' : 'debug'),
+    level: process.env.NODE_ENV === 'production' ? 'info' : process.argv.indexOf('--silent') >= 0 ? 'silent' : 'debug',
     format: format.combine(
         format.colorize({ all: true }),
         format.timestamp(),

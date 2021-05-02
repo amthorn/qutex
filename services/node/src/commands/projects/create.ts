@@ -23,9 +23,9 @@ export class Create extends CommandBase implements ICommand {
 
                 const project = PROJECT_MODEL.build({
                     ...initiative.data,
-                        queues: [queue],
-                        currentQueue: queue.name,
-                        admins: [initiative.user]
+                    queues: [queue],
+                    currentQueue: queue.name,
+                    admins: [initiative.user]
                 } as unknown as IProject);
 
                 // Save the project
