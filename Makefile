@@ -1,7 +1,7 @@
 .PHONY: build
 build:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml build
-	
+
 .PHONY: build-prod
 build-prod:
 	docker compose build
