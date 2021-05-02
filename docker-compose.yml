@@ -2,6 +2,10 @@ version: '3.3'
 services:
     node:
         image: qutex_node:latest
+        build:
+            context: ./services/node
+            args:
+                BUILD: 1
         ports:
             - 3000:3000
     mongo:

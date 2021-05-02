@@ -1,7 +1,10 @@
 .PHONY: build
 build:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml build
-
+	
+.PHONY: build-prod
+build-prod:
+	docker compose build
 
 .PHONY: up
 up:
@@ -14,7 +17,7 @@ logs:
 
 .PHONY: up-prod
 up-prod:
-	docker compose up -d
+	docker-compose up -d
 
 .PHONY: down
 down:

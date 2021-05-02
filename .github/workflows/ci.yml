@@ -52,6 +52,9 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
+      - uses: wbari/start-mongoDB@v0.2
+        with:
+          mongoDBVersion: 4.4.5
       - uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/node test

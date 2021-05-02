@@ -16,11 +16,13 @@ const TEST_PROJECT = {
 
 describe('Create project works appropriately', () => {
     test('project is created when no projects are configured', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Create().relax(TEST_PROJECT)).toEqual('Successfully created "foo"');
         const projects = await PROJECT_MODEL.find({}).exec();
         expect(projects).toHaveLength(1);
     });
     test('project is created with default queue', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Create().relax(TEST_PROJECT)).toEqual('Successfully created "foo"');
         const projects = await PROJECT_MODEL.find({}).exec();
         expect(projects[0].queues).toHaveLength(1);
@@ -29,6 +31,7 @@ describe('Create project works appropriately', () => {
         expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
     });
     test('project is created with default admin', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Create().relax(TEST_PROJECT)).toEqual('Successfully created "foo"');
         const projects = await PROJECT_MODEL.find({}).exec();
         expect(projects[0].admins).toHaveLength(1);
@@ -38,6 +41,7 @@ describe('Create project works appropriately', () => {
         expect(projects[0].admins[0].displayName).toStrictEqual(TEST_PROJECT.user.displayName);
     });
     test('project is not created when project is already configured', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Create().relax(TEST_PROJECT)).toEqual('Successfully created "foo"');
         expect(await new Create().relax(TEST_PROJECT)).toEqual('A project with name "foo" already exists.');
     });

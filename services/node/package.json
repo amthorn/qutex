@@ -8,7 +8,7 @@
     "test": "jest -i --coverage --testLocationInResults",
     "start:dev": "NODE_ENV=development nodemon",
     "build": "rimraf build && tsc",
-    "start": "yarn build && NODE_ENV=production && node build/index.js",
+    "start": "NODE_ENV=production && node build/index.js",
     "lint": "eslint .",
     "qa": "yarn lint && yarn test",
     "start:dev-bot": "yarn stop:ngrok; yarn start:ngrok && ts-node src/bin/startup.ts",

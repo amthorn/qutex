@@ -2,7 +2,8 @@ version: '3.3'
 services:
     node:
         build: 
-            context: ./services/node
+            args:
+                BUILD:
         command: start:dev
         tty: true
         env_file:
