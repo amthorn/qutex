@@ -13,3 +13,6 @@ services:
             - ./services/node/src:/app/src
             - ./services/node/tsconfig.json:/app/tsconfig.json
             - ./services/node/package.json:/app/package.json
+    mongo:
+        ports:
+            - 27017:27017
