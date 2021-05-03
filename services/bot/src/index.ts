@@ -25,6 +25,8 @@ APP.post('/', (request: express.Request, response: express.Response) => {
     response.send('OK');
 });
 
+APP.get('/healthcheck', (response: express.Response) => response.send('OK'));
+
 APP.listen(PORT, HOST, () => {
     if (process.env.NODE_ENV === 'production') {
         LOGGER.info('#########################################');

@@ -18,15 +18,17 @@ export class Parser {
 
         const destination: Destination = {};
 
-        // Email is not sent wfor attachmentActions. Thus use the personId as first
+        // Email is not sent for attachmentActions. Thus, use the personId as first
         // priority so that "card" commands and regular text commands will have the same 
         // information parsed and correlated into mongo
-        if (messageData.personId) {
+
+        // Use roomId as first priority so that group chats don't get pinged directly.
+        if (messageData.roomId) {
+            destination.roomId = messageData.roomId;
+        } else if (messageData.personId) {
             destination.toPersonId = messageData.personId;
         } else if (messageData.personEmail) {
             destination.toPersonEmail = messageData.personEmail;
-        } else {
-            destination.roomId = messageData.roomId;
         }
 
         let rawCommand = null;
@@ -34,6 +36,11 @@ export class Parser {
 
         if (messageData.text) {
             // Response send in text, not as response from a card
+
+            // In a group chat, the raw command can be prefixed with the display name of the bot
+            // where the tag is. Thus, remove this from the start of the raw command.
+            // This will only replace the first occurrence of the target string.
+            messageData.text = messageData.text.replace((await BOT.people.get('me')).displayName, '').trim();
             const rawSplit = messageData.text.split('|').map((i: string) => i.trim());
             rawCommand = rawSplit[0];
             const modifiers = rawSplit.splice(1).map((i: string) => i.toLowerCase());
