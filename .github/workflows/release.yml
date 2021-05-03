@@ -24,14 +24,9 @@ jobs:
         uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/bot install
-      - run: pwd
-      - run: ls -la
-      - run: ls -la services
-      - run: ls -la services/bot
       - name: Build and publish Docker Image to GitHub Packages Registry
         uses: VaultVulp/gp-docker-action@1.1.8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: qutex_bot
           extract-git-tag: true
-          build-context: ./services/bot
