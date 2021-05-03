@@ -35,7 +35,7 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
-      - run: 
+      - run: ./services/bot/bin/lint.sh
       - uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/bot lint

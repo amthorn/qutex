@@ -28,7 +28,6 @@ jobs:
         uses: VaultVulp/gp-docker-action@1.1.8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          # Docker Image name
           image-name: qutex_bot
           extract-git-tag: true
           build-context: ./services/bot
