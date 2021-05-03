@@ -19,6 +19,8 @@ export class Handler {
                 const initiative = await this.parse(request);
                 let result = null;
                 if (initiative.action) {
+                    LOGGER.info(`user: ${initiative.user.displayName}`);
+                    LOGGER.info(`command: ${initiative.rawCommand}`);
                     result = await initiative.action.relax(initiative);
                 } else {
                     result = 'Command not recognized';

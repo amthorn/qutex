@@ -1,6 +1,8 @@
 import { createLogger, format, transports } from 'winston';
+
+const LEVEL = process.env.NODE_ENV === 'production' ? 'info' : process.argv.indexOf('--silent') >= 0 ? 'silent' : 'debug';
 export const LOGGER = createLogger({
-    level: process.env.NODE_ENV === 'production' ? 'info' : process.argv.indexOf('--silent') >= 0 ? 'silent' : 'debug',
+    level: LEVEL,
     format: format.combine(
         format.colorize({ all: true }),
         format.timestamp(),
@@ -17,3 +19,4 @@ export const LOGGER = createLogger({
         new transports.File({ filename: 'combined.log' })
     ]
 });
+LOGGER.info(`LOG LEVEL: ${LEVEL}`);

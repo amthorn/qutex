@@ -2,6 +2,7 @@
 
 import axios, { AxiosResponse } from 'axios';
 import Webex from 'webex';
+import { LOGGER } from '../logger';
 
 const WEBEX = new Webex({
     credentials: process.env.WEBEX_ACCESS_TOKEN
@@ -22,7 +23,7 @@ declare interface Tunnel {
 async function getUrl (retries: number): Promise<string> {
     return axios.get('http://127.0.0.1:4040/api/tunnels').then((response: AxiosResponse) => {
         if (response.status !== SUCCESS_CODE) {
-            console.error(response.statusText);
+            LOGGER.error(response.statusText);
             if (retries > 0) {
                 return getUrl(retries - 1);
             } else {
@@ -35,17 +36,19 @@ async function getUrl (retries: number): Promise<string> {
 }
 
 getUrl(RETRY_COUNT).then((url: string) => {
-    console.log(`Creating webhook on: ${url}`);
+    LOGGER.info(`Creating webhook on: ${url}`);
     WEBEX.webhooks.list({ max: 10 }).then((hooks: IWebhook[]): void => {
         const promises = [];
+        LOGGER.info('Deleting hooks...');
         for (const hook of hooks) {
             promises.push(WEBEX.webhooks.remove({ id: hook.id }));
         }
+        LOGGER.info('Deleted hooks');
 
         Promise.all(promises).then(() => {
             WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'messages', event: 'created' }).then(() => {
                 WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'attachmentActions', event: 'created' }).then(() => {
-                    console.log('Success');
+                    LOGGER.info('Success');
                 });
             });
         });

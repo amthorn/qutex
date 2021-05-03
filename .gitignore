@@ -6,3 +6,5 @@ secrets.env
 result.json
 coverage/
 .DS_Store
+token
+mongoPassword

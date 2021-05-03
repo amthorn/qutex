@@ -20,7 +20,7 @@ jobs:
         if: steps.save-deps.outputs.cache-hit != 'true'
         uses: CultureHQ/actions-yarn@master
         with:
-          args: --cwd services/node install
+          args: --cwd services/bot install
   lint:
     needs: setup
     runs-on: ubuntu-latest
@@ -35,9 +35,10 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
+      - run: 
       - uses: CultureHQ/actions-yarn@master
         with:
-          args: --cwd services/node lint
+          args: --cwd services/bot lint
   test:
     needs: setup
     runs-on: ubuntu-latest
@@ -53,4 +54,4 @@ jobs:
           path: "**/node_modules"
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
       - run: sudo docker run --name mongo -d -p 27017:27017 mongo
-      - run: yarn --cwd services/node test --silent
+      - run: yarn --cwd services/bot test --silent

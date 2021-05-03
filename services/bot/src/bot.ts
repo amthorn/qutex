@@ -1,6 +1,8 @@
 import Webex from 'webex';
+import { GET } from './secrets';
+
 export const BOT = new Webex({
-    credentials: process.env.WEBEX_ACCESS_TOKEN,
+    credentials: GET('token'),
     logger: {
         level: 'debug'
     }

@@ -56,25 +56,12 @@
                         "type": "ActionSet",
                         "actions": [
                             {
-                                "type": "Action.ShowCard",
-                                "style": "positive",
-                                "title": "Show Queue",
-                                "card": {
-                                    "type": "AdaptiveCard",
-                                    "body": [
-                                        {
-                                            "type": "TextBlock",
-                                            "weight": "Bolder",
-                                            "text": "TODO:",
-                                            "wrap": true,
-                                            "color": "Light",
-                                            "size": "Large",
-                                            "spacing": "Small"
-                                        }
-                                    ],
-                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                                    "version": "1.2"
-                                }
+                                "type": "Action.Submit",
+                                "data": {
+                                    "action": "show queue"
+                                },
+                                "style": "default",
+                                "title": "Show Queue"
                             },
                             {
                                 "type": "Action.Submit",

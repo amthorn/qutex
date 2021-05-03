@@ -9,11 +9,11 @@ build-prod:
 .PHONY: up
 up:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
-	yarn --cwd services/node start:dev-bot
+	yarn --cwd services/bot start:dev-bot
 	
 .PHONY: logs
 logs:
-	docker-compose logs -f node
+	docker-compose logs -f bot
 
 .PHONY: up-prod
 up-prod:
@@ -26,9 +26,9 @@ down:
 
 .PHONY: test
 test:
-	yarn --cwd services/node test --silent
+	yarn --cwd services/bot test --silent
 
 .PHONY: lint
 lint:
-	yarn --cwd services/node lint
+	yarn --cwd services/bot lint
 	

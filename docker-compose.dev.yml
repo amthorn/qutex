@@ -1,18 +1,14 @@
 version: '3.3'
 services:
-    node:
-        build: 
-            args:
-                BUILD:
+    bot:
         command: start:dev
         tty: true
-        env_file:
-            - secrets.env
-            - settings.env
+        environment:
+            NODE_ENV: development
         volumes: 
-            - ./services/node/src:/app/src
-            - ./services/node/tsconfig.json:/app/tsconfig.json
-            - ./services/node/package.json:/app/package.json
+            - ./services/bot:/app
+            - ./services/bot/tsconfig.json:/app/tsconfig.json
+            - ./services/bot/package.json:/app/package.json
     mongo:
         ports:
             - 27017:27017

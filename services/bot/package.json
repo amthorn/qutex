@@ -6,13 +6,13 @@
   "types": "src/@types/index.d.ts",
   "scripts": {
     "test": "jest -i --coverage --testLocationInResults",
-    "start:dev": "NODE_ENV=development nodemon",
+    "start:dev": "nodemon",
     "build": "rimraf build && tsc",
-    "start": "NODE_ENV=production && node build/index.js",
+    "start": "node build/index.js",
     "lint": "eslint .",
     "qa": "yarn lint && yarn test",
-    "start:dev-bot": "yarn stop:ngrok; yarn start:ngrok && ts-node src/bin/startup.ts",
-    "start:ngrok": "ts-node src/bin/ngrok.ts &",
+    "start:dev-bot": "yarn stop:ngrok; yarn start:ngrok && ts-node src/startup/startup.ts",
+    "start:ngrok": "ts-node src/startup/ngrok.ts &",
     "stop:ngrok": "ps aux | grep ngrok | grep -v grep | grep -v yarn | awk '{print $2}' | xargs kill -9"
   },
   "keywords": [

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { GET } from '../src/secrets';
 
 beforeAll(async () => {
 
@@ -7,7 +8,8 @@ beforeAll(async () => {
       start it up using the test url and database name
       provided by the node runtime ENV
     */
-    await mongoose.connect('mongodb://localhost:27017', {
+
+    await mongoose.connect(`mongodb://root:${GET('mongoPassword')}@localhost:27017/qutex?authSource=admin`, {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true

@@ -1,13 +1,34 @@
 version: '3.3'
 services:
-    node:
-        image: qutex_node:latest
+    bot:
+        image: qutex_bot:latest
         build:
-            context: ./services/node
-            args:
-                BUILD: 1
+            context: ./services/bot
         ports:
             - 3000:3000
+        env_file:
+            - settings.env
+            - mongo.env
+        environment:
+            NODE_ENV: production
+        secrets:
+            - token
+            - mongoPassword
     mongo:
         image: mongo:4.4.5
         restart: always
+        env_file:
+            - mongo.env
+        environment:
+            MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongoPassword
+        volumes:
+            - mongo_volume:/data/db
+        secrets:
+            - mongoPassword
+secrets:
+    token:
+        file: token
+    mongoPassword:
+        file: mongoPassword
+volumes:
+    mongo_volume:

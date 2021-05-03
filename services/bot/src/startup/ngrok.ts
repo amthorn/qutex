@@ -1,5 +1,5 @@
 import ngrok from 'ngrok';
-
+import { LOGGER } from '../logger';
 ngrok.connect({ addr: 3000 }).then(function (url: string): void {
-    console.log(`URL is: ${url}`);
+    LOGGER.info(`URL is: ${url}`);
 });
