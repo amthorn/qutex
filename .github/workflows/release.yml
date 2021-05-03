@@ -30,3 +30,5 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: qutex_bot
           extract-git-tag: true
+          build-context: ./services/bot
+          dockerfile: ./services/bot/Dockerfile
