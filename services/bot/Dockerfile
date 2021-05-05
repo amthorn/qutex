@@ -9,12 +9,17 @@ COPY package.json package.json
 # Install dependency
 RUN yarn
 
+# Globally install migration library
+RUN npm install -g migrate-mongo
+
 # Copy in the source
 COPY src src
 COPY types types
+COPY migrations migrations
 COPY tsconfig.json tsconfig.json
 COPY .eslintrc .eslintrc
 COPY jest.config.js jest.config.js
+COPY migrate-mongo-config.js migrate-mongo-config.js
 
 RUN yarn build && rm -rf src types
 

@@ -14,6 +14,22 @@ services:
         secrets:
             - token
             - mongoPassword
+    migrate:
+        depends_on: 
+            - mongo
+        image: qutex_bot:latest
+        build:
+            context: ./services/bot
+        env_file:
+            - mongo.env
+        environment:
+            NODE_ENV: production
+        secrets:
+            - mongoPassword
+        entrypoint: migrate-mongo
+        command: up
+        # command: down  # undo-last
+        # command: status  # status
     mongo:
         image: mongo:4.4.5
         restart: always

@@ -13,7 +13,11 @@
     "qa": "yarn lint && yarn test",
     "start:dev-bot": "yarn stop:ngrok; yarn start:ngrok && ts-node src/startup/startup.ts",
     "start:ngrok": "ts-node src/startup/ngrok.ts &",
-    "stop:ngrok": "ps aux | grep ngrok | grep -v grep | grep -v yarn | awk '{print $2}' | xargs kill -9"
+    "stop:ngrok": "ps aux | grep ngrok | grep -v grep | grep -v yarn | awk '{print $2}' | xargs kill -9",
+    "migrate:create": "migrate-mongo new",
+    "migrate:status": "migrate-mongo status",
+    "migrate:undo-last": "migrate-mongo down",
+    "migrate": "migrate-mongo up"
   },
   "keywords": [
     "queue",
@@ -61,8 +65,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "moment": "^2.29.1",
+    "mongo-migrate": "^2.0.2",
     "mongoose": "^5.12.5",
-    "webex": "^1.119.4",
+    "webex": "1.119.4",
     "winston": "^3.3.3"
   }
 }

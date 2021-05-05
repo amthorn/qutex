@@ -3,6 +3,7 @@ import { PROJECT_MODEL } from '../../models/project';
 import { Auth } from '../../enum';
 import * as settings from '../../settings.json';
 import { REGISTRATION_MODEL } from '../../models/registration';
+import { LOGGER } from '../../logger';
 
 export class Create extends CommandBase implements ICommand {
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
@@ -11,10 +12,15 @@ export class Create extends CommandBase implements ICommand {
     public readonly DESCRIPTION: string = 'Creates a target project';
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public async relax (initiative: IInitiative): Promise<string> {
+        LOGGER.verbose('Creating project...');
         // Make sure project doesn't exist
+        initiative.data.name = initiative.data.name.toUpperCase();
         return PROJECT_MODEL.find({ name: initiative.data.name }).then(async (existent) => {
+            let message = '';
+            let level = 'verbose';
             if (existent.length > 0) {
-                return `A project with name "${initiative.data.name}" already exists.`;
+                message = `A project with name "${initiative.data.name}" already exists.`;
+                level = 'warning';
             } else {
                 // Always create project with one default queue
                 const queue = { name: settings.DEFAULT_QUEUE_NAME.toUpperCase(), members: [] };
@@ -37,8 +43,10 @@ export class Create extends CommandBase implements ICommand {
                     projectName: project.name
                 }).save();
 
-                return `Successfully created "${result.name}"`;
+                message = `Successfully created "${result.name}"`;
             }
+            LOGGER.log(level, message);
+            return message;
         });
     }
 }

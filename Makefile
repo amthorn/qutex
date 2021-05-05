@@ -22,7 +22,6 @@ up-prod:
 .PHONY: down
 down:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml down
-	docker volume rm qutex_mongo_volume
 
 .PHONY: test
 test:

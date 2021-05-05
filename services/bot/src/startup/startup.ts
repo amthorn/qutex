@@ -4,9 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import Webex from 'webex';
 import { LOGGER } from '../logger';
 
-const WEBEX = new Webex({
-    credentials: process.env.WEBEX_ACCESS_TOKEN
-});
+const WEBEX = new Webex({ credentials: process.env.WEBEX_ACCESS_TOKEN });
 
 const RETRY_COUNT = 5;
 const SUCCESS_CODE = 200;

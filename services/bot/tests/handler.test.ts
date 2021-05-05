@@ -49,7 +49,7 @@ describe('Handler is working', () => {
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
         expect(BOT.messages.create).toHaveBeenCalledWith({
             toPersonId: 'mockPersonId',
-            markdown: 'Command not recognized'
+            markdown: 'Command not recognized. Try using "help" for more information.'
         });
     });
 
@@ -81,7 +81,7 @@ describe('Handler is working', () => {
     });
 
     test('handler appropriately checks message contents and sends response for get status using room ID', async () => {
-        BOT.messages.get.mockReturnValueOnce({ text: 'get status', roomId: 'mockRoomId' });
+        BOT.messages.get.mockReturnValueOnce({ text: 'get status', roomId: 'mockRoomId', roomType: 'group' });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
@@ -95,13 +95,13 @@ describe('Handler is working', () => {
     });
 
     test('handler appropriately handles the case when data is parsed from command', async () => {
-        BOT.messages.get.mockReturnValueOnce({ text: 'create project foobar', roomId: 'mockRoomId' });
+        BOT.messages.get.mockReturnValueOnce({ text: 'create project foobar', roomId: 'mockRoomId', roomType: 'group' });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
         expect(BOT.messages.create).toHaveBeenCalledWith({
             roomId: 'mockRoomId',
-            markdown: 'Successfully created "foobar"'
+            markdown: 'Successfully created "FOOBAR"'
         });
     });
 });

@@ -14,7 +14,7 @@ export class RemoveMe extends CommandBase implements ICommand {
         const user = await CommandBase.addUser(initiative);
 
         // remove only the first instance
-        const queue = CommandBase.removeFromQueue(project.queues, project.currentQueue, user);
+        const queue = await CommandBase.removeFromQueue(project.queues, project.currentQueue, user);
         if (typeof queue === 'string') return String(queue);
 
         // Save the project

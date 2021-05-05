@@ -14,7 +14,7 @@ export class Parser {
         }
         
         const person = await BOT.people.get(request.body.data.personId);
-        const user = { id: request.body.data.personId, displayName: person.displayName };
+        const user: IPerson = { id: request.body.data.personId, displayName: person.displayName };
 
         const destination: Destination = {};
 
@@ -23,7 +23,7 @@ export class Parser {
         // information parsed and correlated into mongo
 
         // Use roomId as first priority so that group chats don't get pinged directly.
-        if (messageData.roomId) {
+        if (messageData.roomType === 'group') {
             destination.roomId = messageData.roomId;
         } else if (messageData.personId) {
             destination.toPersonId = messageData.personId;
@@ -59,6 +59,8 @@ export class Parser {
         // Determine the appropriate action
         for (const command of Commands) {
             const data = await command.check(rawCommand);
+            // TODO: data type should be easier to work with
+            if (data instanceof Object && data.action) delete data.action;
             if (data) {
                 commandData = {
                     action: command,
@@ -68,7 +70,7 @@ export class Parser {
             }
         }
         return {
-            rawCommand: rawCommand,
+            rawCommand: rawCommand instanceof Object ? rawCommand.action : rawCommand,
             destination: destination,
             debug: debug,
             user: user,

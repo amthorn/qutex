@@ -9,6 +9,7 @@ export class Delete extends CommandBase implements ICommand {
     public readonly DESCRIPTION: string = 'Deletes a target project';
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public async relax (initiative: IInitiative): Promise<string> {
+        initiative.data.name = initiative.data.name.toUpperCase();
         // Make sure project doesn't exist
         const existent = await PROJECT_MODEL.find({ name: initiative.data.name }).exec();
         if (existent.length > 0 && this.authorized(existent[0], initiative.user)) {

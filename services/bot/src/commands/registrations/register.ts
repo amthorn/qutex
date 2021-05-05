@@ -10,6 +10,7 @@ export class Operation extends CommandBase implements ICommand {
     public readonly DESCRIPTION: string = 'Registers the room to a target project by name';
     public readonly AUTHORIZATION: Auth = Auth.SUPER_ADMIN;
     public async relax (initiative: IInitiative): Promise<string> {
+        initiative.data.name = initiative.data.name.toUpperCase();
         // Get the project
         const targetProjects = await PROJECT_MODEL.find({ name: initiative.data.name }).exec();
         const existent = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();

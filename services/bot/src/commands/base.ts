@@ -4,6 +4,8 @@ import { REGISTRATION_MODEL } from '../models/registration';
 import { LOGGER } from '../logger';
 import { Auth } from '../enum';
 import moment from 'moment';
+
+const MILLISECONDS = 1000;
 export abstract class CommandBase {
     public COMMAND_BASE?: string;
     public COMMAND_TYPE?: CommandType;
@@ -42,21 +44,25 @@ export abstract class CommandBase {
         }
     }
     public static async addUser (initiative: IInitiative): Promise<PersonDocument> {
-        const people = await PERSON_MODEL.find({ destination: initiative.destination }).exec();
+        LOGGER.verbose('Adding user if they do not exist...');
+        const people = await PERSON_MODEL.find({ id: initiative.user.id }).exec();
         if (people.length > 0) {
             // person already exists, do nothing but return
+            LOGGER.verbose(`Person '${JSON.stringify(people[0], null, 2)}' already exists.`);
             return people[0];
         } else {
             // Person does not exist; add to database
+            LOGGER.verbose(`Person '${initiative.user.displayName}' does not exist; creating...`);
             return await PERSON_MODEL.build(initiative.user).save();
         }
     }
     public static addToQueue (queues: IQueue[], queue: string, user: IPerson): IQueue {
         const queueObject = queues.filter(i => i.name === queue)[0];
-        const atHeadTime = queueObject.members.length === 0 ? new Date() : null;
+        const now = new Date();
+        const atHeadTime = queueObject.members.length === 0 ? now : null;
         queueObject.members.push({
             person: user,
-            enqueuedAt: new Date(),
+            enqueuedAt: now,
             atHeadTime: atHeadTime
         });
         return queueObject;
@@ -75,19 +81,30 @@ export abstract class CommandBase {
             return `Queue "${queue.name}":\n\n${memberList.join('\n')}`;
         }
     }
-    public static removeFromQueue (queues: IQueue[], queue: string, user: IPerson): IQueue | string {
+    public static async removeFromQueue (queues: IQueue[], queue: string, user: IPerson): Promise<IQueue | string> {
         const queueObject = queues.filter(i => i.name === queue)[0];
         const idx = queueObject.members.findIndex(p => p.person.displayName === user.displayName);
         if (idx === -1) {
             return `User "${user.displayName}" was not found in queue "${queueObject.name}"`;
         } else {
-            queueObject.members.splice(idx, 1);
+            const removed = queueObject.members.splice(idx, 1)[0];
 
             // If we removed the person at the head of the queue and
             // there are more people in the queue
             if (queueObject.members.length > 0 && idx === 0) {
                 const head = queueObject.members[0];
                 head.atHeadTime = new Date();
+            }
+            // Update person object
+            if (!removed.atHeadTime) {
+                // Should never happen
+                LOGGER.error('Corrupted queue member');
+            } else {
+                const atHeadSeconds = Math.round((new Date().getTime() - removed.atHeadTime.getTime()) / MILLISECONDS);
+                LOGGER.verbose(`Increasing 'atHeadSeconds' of '${removed.person.displayName}' by ${atHeadSeconds}`);
+                LOGGER.verbose(removed.person);
+                LOGGER.verbose(await PERSON_MODEL.find({ id: removed.person.id }).exec());
+                await PERSON_MODEL.updateOne({ id: removed.person.id }, { $inc: { atHeadSeconds: atHeadSeconds } }).exec();
             }
             return queueObject;
         }
@@ -112,18 +129,17 @@ export abstract class CommandBase {
         LOGGER.debug(`Checking against regex w/ arguments: ${this.commandWithArgs}`);
         if (typeof command === 'object' && command.action.toLowerCase().match(new RegExp(this.command))) {
             LOGGER.debug(`Match against command w/o arguments: ${this.command}`);
-            delete command.action;
-            return command;
+            return Object.assign({}, command);
         } else if (typeof command !== 'object') {
             const template = new RegExp(this.commandWithArgs.replace(/\{(.*?):(.*?)\}/g, '(?<$1>$2)'));
             const result = command.toLowerCase().match(template);
             if (result !== null) {
-                LOGGER.debug(`Match against command w/ arguments: ${this.commandWithArgs}`);
-                LOGGER.debug(`Match result: ${JSON.stringify(result)}`);
+                LOGGER.verbose(`Match against command w/ arguments: ${this.commandWithArgs}`);
+                LOGGER.verbose(`Match result: ${JSON.stringify(result)}`);
                 return result.groups ? result.groups : true;
             }
         }
-        // should not be reachable
+        LOGGER.debug('No match');
         return null;
     }
     public authorized (project: ProjectDocument, person: IPerson): boolean {

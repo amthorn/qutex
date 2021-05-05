@@ -21,11 +21,14 @@ const PORT = 3000;
 const HANDLER = new Handler();
 
 APP.post('/', (request: express.Request, response: express.Response) => {
+    LOGGER.http('Received');
     HANDLER.handle(request);
     response.send('OK');
 });
 
-APP.get('/healthcheck', (_: express.Request, response: express.Response) => { response.send('OK'); });
+APP.get('/healthcheck', (_: express.Request, response: express.Response) => {
+    response.send('OK');
+});
 
 APP.listen(PORT, HOST, () => {
     if (process.env.NODE_ENV === 'production') {

@@ -5,7 +5,9 @@
     },
     "ignorePatterns": [
         "jest.config.js",
-        "coverage/*"
+        "coverage/*",
+        "migrate-mongo-config.js",
+        "migrations/*"
     ],
     "env": {
         "es6": true
