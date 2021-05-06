@@ -43,6 +43,9 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/set-timezone-action@v1.1
+        with:
+          timezoneLinux: "America/New_York"
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
         with:
