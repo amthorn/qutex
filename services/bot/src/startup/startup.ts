@@ -39,13 +39,20 @@ getUrl(RETRY_COUNT).then((url: string) => {
         const promises = [];
         LOGGER.info('Deleting hooks...');
         for (const hook of hooks) {
+            LOGGER.info(`Removing hook: ${hook.id}`);
             promises.push(WEBEX.webhooks.remove({ id: hook.id }));
         }
         LOGGER.info('Deleted hooks');
-
+        WEBEX.people.get('me').then((data: IWebexPerson) => {
+            LOGGER.info(`Me: ${JSON.stringify(data, null, 2)}`);
+        });
+        
         Promise.all(promises).then(() => {
-            WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'messages', event: 'created' }).then(() => {
-                WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'attachmentActions', event: 'created' }).then(() => {
+            LOGGER.info('Creating hooks...');
+            WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'messages', event: 'created' }).then((data: IWebhook) => {
+                LOGGER.info(`Created messages hook: ${JSON.stringify(data, null, 2)}`);
+                WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'attachmentActions', event: 'created' }).then((_data: IWebhook) => {
+                    LOGGER.info(`Created attachmentActions hook: ${JSON.stringify(_data, null, 2)}`);
                     LOGGER.info('Success');
                 });
             });

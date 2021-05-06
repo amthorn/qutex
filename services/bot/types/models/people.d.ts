@@ -8,4 +8,8 @@ interface IPerson {
      */
     id: Uuid;
     displayName: string;
+    atHeadSeconds: number;
+    atHeadCount: number;
+    inQueueSeconds: number;
+    inQueueCount: number;
 }

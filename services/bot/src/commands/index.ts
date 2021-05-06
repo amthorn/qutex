@@ -21,6 +21,7 @@ import { Get as GetQueue } from './queues/get';
 import { AddMe } from './queue/addMe';
 import { RemoveMe } from './queue/removeMe';
 import { Card as QueueCard } from './queue/card';
+import { HowLong } from './queue/howLong';
 
 import { Create as CreateAdmin } from './admins/create';
 import { List as ListAdmins } from './admins/list';
@@ -62,5 +63,6 @@ export default [
     // Queue
     new QueueCard(),
     new AddMe(),
-    new RemoveMe()
+    new RemoveMe(),
+    new HowLong()
 ] as ICommand[];

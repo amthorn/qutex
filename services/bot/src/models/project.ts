@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { SCHEMA as QUEUE_SCHEMA } from './queue';
-import { SCHEMA as PERSON_SCHEMA } from './person';
 
 interface ProjectModelInterface extends mongoose.Model<ProjectDocument> {
     build: (attr: IProject) => ProjectDocument;
@@ -9,14 +8,14 @@ interface ProjectModelInterface extends mongoose.Model<ProjectDocument> {
 export interface ProjectDocument extends mongoose.Document {
     name: string;
     currentQueue: string;
-    admins: IPerson[];
+    admins: IProjectAdmin[];
     queues: IQueue[];
 }
 
 const SCHEMA = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
     queues: [QUEUE_SCHEMA],
-    admins: { type: [PERSON_SCHEMA], required: true },
+    admins: { type: [{ id: String, displayName: String }], required: true },
     currentQueue: { type: String }
 });
 SCHEMA.statics.build = (attr: IProject): ProjectDocument => {

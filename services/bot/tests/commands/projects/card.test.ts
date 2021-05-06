@@ -16,7 +16,7 @@ const TEST_INITIATIVE = {
 };
 
 describe('Show card for projects works appropriately', () => {
-    test('card is sent appropriately when card commend is issued', async () => {
+    test('card is sent appropriately when card command is issued', async () => {
         // card function doesn't return anything
         expect(await new Card().relax(TEST_INITIATIVE)).toEqual('');
         // doesn't actually do anything like create a project, should just return the card

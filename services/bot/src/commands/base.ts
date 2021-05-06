@@ -53,7 +53,13 @@ export abstract class CommandBase {
         } else {
             // Person does not exist; add to database
             LOGGER.verbose(`Person '${initiative.user.displayName}' does not exist; creating...`);
-            return await PERSON_MODEL.build(initiative.user).save();
+            return await PERSON_MODEL.build({
+                ...initiative.user,
+                inQueueCount: 0,
+                inQueueSeconds: 0,
+                atHeadSeconds: 0,
+                atHeadCount: 0
+            }).save();
         }
     }
     public static addToQueue (queues: IQueue[], queue: string, user: IPerson): IQueue {
@@ -88,6 +94,7 @@ export abstract class CommandBase {
             return `User "${user.displayName}" was not found in queue "${queueObject.name}"`;
         } else {
             const removed = queueObject.members.splice(idx, 1)[0];
+            const now = new Date().getTime();
 
             // If we removed the person at the head of the queue and
             // there are more people in the queue
@@ -96,16 +103,25 @@ export abstract class CommandBase {
                 head.atHeadTime = new Date();
             }
             // Update person object
-            if (!removed.atHeadTime) {
-                // Should never happen
-                LOGGER.error('Corrupted queue member');
-            } else {
-                const atHeadSeconds = Math.round((new Date().getTime() - removed.atHeadTime.getTime()) / MILLISECONDS);
+            const updateData: Record<string, Record<string, number | string>> = { $inc: {} };
+
+            if (removed.atHeadTime) {
+                // They were at the head of the queue when they were popped off
+                const atHeadSeconds = Math.round((now - removed.atHeadTime.getTime()) / MILLISECONDS);
                 LOGGER.verbose(`Increasing 'atHeadSeconds' of '${removed.person.displayName}' by ${atHeadSeconds}`);
-                LOGGER.verbose(removed.person);
-                LOGGER.verbose(await PERSON_MODEL.find({ id: removed.person.id }).exec());
-                await PERSON_MODEL.updateOne({ id: removed.person.id }, { $inc: { atHeadSeconds: atHeadSeconds } }).exec();
+                updateData.$inc.atHeadSeconds = atHeadSeconds;
+                updateData.$inc.atHeadCount = 1;
             }
+
+            // Calculate normal queue values
+            const inQueueSeconds = Math.round((now - removed.enqueuedAt.getTime()) / MILLISECONDS);
+            updateData.$inc.inQueueSeconds = inQueueSeconds;
+            updateData.$inc.inQueueCount = 1;
+            LOGGER.verbose(`Increasing 'inQueueTime' of '${removed.person.displayName}' by ${inQueueSeconds}`);
+            LOGGER.verbose(removed.person);
+            LOGGER.verbose(await PERSON_MODEL.find({ id: removed.person.id }).exec());
+
+            await PERSON_MODEL.updateOne({ id: removed.person.id }, updateData).exec();
             return queueObject;
         }
     }
@@ -121,6 +137,11 @@ export abstract class CommandBase {
             // Return response
             return `Successfully added "${user.displayName}" as an admin.`;
         }
+    }
+    public static getTimeDelta (seconds: number): string {
+        const begin = 11;
+        const end = 8;
+        return new Date(seconds * MILLISECONDS).toISOString().substr(begin, end);
     }
 
     public async check (command: Record<string, string> | string): Promise<Record<string, string> | boolean | string | null | undefined> {

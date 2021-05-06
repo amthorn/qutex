@@ -34,7 +34,7 @@ export class Handler {
                     return await BOT.messages.create({ markdown: result, ...initiative.destination });
                 }
             } catch (e) {
-                LOGGER.error(e);
+                LOGGER.error(e.stack);
                 try {
                     await BOT.messages.create({
                         markdown: `An unexpected error occurred. Please open an issue by using the "help" command:\n${e}`,

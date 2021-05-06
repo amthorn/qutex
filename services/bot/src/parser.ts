@@ -14,7 +14,7 @@ export class Parser {
         }
         
         const person = await BOT.people.get(request.body.data.personId);
-        const user: IPerson = { id: request.body.data.personId, displayName: person.displayName };
+        const user: Record<string, string> = { id: request.body.data.personId, displayName: person.displayName };
 
         const destination: Destination = {};
 

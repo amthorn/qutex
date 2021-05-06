@@ -3,6 +3,9 @@ FROM node:15.14.0-alpine3.13
 # Set the working directory
 WORKDIR /app
 
+# Install curl for the healthckec
+RUN apk update && apk add curl
+
 # Copy in dependency file
 COPY package.json package.json
 

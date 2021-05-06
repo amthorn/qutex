@@ -2,6 +2,7 @@ version: '3.3'
 services:
     bot:
         image: qutex_bot:latest
+        restart: always
         build:
             context: ./services/bot
         ports:
@@ -14,6 +15,12 @@ services:
         secrets:
             - token
             - mongoPassword
+        healthcheck:  
+            test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
+            interval: 1m30s
+            timeout: 10s
+            retries: 3
+            start_period: 20s
     migrate:
         depends_on: 
             - mongo
