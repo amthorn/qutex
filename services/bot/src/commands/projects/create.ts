@@ -20,7 +20,7 @@ export class Create extends CommandBase implements ICommand {
             let level = 'verbose';
             if (existent.length > 0) {
                 message = `A project with name "${initiative.data.name}" already exists.`;
-                level = 'warning';
+                level = 'warn';
             } else {
                 // Always create project with one default queue
                 const queue = { name: settings.DEFAULT_QUEUE_NAME.toUpperCase(), members: [] };

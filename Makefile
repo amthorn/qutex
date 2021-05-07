@@ -25,7 +25,9 @@ down:
 
 .PHONY: test
 test:
-	yarn --cwd services/bot test --silent
+	export QUTEX_TESTING=true && \
+	yarn --cwd services/bot test --verbose && \
+	unset QUTEX_TESTING
 
 .PHONY: lint
 lint:

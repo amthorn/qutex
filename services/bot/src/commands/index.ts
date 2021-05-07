@@ -66,3 +66,8 @@ export default [
     new RemoveMe(),
     new HowLong()
 ] as ICommand[];
+
+// For testing
+export {
+    HelpCard
+};

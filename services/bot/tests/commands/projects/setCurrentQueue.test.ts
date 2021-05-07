@@ -25,7 +25,7 @@ describe('Setting the current queue on a project works appropriately', () => {
     test('Setting the current queue to nonexistent queue', async () => {
         const project = await CREATE_PROJECT();
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
-        await CREATE_QUEUE(project);
+        await CREATE_QUEUE(project, 'fooQName');
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
         const message = `Queue "${TEST_INITIATIVE.data.name}" does not exist on project "${TEST_PROJECT.name}"`;
         expect(await new SetCurrentQueue().relax(TEST_INITIATIVE)).toEqual(message);
@@ -34,7 +34,7 @@ describe('Setting the current queue on a project works appropriately', () => {
     test('Setting the current queue to the same queue it is already set as', async () => {
         const project = await CREATE_PROJECT();
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
-        await CREATE_QUEUE(project);
+        await CREATE_QUEUE(project, 'fooQName');
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
         expect(await new SetCurrentQueue().relax({
             ...TEST_INITIATIVE,
