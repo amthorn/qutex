@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 
-let level = 'debug';
+let level = 'verbose';
 
 if (process.env.NODE_ENV === 'production') {
     level = 'info';
