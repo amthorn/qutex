@@ -2,18 +2,11 @@ import { Card } from '../../../src/commands/projects/card';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import * as projectCard from '../../../src/cards/project.json';
 import { BOT } from '../../../src/bot';
+import { TEST_INITIATIVE } from '../../util';
 
-const TEST_INITIATIVE = {
-    data: { name: 'foo' },
-    rawCommand: 'project',
-    destination: { toPersonId: 'notReal' },
-    action: new Card(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.data = { name: 'foo' };
+TEST_INITIATIVE.rawCommand = 'project';
+TEST_INITIATIVE.action = new Card();
 
 describe('Show card for projects works appropriately', () => {
     test('card is sent appropriately when card command is issued', async () => {

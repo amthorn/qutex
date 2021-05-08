@@ -1,20 +1,12 @@
 import { SetCurrentQueue } from '../../../src/commands/projects/setCurrentQueue';
 import { List } from '../../../src/commands/queues/list';
 import { PROJECT_MODEL } from '../../../src/models/project';
-import { CREATE_PROJECT, CREATE_QUEUE, TEST_REGISTRATION, TEST_PROJECT } from '../../util';
+import { CREATE_PROJECT, CREATE_QUEUE, TEST_PROJECT, TEST_INITIATIVE } from '../../util';
 import * as settings from '../../../src/settings.json';
 
-const TEST_INITIATIVE = {
-    data: { name: 'QNAME' },
-    rawCommand: 'set queue to QNAME',
-    destination: TEST_REGISTRATION.destination,
-    action: new SetCurrentQueue(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.data = { name: 'QNAME' };
+TEST_INITIATIVE.rawCommand = 'set queue to QNAME';
+TEST_INITIATIVE.action = new SetCurrentQueue();
 
 describe('Setting the current queue on a project works appropriately', () => {
     test('Setting the current queue when no project exists fails', async () => {
