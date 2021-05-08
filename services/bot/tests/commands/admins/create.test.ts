@@ -6,7 +6,6 @@ import { TEST_INITIATIVE } from '../../util';
 TEST_INITIATIVE.data = { name: 'foo' };
 TEST_INITIATIVE.rawCommand = 'create project foo';
 TEST_INITIATIVE.action = new Create();
-
 describe('Create project works appropriately', () => {
     test('project is created when no projects are configured', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);

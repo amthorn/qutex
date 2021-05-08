@@ -2,19 +2,11 @@ import { Card } from '../../../src/commands/queue/card';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import * as queueCard from '../../../src/cards/queue.json';
 import { BOT } from '../../../src/bot';
-import { CREATE_PROJECT } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE } from '../../util';
 
-const TEST_INITIATIVE = {
-    data: { name: 'foo' },
-    rawCommand: 'project',
-    destination: { toPersonId: 'notReal' },
-    action: new Card(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.data = { name: 'foo' };
+TEST_INITIATIVE.rawCommand = 'project';
+TEST_INITIATIVE.action = new Card();
 
 describe('Show card for queue works appropriately', () => {
     test('card is sent appropriately when card command is issued', async () => {

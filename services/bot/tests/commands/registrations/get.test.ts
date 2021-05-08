@@ -1,19 +1,10 @@
 import { Get } from '../../../src/commands/registrations/get';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { REGISTRATION_MODEL } from '../../../src/models/registration';
-import { CREATE_PROJECT } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE } from '../../util';
 
-const TEST_INITIATIVE = {
-    data: {},
-    rawCommand: 'get registration',
-    destination: { toPersonId: 'notReal' },
-    action: new Get(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.rawCommand = 'get registration';
+TEST_INITIATIVE.action = new Get();
 
 describe('Getting registration works appropriately', () => {
 

@@ -3,7 +3,7 @@ import { Auth } from '../../enum';
 
 @CommandBase.authorized
 export class Delete extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
+    public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.DELETE;
     public readonly COMMAND_BASE: string = 'queue';
     public readonly ARGS: string = '{name:[\\w\\s]+}';

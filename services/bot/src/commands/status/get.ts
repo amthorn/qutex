@@ -3,7 +3,7 @@ import { Auth } from '../../enum';
 
 @CommandBase.authorized
 export class Get extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.NONE;
+    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.GET;
     public readonly COMMAND_BASE: string = 'status';
     public readonly DESCRIPTION: string = 'Get the status for Qutex';

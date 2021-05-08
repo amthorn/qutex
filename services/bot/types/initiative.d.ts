@@ -25,5 +25,6 @@ interface IInitiative {
      ***********************************************************************************/
     data: Record<string, string>;
     debug: boolean;
+    mentions: string[];
 
 }

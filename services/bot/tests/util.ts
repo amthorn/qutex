@@ -19,6 +19,18 @@ export const TEST_OTHER_USER: IPerson = {
     inQueueSeconds: 0,
     inQueueCount: 0
 };
+export const TEST_INITIATIVE: IInitiative = {
+    data: {},
+    rawCommand: '',
+    destination: { toPersonId: 'notReal' },
+    action: null,
+    debug: false,
+    user: {
+        id: 'fooId',
+        displayName: 'foo display name'
+    },
+    mentions: []
+};
 export const TEST_QUEUE_MEMBER: IQueueMember = { person: TEST_OTHER_USER, enqueuedAt: new Date('2020-01-01'), atHeadTime: null };
 
 export const CREATE_PROJECT = async (

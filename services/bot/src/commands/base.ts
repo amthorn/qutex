@@ -13,11 +13,6 @@ export abstract class CommandBase {
     public ARGS?: string;
     public DESCRIPTION?: string;
 
-    /**
-     * This defines who can run the command
-     */
-    public AUTHORIZATION?: Auth;
-
     public get commandWithArgs (): string {
         return this.ARGS ? [this.command, this.ARGS].join(' ') : this.command;
     }
@@ -40,10 +35,18 @@ export abstract class CommandBase {
     }
     public static async getProject (initiative: IInitiative): Promise<ProjectDocument | string> {
         const registrations = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
-        if (registrations.length > 0) {
-            const project = await PROJECT_MODEL.find({ name: registrations[0].projectName }).exec();
-            if (project.length > 0) {
-                return project[0];
+        // This is a special case for project delete where a registration is not needed.
+        if (initiative.action.COMMAND_BASE === 'project' && initiative.action.COMMAND_TYPE === CommandType.DELETE) {
+            const projects = await PROJECT_MODEL.find({ name: initiative.data.name }).exec();
+            if (projects.length > 0) {
+                return projects[0];
+            } else {
+                return `A project with name "${initiative.data.name}" does not exist.`;
+            }
+        } else if (registrations.length > 0) {
+            const projects = await PROJECT_MODEL.find({ name: registrations[0].projectName }).exec();
+            if (projects.length > 0) {
+                return projects[0];
             } else {
                 throw Error('This destination is registered to a project that does not exist.');
             }
@@ -157,28 +160,31 @@ export abstract class CommandBase {
             private readonly _relax = new cls().relax;
             public async relax (initiative: IInitiative): Promise<string> {
                 LOGGER.debug(`Authorizing: "${initiative.user.id}"`);
-                LOGGER.debug(`Authorization Restriction: ${cls.AUTHORIZATION}`);
+                LOGGER.debug(`Authorization Restriction: ${this.AUTHORIZATION}`);
                 let isAuthorized = false;
 
-                if (cls.AUTHORIZATION === Auth.NONE) {
+                if (this.AUTHORIZATION === Auth.NONE) {
                     // Everyone is authorized
                     isAuthorized = true;
-                } else if (cls.AUTHORIZATION === Auth.PROJECT_ADMIN) {
+                } else if (this.AUTHORIZATION === Auth.PROJECT_ADMIN) {
                     // get project
                     const project = await CommandBase.getProject(initiative);
                     if (typeof project !== 'string') {
                         LOGGER.debug(`Project Admins: ${project.admins}`);
                         isAuthorized = project.admins.map(i => i.id).includes(initiative.user.id);
                     } else {
-                        // If return value is string, then the project wasn't found.
-                        return `A project with name "${initiative.data.name}" does not exist.`;
+                        // If return value is string, then the destination isn't registered
+                        return project;
                     }
-                } else if (cls.AUTHORIZATION === Auth.SUPER_ADMIN) {
+                } else if (this.AUTHORIZATION === Auth.SUPER_ADMIN) {
                     isAuthorized = cls.SUPER_ADMINS.includes(initiative.user.id);
                 }
+
                 if (isAuthorized) {
+                    LOGGER.verbose('Authorized');
                     return await this._relax(initiative);
                 } else {
+                    LOGGER.verbose('Unauthorized');
                     // deny by default
                     return 'You are not authorized to perform that action. Please ask an administrator.';
                 }

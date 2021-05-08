@@ -5,7 +5,7 @@ import { REGISTRATION_MODEL } from '../../models/registration';
 
 @CommandBase.authorized
 export class Operation extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.SUPER_ADMIN;
+    public readonly AUTHORIZATION: Auth = Auth.SUPER_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'register to project';
     public readonly ARGS: string = '{name:[\\w\\s]+}';

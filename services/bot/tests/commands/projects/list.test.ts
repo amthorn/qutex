@@ -1,18 +1,11 @@
 import { List } from '../../../src/commands/projects/list';
 import { Create } from '../../../src/commands/projects/create';
 import { PROJECT_MODEL } from '../../../src/models/project';
+import { TEST_INITIATIVE } from '../../util';
 
-const TEST_INITIATIVE = {
-    data: { name: 'foo' },
-    rawCommand: 'create project foo',
-    destination: { toPersonId: 'notReal' },
-    action: new Create(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.data = { name: 'foo' };
+TEST_INITIATIVE.rawCommand = 'create project foo';
+TEST_INITIATIVE.action = new Create();
 
 describe('List project works appropriately', () => {
     test('projects are listed when no projects exist', async () => {

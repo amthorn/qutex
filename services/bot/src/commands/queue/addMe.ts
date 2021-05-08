@@ -3,7 +3,7 @@ import { Auth } from '../../enum';
 
 @CommandBase.authorized
 export class AddMe extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.NONE;
+    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'add me';
     public readonly DESCRIPTION: string = 'Adds the user to the current queue';

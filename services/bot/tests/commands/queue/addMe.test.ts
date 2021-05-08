@@ -2,20 +2,11 @@ import { AddMe } from '../../../src/commands/queue/addMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_PROJECT } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT } from '../../util';
 
 const STRICT_DATE = 1620279788056;
-const TEST_INITIATIVE = {
-    data: {},
-    rawCommand: 'add me',
-    destination: { toPersonId: 'notReal' },
-    action: new AddMe(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.rawCommand = 'add me';
+TEST_INITIATIVE.action = new AddMe();
 
 describe('Adding me to a queue works appropriately', () => {
     beforeAll(() => {

@@ -44,15 +44,15 @@ getUrl(RETRY_COUNT).then((url: string) => {
         }
         LOGGER.info('Deleted hooks');
         WEBEX.people.get('me').then((data: IWebexPerson) => {
-            LOGGER.info(`Me: ${JSON.stringify(data, null, 2)}`);
+            LOGGER.info(`Me: ${JSON.stringify(data.emails, null, 2)}`);
         });
         
         Promise.all(promises).then(() => {
             LOGGER.info('Creating hooks...');
             WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'messages', event: 'created' }).then((data: IWebhook) => {
-                LOGGER.info(`Created messages hook: ${JSON.stringify(data, null, 2)}`);
+                LOGGER.info(`Created messages hook: ${JSON.stringify(data.targetUrl, null, 2)}`);
                 WEBEX.webhooks.create({ targetUrl: url, name: url, resource: 'attachmentActions', event: 'created' }).then((_data: IWebhook) => {
-                    LOGGER.info(`Created attachmentActions hook: ${JSON.stringify(_data, null, 2)}`);
+                    LOGGER.info(`Created attachmentActions hook: ${JSON.stringify(_data.targetUrl, null, 2)}`);
                     LOGGER.info('Success');
                 });
             });

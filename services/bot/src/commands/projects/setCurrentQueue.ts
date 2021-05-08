@@ -3,7 +3,7 @@ import { Auth } from '../../enum';
 
 @CommandBase.authorized
 export class SetCurrentQueue extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.NONE;
+    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'set (current )?queue to';
     public readonly ARGS: string = '{name:[\\w\\s]+}';

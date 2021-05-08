@@ -3,18 +3,11 @@ import { PROJECT_MODEL } from '../../../src/models/project';
 import * as registrationCard from '../../../src/cards/registration.json';
 import { BOT } from '../../../src/bot';
 import { REGISTRATION_MODEL } from '../../../src/models/registration';
+import { TEST_INITIATIVE } from '../../util';
 
-const TEST_INITIATIVE = {
-    data: { name: 'foo' },
-    rawCommand: 'registration',
-    destination: { toPersonId: 'notReal' },
-    action: new Card(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.data = { name: 'foo' };
+TEST_INITIATIVE.rawCommand = 'registration';
+TEST_INITIATIVE.action = new Card();
 
 describe('Show card for registration works appropriately', () => {
     test('card is sent appropriately when card command is issued', async () => {

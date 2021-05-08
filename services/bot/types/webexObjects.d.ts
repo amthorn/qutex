@@ -1,9 +1,11 @@
 interface IWebhook {
     id: string;
+    targetUrl: string;
 }
 
 interface IWebexPerson {
     id: string;
+    emails: string[];
 }
 
 enum RoomType {

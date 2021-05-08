@@ -4,7 +4,7 @@ import { Auth } from '../../enum';
 
 @CommandBase.authorized
 export class List extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.NONE;
+    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.LIST;
     public readonly COMMAND_BASE: string = 'admins';
     public readonly DESCRIPTION: string = 'Lists all project admins';

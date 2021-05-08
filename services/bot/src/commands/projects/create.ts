@@ -7,7 +7,7 @@ import { LOGGER } from '../../logger';
 
 @CommandBase.authorized
 export class Create extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.NONE;
+    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
     public readonly COMMAND_BASE: string = 'project';
     public readonly ARGS: string = '{name:[\\w\\s]+}';

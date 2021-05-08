@@ -5,7 +5,7 @@ import { PERSON_MODEL, PersonDocument } from '../../models/person';
 
 @CommandBase.authorized
 export class HowLong extends CommandBase implements ICommand {
-    public static readonly AUTHORIZATION: Auth = Auth.NONE;
+    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'how long';
     public readonly DESCRIPTION: string = 'Get the estimated time remaining until user is at head of queue';

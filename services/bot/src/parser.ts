@@ -3,8 +3,13 @@ import { BOT } from './bot';
 import Commands from './commands';
 import { LOGGER } from './logger';
 
+
+
 export class Parser {
     public async parse (request: Request): Promise<IInitiative> {
+        // TODO: improve this by pulling out of this function
+        // It should only happen once. Here it will be called on every request.
+        const me = await BOT.people.get('me');
         const messageId = request.body.data.id;
         let messageData = null;
         if (request.body.resource == 'attachmentActions') {
@@ -17,6 +22,7 @@ export class Parser {
         const user: Record<string, string> = { id: request.body.data.personId, displayName: person.displayName };
 
         const destination: Destination = {};
+        const mentions: string[] = messageData.mentionedPeople || [];
 
         // Email is not sent for attachmentActions. Thus, use the personId as first
         // priority so that "card" commands and regular text commands will have the same 
@@ -75,7 +81,8 @@ export class Parser {
             debug: debug,
             user: user,
             data: commandData.data,
-            action: commandData.action
+            action: commandData.action,
+            mentions: mentions.filter(i => i !== me.id)
         };
 
     }

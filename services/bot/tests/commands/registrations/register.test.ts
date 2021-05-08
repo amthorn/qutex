@@ -1,19 +1,12 @@
 import { Operation } from '../../../src/commands/registrations/register';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { REGISTRATION_MODEL } from '../../../src/models/registration';
-import { CREATE_PROJECT } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, PROJECT_NAME } from '../../util';
 
-const TEST_INITIATIVE = {
-    data: { name: 'PNAME' },
-    rawCommand: 'register to project',
-    destination: { toPersonId: 'notReal' },
-    action: new Operation(),
-    debug: false,
-    user: {
-        id: 'superAdminId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.data = { name: PROJECT_NAME };
+TEST_INITIATIVE.rawCommand = 'register to project';
+TEST_INITIATIVE.action = new Operation();
+TEST_INITIATIVE.user.id = 'superAdminId';
 
 describe('Getting registration works appropriately', () => {
 

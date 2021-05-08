@@ -1,18 +1,11 @@
-import { CREATE_PROJECT } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE } from '../../util';
 import { Delete } from '../../../src/commands/projects/delete';
 import { PROJECT_MODEL } from '../../../src/models/project';
 
-const TEST_INITIATIVE = {
-    data: { name: 'PNAME' },
-    rawCommand: 'delete project PNAME',
-    destination: { toPersonId: 'notReal' },
-    action: new Delete(),
-    debug: false,
-    user: {
-        id: 'adminId',
-        displayName: 'foo display name'
-    }
-};
+TEST_INITIATIVE.data = { name: 'PNAME' };
+TEST_INITIATIVE.rawCommand = 'delete project PNAME';
+TEST_INITIATIVE.action = new Delete();
+TEST_INITIATIVE.user.id = 'adminId';
 
 describe('Delete project works appropriately', () => {
     test('project is not deleted when no projects are configured', async () => {
