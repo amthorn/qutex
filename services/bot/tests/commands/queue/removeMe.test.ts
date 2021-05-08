@@ -3,24 +3,16 @@ import { RemoveMe } from '../../../src/commands/queue/removeMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_QUEUE_MEMBER, TEST_OTHER_USER } from '../../util';
+import { CREATE_PROJECT, TEST_QUEUE_MEMBER, TEST_OTHER_USER, TEST_INITIATIVE } from '../../util';
 
 const STRICT_DATE = 1620279788056;
 const TWO_SECONDS = 2000;
 const FOUR_SECONDS = 4000;
 const FIVE_SECONDS = 5000;
 const TEN_SECONDS = 10000;
-const TEST_INITIATIVE: IInitiative = {
-    data: {},
-    rawCommand: 'remove me',
-    destination: { toPersonId: 'notReal' },
-    action: new RemoveMe(),
-    debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    }
-};
+
+TEST_INITIATIVE.rawCommand = 'remove me';
+TEST_INITIATIVE.action = new RemoveMe();
 
 describe('Removing me from a queue works appropriately', () => {
     beforeAll(() => {
