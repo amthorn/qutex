@@ -3,12 +3,15 @@ import { ProjectDocument, PROJECT_MODEL } from '../src/models/project';
 import * as settings from '../src/settings.json';
 
 export const PROJECT_NAME = 'PNAME';
+export const PROJECT_ADMIN = { id: 'adminId', displayName: 'ANAME' };
+export const STANDARD_USER = { id: 'standardId', displayName: 'STANDARDNAME' };
+export const SUPER_ADMIN = { id: 'superAdminId', displayName: 'SUPERANAME' };
 export const TEST_QUEUE: IQueue = { name: settings.DEFAULT_QUEUE_NAME, members: [] };
 export const TEST_REGISTRATION: IRegistration = { destination: { toPersonId: 'notReal' }, projectName: PROJECT_NAME };
 export const TEST_PROJECT: IProject = {
     name: PROJECT_NAME,
     queues: [TEST_QUEUE],
-    admins: [{ id: 'adminId', displayName: 'ANAME' }],
+    admins: [PROJECT_ADMIN],
     currentQueue: settings.DEFAULT_QUEUE_NAME
 };
 export const TEST_OTHER_USER: IPerson = {
@@ -25,10 +28,7 @@ export const TEST_INITIATIVE: IInitiative = {
     destination: { toPersonId: 'notReal' },
     action: null,
     debug: false,
-    user: {
-        id: 'fooId',
-        displayName: 'foo display name'
-    },
+    user: STANDARD_USER,
     mentions: []
 };
 export const TEST_QUEUE_MEMBER: IQueueMember = { person: TEST_OTHER_USER, enqueuedAt: new Date('2020-01-01'), atHeadTime: null };

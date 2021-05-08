@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 import { GET } from '../src/secrets';
+import { SUPER_ADMIN } from './util';
 
 // Mock ENV vars
 process.env.VERSION = '99.99.99';
 process.env.RELEASE_DATE = 'Today';
 process.env.AUTHOR_NAME = 'My Author Name';
 process.env.AUTHOR_EMAIL = 'email@email.email';
-process.env.SUPER_ADMINS = '["superAdminId"]';
+process.env.SUPER_ADMINS = `["${SUPER_ADMIN.id}"]`;
 
 beforeAll(async () => {
 

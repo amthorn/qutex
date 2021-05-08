@@ -3,7 +3,7 @@ import { RemoveMe } from '../../../src/commands/queue/removeMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_QUEUE_MEMBER, TEST_OTHER_USER, TEST_INITIATIVE } from '../../util';
+import { CREATE_PROJECT, TEST_QUEUE_MEMBER, TEST_OTHER_USER, TEST_INITIATIVE, STANDARD_USER } from '../../util';
 
 const STRICT_DATE = 1620279788056;
 const TWO_SECONDS = 2000;
@@ -32,7 +32,7 @@ describe('Removing me from a queue works appropriately', () => {
         const project = await CREATE_PROJECT();
         const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
         expect(queue.members).toHaveLength(0);
-        expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual('User "foo display name" was not found in queue "DEFAULT"');
+        expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`User "${STANDARD_USER.displayName}" was not found in queue "DEFAULT"`);
         expect(queue.members).toHaveLength(0);
     });
 
@@ -45,7 +45,7 @@ describe('Removing me from a queue works appropriately', () => {
         const newProject = await PROJECT_MODEL.find({ name: project.name }).exec();
         const newQueue = newProject[0].queues.filter(i => i.name === newProject[0].currentQueue)[0];
         expect(newQueue.members).toHaveLength(1);
-        expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual('User "foo display name" was not found in queue "DEFAULT"');
+        expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`User "${STANDARD_USER.displayName}" was not found in queue "DEFAULT"`);
         expect(newQueue.members).toHaveLength(1);
 
     });
@@ -56,7 +56,7 @@ describe('Removing me from a queue works appropriately', () => {
             MockDate.set(STRICT_DATE);
             project = await CREATE_PROJECT();
             expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-                'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)'
+                `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
             );
 
             project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
@@ -73,15 +73,15 @@ describe('Removing me from a queue works appropriately', () => {
         });
         test('validate', async () => {
             MockDate.set(STRICT_DATE + FIVE_SECONDS);
-            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual('Successfully removed "foo display name" from queue "DEFAULT".\n\nQueue "DEFAULT" is empty');
+            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT" is empty`);
 
             // Verify
             const person = (await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec())[0];
             expect(person).toEqual(expect.objectContaining({
                 atHeadCount: 1,
                 atHeadSeconds: 5,
-                displayName: 'foo display name',
-                id: 'fooId',
+                displayName: STANDARD_USER.displayName,
+                id: STANDARD_USER.id,
                 inQueueCount: 1,
                 inQueueSeconds: 5
             }));
@@ -98,11 +98,11 @@ describe('Removing me from a queue works appropriately', () => {
             MockDate.set(STRICT_DATE);
             project = await CREATE_PROJECT();
             expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-                'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)'
+                `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
             );
             MockDate.set(STRICT_DATE + TWO_SECONDS);
             expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-                'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)\n2. foo display name (May 6, 2021 01:43:10 AM EST)'
+                `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n2. ${STANDARD_USER.displayName} (May 6, 2021 01:43:10 AM EST)`
             );
 
             project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
@@ -124,15 +124,15 @@ describe('Removing me from a queue works appropriately', () => {
         });
         test('validate', async () => {
             MockDate.set(STRICT_DATE + FIVE_SECONDS);
-            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual('Successfully removed "foo display name" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:10 AM EST)\n\nfoo display name, you\'re at the front of the queue!');
+            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:10 AM EST)\n\n${STANDARD_USER.displayName}, you\'re at the front of the queue!`);
 
             // Verify
             const person = (await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec())[0];
             expect(person).toEqual(expect.objectContaining({
                 atHeadCount: 1,
                 atHeadSeconds: 5,
-                displayName: 'foo display name',
-                id: 'fooId',
+                displayName: STANDARD_USER.displayName,
+                id: STANDARD_USER.id,
                 inQueueCount: 1,
                 inQueueSeconds: 5
             }));
@@ -162,11 +162,11 @@ describe('Removing me from a queue works appropriately', () => {
             );
             MockDate.set(STRICT_DATE + TWO_SECONDS);
             expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-                'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. foo display name (May 6, 2021 01:43:10 AM EST)'
+                `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. ${STANDARD_USER.displayName} (May 6, 2021 01:43:10 AM EST)`
             );
             MockDate.set(STRICT_DATE + FOUR_SECONDS);
             expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-                'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. foo display name (May 6, 2021 01:43:10 AM EST)\n3. foo display name (May 6, 2021 01:43:12 AM EST)'
+                `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. ${STANDARD_USER.displayName} (May 6, 2021 01:43:10 AM EST)\n3. ${STANDARD_USER.displayName} (May 6, 2021 01:43:12 AM EST)`
             );
 
             project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
@@ -196,7 +196,7 @@ describe('Removing me from a queue works appropriately', () => {
         });
         test('validate', async () => {
             MockDate.set(STRICT_DATE + TEN_SECONDS);
-            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual('Successfully removed "foo display name" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. foo display name (May 6, 2021 01:43:12 AM EST)\n\nother user name, you\'re at the front of the queue!');
+            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. ${STANDARD_USER.displayName} (May 6, 2021 01:43:12 AM EST)\n\nother user name, you\'re at the front of the queue!`);
 
             // Verify
             const person = (await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec())[0];
@@ -204,8 +204,8 @@ describe('Removing me from a queue works appropriately', () => {
                 // Was never at head so values are zero
                 atHeadCount: 0,
                 atHeadSeconds: 0,
-                displayName: 'foo display name',
-                id: 'fooId',
+                displayName: STANDARD_USER.displayName,
+                id: STANDARD_USER.id,
                 inQueueCount: 1,
                 inQueueSeconds: 8 // (8 seconds total in queue = -10 + 2)
             }));
@@ -250,14 +250,14 @@ describe('Removing me from a queue works appropriately', () => {
         const testInitiativeRoom = TEST_INITIATIVE;
         beforeAll(async () => {
             MockDate.set(STRICT_DATE);
-            testInitiativeRoom.destination = { roomId: 'fooId' };
+            testInitiativeRoom.destination = { roomId: STANDARD_USER.id };
             project = await CREATE_PROJECT({ destination: testInitiativeRoom.destination, registration: true });
             expect(await new AddMe().relax(testInitiativeRoom)).toEqual(
-                'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)'
+                `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
             );
             MockDate.set(STRICT_DATE + TWO_SECONDS);
             expect(await new AddMe().relax({ ...testInitiativeRoom, user: TEST_OTHER_USER })).toEqual(
-                'Successfully added "other user name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)\n2. other user name (May 6, 2021 01:43:10 AM EST)'
+                `Successfully added "other user name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n2. other user name (May 6, 2021 01:43:10 AM EST)`
             );
 
             project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
@@ -282,7 +282,7 @@ describe('Removing me from a queue works appropriately', () => {
         });
         test('validate', async () => {
             MockDate.set(STRICT_DATE + FIVE_SECONDS);
-            expect(await new RemoveMe().relax(testInitiativeRoom)).toEqual('Successfully removed "foo display name" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:10 AM EST)\n\n<@personId:otherUser|other user name>, you\'re at the front of the queue!');
+            expect(await new RemoveMe().relax(testInitiativeRoom)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:10 AM EST)\n\n<@personId:otherUser|other user name>, you\'re at the front of the queue!`);
         });
     });
     test('removes me successfully to non-default queue and validates side effects when project exists', async () => {

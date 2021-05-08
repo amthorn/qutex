@@ -2,7 +2,7 @@ import { AddMe } from '../../../src/commands/queue/addMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER } from '../../util';
 
 const STRICT_DATE = 1620279788056;
 TEST_INITIATIVE.rawCommand = 'add me';
@@ -29,7 +29,7 @@ describe('Adding me to a queue works appropriately', () => {
         expect(await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec()).toHaveLength(0);
 
         expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-            'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)'
+            `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
         );
         // validate
         const people = await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec();
@@ -63,10 +63,10 @@ describe('Adding me to a queue works appropriately', () => {
         expect(await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec()).toHaveLength(0);
 
         expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-            'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)'
+            `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
         );
         expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
-            'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)\n2. foo display name (May 6, 2021 01:43:08 AM EST)'
+            `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n2. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
         );
         // validate
         const people = await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec();
