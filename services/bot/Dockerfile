@@ -12,9 +12,6 @@ COPY package.json package.json
 # Install dependency
 RUN yarn
 
-# Globally install migration library
-RUN npm install -g migrate-mongo
-
 # Copy in the source
 COPY src src
 COPY types types

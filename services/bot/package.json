@@ -66,8 +66,8 @@
   },
   "dependencies": {
     "express": "^4.16.4",
+    "migrate-mongo": "^8.2.2",
     "moment": "^2.29.1",
-    "mongo-migrate": "^2.0.2",
     "mongoose": "^5.12.5",
     "webex": "1.119.4",
     "winston": "^3.3.3"

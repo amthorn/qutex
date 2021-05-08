@@ -33,7 +33,7 @@ services:
             NODE_ENV: production
         secrets:
             - mongoPassword
-        entrypoint: migrate-mongo
+        entrypoint: node_modules/migrate-mongo/bin/migrate-mongo.js
         command: up
         # command: down  # undo-last
         # command: status  # status
