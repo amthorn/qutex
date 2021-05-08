@@ -21,19 +21,30 @@ export const TEST_OTHER_USER: IPerson = {
 };
 export const TEST_QUEUE_MEMBER: IQueueMember = { person: TEST_OTHER_USER, enqueuedAt: new Date('2020-01-01'), atHeadTime: null };
 
-export const CREATE_PROJECT = async (destination?: Destination): Promise<ProjectDocument> => {
+export const CREATE_PROJECT = async (
+    {
+        name = PROJECT_NAME,
+        destination,
+        registration = true
+    }: {
+        name?: string;
+        destination?: Destination;
+        registration?: boolean;
+    } = {}
+): Promise<ProjectDocument> => {
     // Create project
-    expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
-    const project = await PROJECT_MODEL.build(TEST_PROJECT).save();
-    expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
+    expect(await PROJECT_MODEL.find({ name: name }).exec()).toHaveLength(0);
+    const project = await PROJECT_MODEL.build({ ...TEST_PROJECT, name: name }).save();
+    expect(await PROJECT_MODEL.find({ name: name }).exec()).toHaveLength(1);
 
     // Set registration for project
-    expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(0);
-    if (destination) {
-        TEST_REGISTRATION.destination = destination;
+    if (registration) {
+        expect(await REGISTRATION_MODEL.find({ projectName: name }).exec()).toHaveLength(0);
+        TEST_REGISTRATION.projectName = name;
+        TEST_REGISTRATION.destination = destination ?? TEST_REGISTRATION.destination;
+        await REGISTRATION_MODEL.build(TEST_REGISTRATION).save();
+        expect(await REGISTRATION_MODEL.find({ projectName: name }).exec()).toHaveLength(1);
     }
-    await REGISTRATION_MODEL.build(TEST_REGISTRATION).save();
-    expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(1);
 
     return project;
 };

@@ -3,12 +3,13 @@ import { PROJECT_MODEL } from '../../models/project';
 import { Auth } from '../../enum';
 import { REGISTRATION_MODEL } from '../../models/registration';
 
+@CommandBase.authorized
 export class Operation extends CommandBase implements ICommand {
+    public static readonly AUTHORIZATION: Auth = Auth.SUPER_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'register to project';
     public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Registers the room to a target project by name';
-    public readonly AUTHORIZATION: Auth = Auth.SUPER_ADMIN;
     public async relax (initiative: IInitiative): Promise<string> {
         initiative.data.name = initiative.data.name.toUpperCase();
         // Get the project
@@ -23,13 +24,19 @@ export class Operation extends CommandBase implements ICommand {
 
         if (existent.length > 0) {
             const existentRegistration = existent[0];
+            let msg = '';
 
             // Destination is already registered. handle appropriately
-            // TODO: Enable a settings to ask for confirmation or even error outright.
-            // Perhaps a "strictError = true" ??
+            if (existentRegistration.projectName !== targetProject.name) {
+                msg = `This destination is already registered to "${existentRegistration.projectName}". Changed registration to "${targetProject.name}"`;
+            } else {
+                // TODO: Enable a settings to ask for confirmation or even error outright.
+                // Perhaps a "strictError = true" ??
+                msg = `This destination is already registered to "${existentRegistration.projectName}". Reregistered to "${targetProject.name}".`;
+            }
             existentRegistration.projectName = targetProject.name;
             await existentRegistration.save();
-            return `This destination is already registered to "${existentRegistration.projectName}". Reregistered to "${targetProject.name}".`;
+            return msg;
         } else {
             // destination not registered
             await REGISTRATION_MODEL.build({ destination: initiative.destination, projectName: initiative.data.name }).save();

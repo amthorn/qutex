@@ -3,10 +3,10 @@ import { PROJECT_MODEL } from '../../models/project';
 import { Auth } from '../../enum';
 
 export class List extends CommandBase implements ICommand {
+    public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.LIST;
     public readonly COMMAND_BASE: string = 'projects';
     public readonly DESCRIPTION: string = 'Lists all available projects';
-    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public async relax (): Promise<string> {
         const projects = await PROJECT_MODEL.find({}).exec();
         if (projects.length > 0) {

@@ -4,10 +4,10 @@ import { LOGGER } from '../../logger';
 import { PERSON_MODEL, PersonDocument } from '../../models/person';
 
 export class HowLong extends CommandBase implements ICommand {
+    public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'how long';
     public readonly DESCRIPTION: string = 'Get the estimated time remaining until user is at head of queue';
-    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public async relax (initiative: IInitiative): Promise<string> {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);

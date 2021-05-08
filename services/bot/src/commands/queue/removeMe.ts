@@ -2,10 +2,10 @@ import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 
 export class RemoveMe extends CommandBase implements ICommand {
+    public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'remove me';
     public readonly DESCRIPTION: string = 'Removes the first occurrence of the user from the current queue';
-    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public async relax (initiative: IInitiative): Promise<string> {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);

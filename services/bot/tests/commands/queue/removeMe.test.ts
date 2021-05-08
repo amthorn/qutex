@@ -259,7 +259,7 @@ describe('Removing me from a queue works appropriately', () => {
         beforeAll(async () => {
             MockDate.set(STRICT_DATE);
             testInitiativeRoom.destination = { roomId: 'fooId' };
-            project = await CREATE_PROJECT(testInitiativeRoom.destination);
+            project = await CREATE_PROJECT({ destination: testInitiativeRoom.destination, registration: true });
             expect(await new AddMe().relax(testInitiativeRoom)).toEqual(
                 'Successfully added "foo display name" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. foo display name (May 6, 2021 01:43:08 AM EST)'
             );

@@ -2,10 +2,10 @@ import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 
 export class RemoveMe extends CommandBase implements ICommand {
+    public static readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = '^remove me as an admin$';
     public readonly DESCRIPTION: string = 'Removes the user as a project admin';
-    public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public async relax (initiative: IInitiative): Promise<string> {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);

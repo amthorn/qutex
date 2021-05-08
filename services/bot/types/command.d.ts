@@ -52,9 +52,4 @@ interface ICommand {
      */
     readonly DESCRIPTION: string;
 
-    /**
-     * This defines who can run the command
-     */
-    readonly AUTHORIZATION: Auth;
-
 }

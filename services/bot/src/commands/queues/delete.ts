@@ -2,11 +2,11 @@ import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 
 export class Delete extends CommandBase implements ICommand {
+    public static readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.DELETE;
     public readonly COMMAND_BASE: string = 'queue';
     public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Deletes a target queue';
-    public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public async relax (initiative: IInitiative): Promise<string> {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);

@@ -6,6 +6,7 @@ process.env.VERSION = '99.99.99';
 process.env.RELEASE_DATE = 'Today';
 process.env.AUTHOR_NAME = 'My Author Name';
 process.env.AUTHOR_EMAIL = 'email@email.email';
+process.env.SUPER_ADMINS = '["superAdminId"]';
 
 beforeAll(async () => {
 

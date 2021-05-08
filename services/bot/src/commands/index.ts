@@ -27,6 +27,7 @@ import { Create as CreateAdmin } from './admins/create';
 import { List as ListAdmins } from './admins/list';
 import { RemoveMe as RemoveMeAsAdmin } from './admins/removeMe';
 import { Card as AdminCard } from './admins/card';
+import { CommandBase } from './base';
 
 export default [
     // Status
@@ -65,7 +66,7 @@ export default [
     new AddMe(),
     new RemoveMe(),
     new HowLong()
-] as ICommand[];
+] as CommandBase[];
 
 // For testing
 export {

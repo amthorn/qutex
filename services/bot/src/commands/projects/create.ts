@@ -6,11 +6,11 @@ import { REGISTRATION_MODEL } from '../../models/registration';
 import { LOGGER } from '../../logger';
 
 export class Create extends CommandBase implements ICommand {
+    public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
     public readonly COMMAND_BASE: string = 'project';
     public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Creates a target project';
-    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public async relax (initiative: IInitiative): Promise<string> {
         LOGGER.verbose('Creating project...');
         // Make sure project doesn't exist

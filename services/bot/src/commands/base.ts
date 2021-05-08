@@ -5,12 +5,17 @@ import { LOGGER } from '../logger';
 import { Auth } from '../enum';
 import moment from 'moment';
 
+
 const MILLISECONDS = 1000;
 export abstract class CommandBase {
     public COMMAND_BASE?: string;
     public COMMAND_TYPE?: CommandType;
     public ARGS?: string;
     public DESCRIPTION?: string;
+
+    /**
+     * This defines who can run the command
+     */
     public AUTHORIZATION?: Auth;
 
     public get commandWithArgs (): string {
@@ -29,6 +34,9 @@ export abstract class CommandBase {
                 // Do nothing
                 return this.COMMAND_BASE ?? '';
         }
+    }
+    public static get SUPER_ADMINS (): string[] {
+        return JSON.parse(process.env.SUPER_ADMINS || '[]');
     }
     public static async getProject (initiative: IInitiative): Promise<ProjectDocument | string> {
         const registrations = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
@@ -143,6 +151,41 @@ export abstract class CommandBase {
         const end = 8;
         return new Date(seconds * MILLISECONDS).toISOString().substr(begin, end);
     }
+    // Maybe could be fixed if we use this: https://github.com/Microsoft/TypeScript/issues/4890
+    public static authorized (cls: any): any { //eslint-disable-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+        return class extends cls {
+            private readonly _relax = new cls().relax;
+            public async relax (initiative: IInitiative): Promise<string> {
+                LOGGER.debug(`Authorizing: "${initiative.user.id}"`);
+                LOGGER.debug(`Authorization Restriction: ${cls.AUTHORIZATION}`);
+                let isAuthorized = false;
+
+                if (cls.AUTHORIZATION === Auth.NONE) {
+                    // Everyone is authorized
+                    isAuthorized = true;
+                } else if (cls.AUTHORIZATION === Auth.PROJECT_ADMIN) {
+                    // get project
+                    const project = await CommandBase.getProject(initiative);
+                    if (typeof project !== 'string') {
+                        LOGGER.debug(`Project Admins: ${project.admins}`);
+                        isAuthorized = project.admins.map(i => i.id).includes(initiative.user.id);
+                    } else {
+                        // If return value is string, then the project wasn't found.
+                        return `A project with name "${initiative.data.name}" does not exist.`;
+                    }
+                } else if (cls.AUTHORIZATION === Auth.SUPER_ADMIN) {
+                    isAuthorized = cls.SUPER_ADMINS.includes(initiative.user.id);
+                }
+                if (isAuthorized) {
+                    return await this._relax(initiative);
+                } else {
+                    // deny by default
+                    return 'You are not authorized to perform that action. Please ask an administrator.';
+                }
+
+            }
+        };
+    }
 
     public async check (command: Record<string, string> | string): Promise<Record<string, string> | boolean | string | null | undefined> {
         LOGGER.debug(`Checking command: ${JSON.stringify(command, null, 2)}`);
@@ -163,17 +206,5 @@ export abstract class CommandBase {
         LOGGER.debug('No match');
         return null;
     }
-    public authorized (project: ProjectDocument, person: IPerson): boolean {
-        LOGGER.debug(`Authorizing: "${person.id}" with "${project.name}"`);
-        LOGGER.debug(`Authorization Restriction: ${this.AUTHORIZATION}`);
-        LOGGER.debug(`Project Admins: ${project.admins}`);
-        if (this.AUTHORIZATION === Auth.PROJECT_ADMIN) {
-            return project.admins.map(i => i.id).includes(person.id);
-        } else if (this.AUTHORIZATION === Auth.SUPER_ADMIN) {
-            // TODO:
-            return false;
-        } else {
-            return true;
-        }
-    }
+    public abstract relax (initiative: IInitiative): Promise<string>;
 }
