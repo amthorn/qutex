@@ -3,6 +3,7 @@ import * as registrationCard from '../../cards/registration.json';
 import { BOT } from '../../bot';
 import { Auth } from '../../enum';
 
+@CommandBase.authorized
 export class Card extends CommandBase implements ICommand {
     public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CARD;

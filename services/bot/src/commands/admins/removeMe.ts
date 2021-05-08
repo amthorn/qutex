@@ -1,6 +1,7 @@
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 
+@CommandBase.authorized
 export class RemoveMe extends CommandBase implements ICommand {
     public static readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;

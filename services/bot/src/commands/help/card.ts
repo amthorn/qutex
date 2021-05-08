@@ -4,6 +4,7 @@ import { Auth } from '../../enum';
 import * as helpCard from '../../cards/help.json';
 import commands from '..';
 
+@CommandBase.authorized
 export class Card extends CommandBase implements ICommand {
     public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CARD;

@@ -3,6 +3,7 @@ import { Auth } from '../../enum';
 import { LOGGER } from '../../logger';
 import { PERSON_MODEL, PersonDocument } from '../../models/person';
 
+@CommandBase.authorized
 export class HowLong extends CommandBase implements ICommand {
     public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;

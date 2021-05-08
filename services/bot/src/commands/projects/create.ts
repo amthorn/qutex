@@ -5,6 +5,7 @@ import * as settings from '../../settings.json';
 import { REGISTRATION_MODEL } from '../../models/registration';
 import { LOGGER } from '../../logger';
 
+@CommandBase.authorized
 export class Create extends CommandBase implements ICommand {
     public static readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
