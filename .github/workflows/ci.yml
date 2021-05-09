@@ -67,4 +67,3 @@ jobs:
           file: ./services/bot/coverage/coverage-final.json
           name: codecov-umbrella
           fail_ci_if_error: true
-          verbose: true
