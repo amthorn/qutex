@@ -59,7 +59,9 @@ jobs:
       - run: echo `openssl rand -hex 64` >> mongoPassword
       - run: echo "DOESNTMATTER" >> token
       - run: sudo docker run -v $(pwd)/mongoPassword:/run/secrets/mongoPassword -e MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongoPassword --env-file mongo.env --name mongo -d -p 27017:27017 mongo:4.4.5
-      - run: yarn --cwd services/bot test --verbose
+      - env:
+          QUTEX_TESTING: true
+        run: yarn --cwd services/bot test --verbose
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
