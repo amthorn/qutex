@@ -16,6 +16,10 @@ export class Remove extends CommandBase implements ICommand {
         // Get project
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
+        // Check if they were tagged. If not, send error
+        if (initiative.mentions.length == 0) {
+            return 'No tags found. Please tag a user in order to remove an admin.';
+        }
 
         // Remove admin if they're already an admin
         // Only look at the first one in the list
