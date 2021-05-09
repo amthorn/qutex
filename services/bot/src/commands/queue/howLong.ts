@@ -15,38 +15,52 @@ export class HowLong extends CommandBase implements ICommand {
 
         LOGGER.verbose('Getting the user if they exist...');
         const people = await PERSON_MODEL.find({ id: initiative.user.id }).exec();
+        const queueObject = project.queues.filter(i => i.name === project.currentQueue)[0];
+        let idx = queueObject.members.length;
+
         if (people.length > 0) {
             const person = people[0];
             // person exists
             LOGGER.verbose(`Person '${JSON.stringify(people[0], null, 2)}' exists.`);
-            const queueObject = project.queues.filter(i => i.name === project.currentQueue)[0];
-            const idx = queueObject.members.findIndex(p => p.person.displayName === person.displayName);
-            if (idx === -1) {
-                return `User "${person.displayName}" was not found in queue "${queueObject.name}"`;
-            } else {
-                // get subqueue of all members ahead of the person
-                const subqueue = queueObject.members.slice(0, 1);
-                const members = [];
-                for (const member of subqueue) {
-                    members.push((await PERSON_MODEL.find({ id: member.person.id }).exec())[0]);
-                }
-                const howLong = this.calculateWaitTime(members);
+            idx = queueObject.members.findIndex(p => p.person.displayName === person.displayName);
+            idx = idx === -1 ? queueObject.members.length : idx;
+        }
 
-                LOGGER.debug(`Estimated wait time: ${howLong} seconds`);
-                const msg = `Given that there are ${subqueue.length} people ahead of you. ` +
-                    `Your estimated wait time is ${CommandBase.getTimeDelta(howLong)}`;
-                LOGGER.verbose(msg);
-                return msg;
-            }
+        // get subqueue of all members ahead of the person
+        const subqueue = queueObject.members.slice(0, idx);
+        if (subqueue.length === 0 && queueObject.members.length !== 0) {
+            return 'You are already at the head of the queue';
         } else {
-            // Person does not exist
-            const msg = `Person '${initiative.user.displayName}' does not exist so cannot get how long`;
+            const members = [];
+            for (const member of subqueue) {
+                members.push((await PERSON_MODEL.find({ id: member.person.id }).exec())[0]);
+            }
+            LOGGER.verbose(`Queue members are: ${JSON.stringify(members, null, 2)}`);
+            let howLong = this.calculateWaitTime(members);
+            LOGGER.verbose(`Average wait time: ${howLong}`);
+            howLong -= subqueue.length > 0 ? this.getBeenHeadFor(subqueue[0]) : 0;
+
+            LOGGER.verbose(`Estimated wait time: ${howLong} seconds`);
+            const msg = `Given that there are ${subqueue.length} people ahead of you. ` +
+                `Your estimated wait time is ${CommandBase.getTimeDelta(howLong)}`;
             LOGGER.verbose(msg);
             return msg;
         }
+
     }
     private getAverageWaitTime (person: PersonDocument, head: boolean): number {
-        return head ? person.atHeadSeconds / person.atHeadCount : person.inQueueSeconds / person.inQueueCount;
+        if (head) {
+            return person.atHeadCount === 0 ? person.atHeadCount : person.atHeadSeconds / person.atHeadCount;
+        } else {
+            return person.inQueueCount === 0 ? person.inQueueCount : person.inQueueSeconds / person.inQueueCount;
+        }
+    }
+    /**
+     * @param head the queue member for the head of the queue
+     * @returns The number of seconds that the head of the queue has been at the head for
+     */
+    private getBeenHeadFor (head: IQueueMember): number {
+        return (new Date().getTime() - head.enqueuedAt.getTime()) / 1000;
     }
     private calculateWaitTime (subqueue: PersonDocument[]): number {
         if (subqueue.length === 0) {

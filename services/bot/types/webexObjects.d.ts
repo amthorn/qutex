@@ -1,3 +1,8 @@
+/**
+ * @file The descriptions for various webex objects. This is needed cause @types/webex doesn't exist.
+ * @author Ava Thorn
+ */
+
 interface IWebhook {
     id: string;
     targetUrl: string;

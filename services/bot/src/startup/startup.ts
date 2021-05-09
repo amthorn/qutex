@@ -1,3 +1,8 @@
+/**
+ * @file Registers the webhooks for the bot with the ngrok process \
+ * that is assumed to be running on the host machine.
+ * @author Ava Thorn
+ */
 /// <reference path="../../types/index.d.ts" />
 
 import axios, { AxiosResponse } from 'axios';
@@ -17,7 +22,13 @@ declare interface Tunnel {
     /* URL to the started tunnel */
     proto: Protocols;
 }
-
+/**
+ * Gets the url from the ngrok process.
+ *
+ * @param retries - Number of times to retry to get the url. It can fail in
+ * various situations such as for network issues or slowness within ngrok.
+ * @returns URL that ngrok has exposed for the target port on the host.
+ */
 async function getUrl (retries: number): Promise<string> {
     return axios.get('http://127.0.0.1:4040/api/tunnels').then((response: AxiosResponse) => {
         if (response.status !== SUCCESS_CODE) {

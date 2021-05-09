@@ -4,7 +4,7 @@ interface IPerson {
      *****************************************************************/
 
     /**
-     * The personId that identifies the person
+     * The personId that identifies the person.
      */
     id: Uuid;
     displayName: string;

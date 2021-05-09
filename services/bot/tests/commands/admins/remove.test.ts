@@ -55,7 +55,6 @@ describe('Remove admin errors when it should', () => {
         project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
         expect(project.admins).toHaveLength(1);
         expect(project.admins[0]).toEqual(expect.objectContaining(PROJECT_ADMIN));
-
     });
     test('Errors when no admin is tagged', async () => {
         let project = await CREATE_PROJECT();

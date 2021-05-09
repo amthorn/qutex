@@ -13,13 +13,33 @@
         "es6": true
         // "shared-node-browser": true
     },
+    "plugins": [
+        "jsdoc"
+    ],
     "extends": [
+        "plugin:jsdoc/recommended",
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
         // "plugin:prettier/recommended"
     ],
     "rules": {
+        "jsdoc/check-examples": 2,
+        "jsdoc/check-indentation": 2,
+        "jsdoc/check-line-alignment": 2,
+        "jsdoc/check-syntax": 2,
+        "jsdoc/match-description": 2,
+        "jsdoc/no-bad-blocks": 2,
+        "jsdoc/no-defaults": 2,
+        "jsdoc/no-types": 2,
+        "jsdoc/require-description": 2,
+        "jsdoc/require-description-complete-sentence": 2,
+        "jsdoc/require-example": 0,
+        "jsdoc/require-file-overview": 2,
+        "jsdoc/require-hyphen-before-param-description": 2,
+        "jsdoc/require-throws": 2,
+        "jsdoc/require-param-type": 0,
+        "jsdoc/require-returns-type": 0,
         "@typescript-eslint/array-type": "warn",
         "@typescript-eslint/ban-ts-comment": "warn",
         "@typescript-eslint/class-literal-property-style": "error",

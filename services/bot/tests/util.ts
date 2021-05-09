@@ -37,16 +37,17 @@ export const CREATE_PROJECT = async (
     {
         name = PROJECT_NAME,
         destination,
-        registration = true
+        registration = true,
+        admins = TEST_PROJECT.admins
     }: {
         name?: string;
         destination?: Destination;
         registration?: boolean;
-    } = {}
-): Promise<ProjectDocument> => {
+        admins?: IProjectAdmin[];
+    } = {}): Promise<ProjectDocument> => {
     // Create project
     expect(await PROJECT_MODEL.find({ name: name }).exec()).toHaveLength(0);
-    const project = await PROJECT_MODEL.build({ ...TEST_PROJECT, name: name }).save();
+    const project = await PROJECT_MODEL.build({ ...TEST_PROJECT, name: name, admins: admins }).save();
     expect(await PROJECT_MODEL.find({ name: name }).exec()).toHaveLength(1);
 
     // Set registration for project
