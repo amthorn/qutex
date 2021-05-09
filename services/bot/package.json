@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "src/@types/index.d.ts",
   "scripts": {
-    "test": "jest -i --coverage --testLocationInResults",
+    "test": "jest -i",
     "start:dev": "nodemon",
     "build": "rimraf build && tsc",
     "start": "node build/index.js",
