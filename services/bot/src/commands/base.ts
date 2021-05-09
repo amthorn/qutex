@@ -163,7 +163,8 @@ export abstract class CommandBase {
                 LOGGER.debug(`Authorization Restriction: ${this.AUTHORIZATION}`);
                 let isAuthorized = false;
 
-                if (this.AUTHORIZATION === Auth.NONE) {
+                // Superadmins can do anything
+                if (this.AUTHORIZATION === Auth.NONE || cls.SUPER_ADMINS.includes(initiative.user.id)) {
                     // Everyone is authorized
                     isAuthorized = true;
                 } else if (this.AUTHORIZATION === Auth.PROJECT_ADMIN) {
@@ -176,8 +177,6 @@ export abstract class CommandBase {
                         // If return value is string, then the destination isn't registered
                         return project;
                     }
-                } else if (this.AUTHORIZATION === Auth.SUPER_ADMIN) {
-                    isAuthorized = cls.SUPER_ADMINS.includes(initiative.user.id);
                 }
 
                 if (isAuthorized) {

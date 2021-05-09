@@ -124,7 +124,7 @@ describe('Removing me from a queue works appropriately', () => {
         });
         test('validate', async () => {
             MockDate.set(STRICT_DATE + FIVE_SECONDS);
-            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:10 AM EST)\n\n${STANDARD_USER.displayName}, you\'re at the front of the queue!`);
+            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:10 AM EST)\n\n${STANDARD_USER.displayName}, you're at the front of the queue!`);
 
             // Verify
             const person = (await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec())[0];
@@ -196,7 +196,7 @@ describe('Removing me from a queue works appropriately', () => {
         });
         test('validate', async () => {
             MockDate.set(STRICT_DATE + TEN_SECONDS);
-            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. ${STANDARD_USER.displayName} (May 6, 2021 01:43:12 AM EST)\n\nother user name, you\'re at the front of the queue!`);
+            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:08 AM EST)\n2. ${STANDARD_USER.displayName} (May 6, 2021 01:43:12 AM EST)\n\nother user name, you're at the front of the queue!`);
 
             // Verify
             const person = (await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec())[0];
@@ -282,7 +282,7 @@ describe('Removing me from a queue works appropriately', () => {
         });
         test('validate', async () => {
             MockDate.set(STRICT_DATE + FIVE_SECONDS);
-            expect(await new RemoveMe().relax(testInitiativeRoom)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:10 AM EST)\n\n<@personId:otherUser|other user name>, you\'re at the front of the queue!`);
+            expect(await new RemoveMe().relax(testInitiativeRoom)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:10 AM EST)\n\n<@personId:otherUser|other user name>, you're at the front of the queue!`);
         });
     });
     test('removes me successfully to non-default queue and validates side effects when project exists', async () => {
