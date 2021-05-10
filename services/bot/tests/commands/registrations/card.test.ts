@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "registration" card command.
+ * @author Ava Thorn
+ */
 import { Card } from '../../../src/commands/registrations/card';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import * as registrationCard from '../../../src/cards/registration.json';

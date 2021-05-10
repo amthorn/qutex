@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "create admin" command.
+ * @author Ava Thorn
+ */
 import { Create } from '../../../src/commands/admins/create';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { CREATE_PROJECT, TEST_INITIATIVE, PROJECT_ADMIN, STANDARD_USER, SUPER_ADMIN } from '../../util';

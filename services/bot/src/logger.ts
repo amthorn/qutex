@@ -1,3 +1,7 @@
+/**
+ * @file This file handles the setup of the logger for qutex.
+ * @author Ava Thorn
+ */
 import { createLogger, format, transports } from 'winston';
 
 let level = 'verbose';
@@ -17,8 +21,8 @@ export const LOGGER = createLogger({
     defaultMeta: { service: 'bot-service' },
     transports: [
         /**
-         *  - Write all logs with level `error` and below to `error.log`
-         *  - Write all logs with level `info` and below to `combined.log`
+         * - Write all logs with level `error` and below to `error.log`.
+         * - Write all logs with level `info` and below to `combined.log`.
          */
         new transports.Console(),
         new transports.File({ filename: 'error.log', level: 'error' }),

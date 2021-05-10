@@ -1,3 +1,7 @@
+/**
+ * @file A command list for all the command classes.
+ * @author Ava Thorn
+ */
 import { Get as GetStatus } from './status/get';
 
 import { Card as HelpCard } from './help/card';
@@ -16,7 +20,7 @@ import { List as ListQueues } from './queues/list';
 import { Create as CreateQueues } from './queues/create';
 import { Card as QueuesCard } from './queues/card';
 import { Delete as DeleteQueues } from './queues/delete';
-import { Get as GetQueue } from './queues/get';
+import { Get as GetQueue } from './queue/get';
 
 import { AddMe } from './queue/addMe';
 import { RemoveMe } from './queue/removeMe';

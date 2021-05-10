@@ -1,3 +1,8 @@
+/**
+ * @file This file starts ngrok on port 3000. It is used mainly for development. You can run this
+ * with yarn start:dev-bot or yarn start:ngrok.
+ * @author Ava Thorn
+ */
 import ngrok from 'ngrok';
 import { LOGGER } from '../logger';
 

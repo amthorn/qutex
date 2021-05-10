@@ -1,11 +1,21 @@
+/**
+ * @file This is the parser file. It is responsible for parsing the actual command string from the user.
+ * It also handles parsing the card responses.
+ * @author Ava Thorn
+ */
 import { Request } from 'express';
 import { BOT } from './bot';
 import Commands from './commands';
 import { LOGGER } from './logger';
 
-
-
 export class Parser {
+    /**
+     * This function is responsible for parsing the actual command string from the user.
+     * It also handles parsing the card responses.
+     *
+     * @param request - The express request object for the current endpoint.
+     * @returns A parsed initiative context for use in the handler.
+     */
     public async parse (request: Request): Promise<IInitiative> {
         // TODO: improve this by pulling out of this function
         // It should only happen once. Here it will be called on every request.
@@ -86,6 +96,16 @@ export class Parser {
         };
 
     }
+    /**
+     * Normalizes a javascript object by modifying keys to remove underscore prefixes. This is necessary because
+     * webex cards do not permit the same key to be submitted on the same card. So when a card contains multiple actions
+     * that both are submitted from the same card, the keys must be differently named. Even when the keys in the backend
+     * database need to be the same. This function, thus, normalizes those keys so that they can be different on the
+     * webex card but the same in the database.
+     *
+     * @param data - An object to be normalized.
+     * @returns Normalized javascript object.
+     */
     private normalize (data: any): Record<string, string> { //eslint-disable-line @typescript-eslint/no-explicit-any
         const result: Record<string, string> = {};
         for (const key in data._map) {

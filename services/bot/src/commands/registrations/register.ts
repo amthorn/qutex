@@ -1,3 +1,7 @@
+/**
+ * @file The Command object for the "register to project" command which registers the destination to a project.
+ * @author Ava Thorn
+ */
 import { CommandBase } from '../base';
 import { PROJECT_MODEL } from '../../models/project';
 import { Auth } from '../../enum';
@@ -5,11 +9,22 @@ import { REGISTRATION_MODEL } from '../../models/registration';
 
 @CommandBase.authorized
 export class Operation extends CommandBase implements ICommand {
+    /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.SUPER_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'register to project';
     public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Registers the room to a target project by name';
+    /* eslint-enable jsdoc/require-jsdoc */
+
+    /**
+     * Responsible for registering the project to a target destination.
+     *
+     * @access public
+     * @param initiative - The initiative for the operation.
+     * @async
+     * @returns The response string.
+     */
     public async relax (initiative: IInitiative): Promise<string> {
         initiative.data.name = initiative.data.name.toUpperCase();
         // Get the project

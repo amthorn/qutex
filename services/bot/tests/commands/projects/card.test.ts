@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "project" card command.
+ * @author Ava Thorn
+ */
 import { Card } from '../../../src/commands/projects/card';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import * as projectCard from '../../../src/cards/project.json';

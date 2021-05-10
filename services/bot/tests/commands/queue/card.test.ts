@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "queue" card command.
+ * @author Ava Thorn
+ */
 import { Card } from '../../../src/commands/queue/card';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import * as queueCard from '../../../src/cards/queue.json';

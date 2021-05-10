@@ -1,3 +1,7 @@
+/**
+ * @file Test file for handler.ts.
+ * @author Ava Thorn
+ */
 import { Handler } from '../src/handler';
 import { BOT } from '../src/bot';
 import { Request } from 'express';

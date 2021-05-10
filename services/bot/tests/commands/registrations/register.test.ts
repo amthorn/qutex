@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "register to project" command.
+ * @author Ava Thorn
+ */
 import { Operation } from '../../../src/commands/registrations/register';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { REGISTRATION_MODEL } from '../../../src/models/registration';

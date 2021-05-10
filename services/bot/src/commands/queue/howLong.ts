@@ -1,14 +1,56 @@
+/**
+ * @file The Command object for the "how long" which gets the amount of time before the first instance
+ * of the user gets to the head of the queue.
+ * @author Ava Thorn
+ */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 import { LOGGER } from '../../logger';
 import { PERSON_MODEL, PersonDocument } from '../../models/person';
 
+const MILLISECONDS = 1000;
+
+/**
+ * Formula for calculating "how long" until a person reaches the head of the queue is...
+ *
+ *************
+ * VARIABLES *
+ *************
+ * Head = The member currently at the head of the queue.
+ * TimeElapsed = Time elapsed since the current queue head was put at the head.
+ *
+ *************
+ * FUNCTIONS *
+ *************
+ * AvgHeadFlush(N) = Average time to flush member N from the head of the queue.
+ * Relax(N) = The current queue except with the current head removed and all the members shifted up one.
+ *
+ *
+ ***********
+ * FORMULA *
+ ***********
+ * HowLong(0) = 0                                               --> No one is in the queue. How long is zero.
+ * HowLong(1) = AvgHeadFlush(Head) - TimeElapsed                --> Only one person is in the queue; subtract time elapsed.
+ * HowLong(N) = MAX(AvgHeadFlush(N) + HowLong(Relax(N-1)), 0)   --> Recursive all other cases.
+ *
+ */
 @CommandBase.authorized
 export class HowLong extends CommandBase implements ICommand {
+    /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'how long';
     public readonly DESCRIPTION: string = 'Get the estimated time remaining until user is at head of queue';
+    /* eslint-enable jsdoc/require-jsdoc */
+
+    /**
+     * Gets the estimated time remaining until the user is at the head of the queue.
+     *
+     * @access public
+     * @param initiative - The initiative for the operation.
+     * @async
+     * @returns The response string.
+     */
     public async relax (initiative: IInitiative): Promise<string> {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
@@ -21,7 +63,7 @@ export class HowLong extends CommandBase implements ICommand {
         if (people.length > 0) {
             const person = people[0];
             // person exists
-            LOGGER.verbose(`Person '${JSON.stringify(people[0], null, 2)}' exists.`);
+            LOGGER.debug(`Person '${JSON.stringify(people[0], null, 2)}' exists.`);
             idx = queueObject.members.findIndex(p => p.person.displayName === person.displayName);
             idx = idx === -1 ? queueObject.members.length : idx;
         }
@@ -35,46 +77,61 @@ export class HowLong extends CommandBase implements ICommand {
             for (const member of subqueue) {
                 members.push((await PERSON_MODEL.find({ id: member.person.id }).exec())[0]);
             }
-            LOGGER.verbose(`Queue members are: ${JSON.stringify(members, null, 2)}`);
-            let howLong = this.calculateWaitTime(members);
+            LOGGER.debug(`Queue members are: ${JSON.stringify(members, null, 2)}`);
+            const howLong = this.howLong(members, subqueue[0]);
             LOGGER.verbose(`Average wait time: ${howLong}`);
-            howLong -= subqueue.length > 0 ? this.getBeenHeadFor(subqueue[0]) : 0;
+
+            const phrase = subqueue.length === 1 ? 'is 1 person' : `are ${subqueue.length} people`;
 
             LOGGER.verbose(`Estimated wait time: ${howLong} seconds`);
-            const msg = `Given that there are ${subqueue.length} people ahead of you. ` +
+            const msg = `Given that there ${phrase} ahead of you. ` +
                 `Your estimated wait time is ${CommandBase.getTimeDelta(howLong)}`;
             LOGGER.verbose(msg);
             return msg;
         }
-
     }
-    private getAverageWaitTime (person: PersonDocument, head: boolean): number {
-        if (head) {
-            return person.atHeadCount === 0 ? person.atHeadCount : person.atHeadSeconds / person.atHeadCount;
-        } else {
-            return person.inQueueCount === 0 ? person.inQueueCount : person.inQueueSeconds / person.inQueueCount;
-        }
+
+    /**
+     * Gets the average amount of time it takes to flush this person from the head of the queue.
+     * 
+     * @param person - The person whose average wait time you want to get.
+     * @returns The average amount of time it takes to flush this person from the queue in seconds.
+     */
+    private averageHeadFlush (person: PersonDocument): number {
+        return person.atHeadCount === 0 ? person.atHeadCount : person.atHeadSeconds / person.atHeadCount;
     }
     /**
-     * @param head the queue member for the head of the queue
-     * @returns The number of seconds that the head of the queue has been at the head for
+     * Gets the amount of time that the head member has been at head.
+     *
+     * @param head - The queue member for the head of the queue.
+     * @returns The number of seconds for which the head of the queue has been at the head.
      */
-    private getBeenHeadFor (head: IQueueMember): number {
-        return (new Date().getTime() - head.enqueuedAt.getTime()) / 1000;
+    private timeElapsed (head: IQueueMember): number {
+        const value = (new Date().getTime() - head.enqueuedAt.getTime()) / MILLISECONDS;
+        LOGGER.verbose(`Been at head for: ${value}`);
+        return value;
     }
-    private calculateWaitTime (subqueue: PersonDocument[]): number {
+
+    /**
+     * Get the estimated amount of time (in seconds) until the subqueue is flushed.
+     *
+     * @param subqueue - A list of people in the subqueue.
+     * @param globalHead - The current head of the entire queue (not the subqueue).
+     * @returns The number of seconds until the subqueue is flushed.
+     */
+    private howLong (subqueue: PersonDocument[], globalHead: IQueueMember): number {
         if (subqueue.length === 0) {
+            LOGGER.verbose('Length: 0 - Time: 0');
             return 0;
-        } else {
-            const head = subqueue.splice(0, 1)[0];
-            let time = this.getAverageWaitTime(head, true);
-            if (subqueue.length >= 1) {
-                // Remaining members are not head values
-                for (const member of subqueue) {
-                    time += this.getAverageWaitTime(member, false);
-                }
-            }
+        } else if (subqueue.length === 1) {
+            const time = this.averageHeadFlush(subqueue[0]) - this.timeElapsed(globalHead);
+            LOGGER.verbose(`Length: 1 - Time: ${time}`);
             return time;
+        } else {
+            const time = this.averageHeadFlush(subqueue[0]) + this.howLong(subqueue.slice(1), globalHead);
+            LOGGER.verbose(`Length: ${subqueue.length} - Time: ${time}`);
+            // How long can never be negative for any subqueue.
+            return Math.max(time, 0);
         }
     }
 }

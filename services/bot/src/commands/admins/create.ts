@@ -1,3 +1,8 @@
+/**
+ * @file The Command object for the "create admin" command which creates a target admin by name. You must tag the person
+ * you want to remove.
+ * @author Ava Thorn
+ */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 import { LOGGER } from '../../logger';
@@ -5,10 +10,21 @@ import { BOT } from '../../bot';
 
 @CommandBase.authorized
 export class Create extends CommandBase implements ICommand {
+    /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
     public readonly COMMAND_BASE: string = 'admin';
     public readonly DESCRIPTION: string = 'Adds a target project admin';
+    /* eslint-enable jsdoc/require-jsdoc */
+
+    /**
+     * Adds a target project admin. The user must be tagged to be added as an admin.
+     *
+     * @access public
+     * @param initiative - The initiative for the operation.
+     * @async
+     * @returns The response string.
+     */
     public async relax (initiative: IInitiative): Promise<string> {
         LOGGER.verbose('Creating admin...');
         let msg = '';

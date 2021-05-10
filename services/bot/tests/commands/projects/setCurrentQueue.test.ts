@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "set queue to" command.
+ * @author Ava Thorn
+ */
 import { SetCurrentQueue } from '../../../src/commands/projects/setCurrentQueue';
 import { List } from '../../../src/commands/queues/list';
 import { PROJECT_MODEL } from '../../../src/models/project';

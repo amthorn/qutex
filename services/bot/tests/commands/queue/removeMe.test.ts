@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "remove me" command.
+ * @author Ava Thorn
+ */
 import { AddMe } from '../../../src/commands/queue/addMe';
 import { RemoveMe } from '../../../src/commands/queue/removeMe';
 import { PROJECT_MODEL } from '../../../src/models/project';

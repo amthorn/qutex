@@ -1,7 +1,12 @@
+/**
+ * @file Contains various utility functions and constants for use by the jest tests.
+ * @author Ava Thorn
+ */
 import { REGISTRATION_MODEL } from '../src/models/registration';
 import { ProjectDocument, PROJECT_MODEL } from '../src/models/project';
 import * as settings from '../src/settings.json';
 
+export const STRICT_DATE = 1620279788056;
 export const PROJECT_NAME = 'PNAME';
 export const PROJECT_ADMIN = { id: 'adminId', displayName: 'ANAME' };
 export const STANDARD_USER = { id: 'standardId', displayName: 'STANDARDNAME' };
@@ -32,7 +37,16 @@ export const TEST_INITIATIVE: IInitiative = {
     mentions: []
 };
 export const TEST_QUEUE_MEMBER: IQueueMember = { person: TEST_OTHER_USER, enqueuedAt: new Date('2020-01-01'), atHeadTime: null };
-
+/**
+ * Creates a target project with various parameters for use in testing.
+ *
+ * @param obj - The destructured object project parameters.
+ * @param obj.name - The name of the project to create.
+ * @param obj.destination - The destination for which to create the project.
+ * @param obj.registration - Whether or not to register the project to the destination upon creation.
+ * @param obj.admins - A list of IProjectAdmin interfaces to use as the initial list of project admins.
+ * @returns The newly created project.
+ */
 export const CREATE_PROJECT = async (
     {
         name = PROJECT_NAME,
@@ -61,6 +75,14 @@ export const CREATE_PROJECT = async (
 
     return project;
 };
+/**
+ * Creates a new target queue by name on a target project with a set of members.
+ *
+ * @param project - Project on which to create a new queue.
+ * @param queueName - The name of the queue to create.
+ * @param members - Initiative member set for the queue.
+ * @returns The newly created queue object.
+ */
 export const CREATE_QUEUE = async (project: ProjectDocument, queueName?: string, members?: IQueueMember[]): Promise<IQueue> => {
     const preLength = project.queues.length;
     const queue = { ...TEST_QUEUE, name: queueName ? queueName : TEST_QUEUE.name, members: members?.length ? members : [] };

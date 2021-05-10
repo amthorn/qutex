@@ -24,7 +24,27 @@
         // "plugin:prettier/recommended"
     ],
     "rules": {
-        "jsdoc/check-examples": 2,
+        "jsdoc/require-jsdoc": [
+            "error",
+            {
+                "require": {
+                    "FunctionDeclaration": true,
+                    "MethodDefinition": true,
+                    "ClassDeclaration": false,
+                    "ArrowFunctionExpression": true,
+                    "FunctionExpression": true
+                },
+                "contexts": [
+                    "ClassProperty",
+                    "TSDeclareFunction",
+                    "TSEnumDeclaration",
+                    "TSInterfaceDeclaration",
+                    "TSTypeAliasDeclaration"
+                    //"VariableDeclaration"
+                ]
+            }
+        ],
+        "jsdoc/check-examples": 0,
         "jsdoc/check-indentation": 2,
         "jsdoc/check-line-alignment": 2,
         "jsdoc/check-syntax": 2,

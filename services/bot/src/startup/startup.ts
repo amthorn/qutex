@@ -13,12 +13,19 @@ const WEBEX = new Webex({ credentials: process.env.WEBEX_ACCESS_TOKEN });
 
 const RETRY_COUNT = 5;
 const SUCCESS_CODE = 200;
-declare enum Protocols {
+
+/**
+ * Enums for protocols.
+ */
+enum Protocols {
     HTTP = 'http',
     HTTPS = 'https'
 }
 
-declare interface Tunnel {
+/**
+ * Interface for the ngrok tunnel.
+ */
+interface Tunnel {
     /* URL to the started tunnel */
     proto: Protocols;
 }

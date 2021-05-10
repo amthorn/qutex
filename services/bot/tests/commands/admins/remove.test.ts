@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "remote admin" command.
+ * @author Ava Thorn
+ */
 import { Remove } from '../../../src/commands/admins/remove';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { CREATE_PROJECT, TEST_INITIATIVE, PROJECT_ADMIN, STANDARD_USER, SUPER_ADMIN } from '../../util';
@@ -6,7 +10,7 @@ import { BOT } from '../../../src/bot';
 const NEW_ADMIN = { id: 'newAdminId', displayName: 'DISPLAY ADMIN NEW' };
 
 TEST_INITIATIVE.data = { name: NEW_ADMIN.displayName };
-TEST_INITIATIVE.rawCommand = `create admin ${NEW_ADMIN.displayName}`;
+TEST_INITIATIVE.rawCommand = `remove admin ${NEW_ADMIN.displayName}`;
 TEST_INITIATIVE.action = new Remove();
 TEST_INITIATIVE.mentions = [NEW_ADMIN.id];
 TEST_INITIATIVE.user = PROJECT_ADMIN;

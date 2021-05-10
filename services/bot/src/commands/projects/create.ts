@@ -1,3 +1,7 @@
+/**
+ * @file The Command object for the "create project" command which deletes a target project by name.
+ * @author Ava Thorn
+ */
 import { CommandBase } from '../base';
 import { PROJECT_MODEL } from '../../models/project';
 import { Auth } from '../../enum';
@@ -7,11 +11,22 @@ import { LOGGER } from '../../logger';
 
 @CommandBase.authorized
 export class Create extends CommandBase implements ICommand {
+    /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
     public readonly COMMAND_BASE: string = 'project';
     public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Creates a target project';
+    /* eslint-enable jsdoc/require-jsdoc */
+
+    /**
+     * Creates a target project.
+     *
+     * @access public
+     * @param initiative - The initiative for the operation.
+     * @async
+     * @returns The response string.
+     */
     public async relax (initiative: IInitiative): Promise<string> {
         LOGGER.verbose('Creating project...');
         // Make sure project doesn't exist

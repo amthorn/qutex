@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "delete project" command.
+ * @author Ava Thorn
+ */
 import { CREATE_PROJECT, TEST_INITIATIVE } from '../../util';
 import { Delete } from '../../../src/commands/projects/delete';
 import { PROJECT_MODEL } from '../../../src/models/project';

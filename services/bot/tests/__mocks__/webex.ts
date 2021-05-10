@@ -1,3 +1,7 @@
+/**
+ * @file Contains the mocks for the webex library.
+ * @author Ava Thorn
+ */
 
 const MOCK_MESSAGE = { text: 'foo', personId: 'fooPersonId' };
 const MOCK_PERSON = { id: 'fooId' };

@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "list admins" command.
+ * @author Ava Thorn
+ */
 import { List } from '../../../src/commands/admins/list';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { REGISTRATION_MODEL } from '../../../src/models/registration';

@@ -1,3 +1,8 @@
+/**
+ * @file The Command object for the "remove admin" command which deletes a target admin by name. You must tag the person
+ * you want to remove.
+ * @author Ava Thorn
+ */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 import { LOGGER } from '../../logger';
@@ -5,10 +10,21 @@ import { BOT } from '../../bot';
 
 @CommandBase.authorized
 export class Remove extends CommandBase implements ICommand {
+    /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'remove admin';
     public readonly DESCRIPTION: string = 'Removes a user as a project admin';
+    /* eslint-enable jsdoc/require-jsdoc */
+
+    /**
+     * Removes a target user as a project admin. The user must be tagged.
+     *
+     * @access public
+     * @param initiative - The initiative for the operation.
+     * @async
+     * @returns The response string.
+     */
     public async relax (initiative: IInitiative): Promise<string> {
         LOGGER.verbose('Removing admin...');
         let msg = '';

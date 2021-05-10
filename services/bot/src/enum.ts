@@ -1,3 +1,7 @@
+/**
+ * @file Various enums for qutex.
+ * @author Ava Thorn
+ */
 export enum Auth {
     NONE = 'none',
     PROJECT_ADMIN = 'projectAdmin',

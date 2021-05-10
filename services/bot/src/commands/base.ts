@@ -1,3 +1,7 @@
+/**
+ * @file This is the base command which contains many of the common utilities that are used across multiple commands.
+ * @author Ava Thorn
+ */
 import { ProjectDocument, PROJECT_MODEL } from '../models/project';
 import { PersonDocument, PERSON_MODEL } from '../models/person';
 import { REGISTRATION_MODEL } from '../models/registration';
@@ -8,14 +12,56 @@ import moment from 'moment';
 
 const MILLISECONDS = 1000;
 export abstract class CommandBase {
+
+    /**
+     * This is the string which does not include arguments.
+     *
+     * @access public
+     * @readonly
+     */
     public COMMAND_BASE?: string;
+
+    /**
+     * This property should determine what kind of command this is.
+     * Possible commands are listed by the enum type CommandType.
+     *
+     * @access public
+     * @readonly
+     */
     public COMMAND_TYPE?: CommandType;
+
+    /**
+     * This string is what is used to store arguments for the command string.
+     *
+     * @access public
+     * @readonly
+     */
     public ARGS?: string;
+
+    /**
+     * This is a short description of the command which is displayed in the help card.
+     *
+     * @access public
+     * @readonly
+     */
     public DESCRIPTION?: string;
 
+    /**
+     * Gets the command that contains the arguments.
+     *
+     * @access public
+     * @returns The string command which contains arguments.
+     */
     public get commandWithArgs (): string {
         return this.ARGS ? [this.command, this.ARGS].join(' ') : this.command;
     }
+
+    /**
+     * Gets the command that does not contain the arguments.
+     *
+     * @access public
+     * @returns The command that does not contain the arguments.
+     */
     public get command (): string {
         switch (this.COMMAND_TYPE) {
             case CommandType.CREATE:
@@ -30,9 +76,26 @@ export abstract class CommandBase {
                 return this.COMMAND_BASE ?? '';
         }
     }
+
+    /**
+     * Gets a list of super admins from the env variables.
+     *
+     * @access public
+     * @static
+     * @returns A string list of super admins.
+     */
     public static get SUPER_ADMINS (): string[] {
         return JSON.parse(process.env.SUPER_ADMINS || '[]');
     }
+
+    /**
+     * Returns the registered or named project for the given initiative context.
+     *
+     * @param initiative - This is the initiative for which to get the registered or named project.
+     * @todo Throw errors instead of returning error string.
+     * @throws Error when destination is registered to a project that does not exist.
+     * @returns Project model or error string for the given initiative context.
+     */
     public static async getProject (initiative: IInitiative): Promise<ProjectDocument | string> {
         const registrations = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
         // This is a special case for project delete where a registration is not needed.
@@ -54,6 +117,14 @@ export abstract class CommandBase {
             return 'There are no projects registered.';
         }
     }
+
+    /**
+     * Adds the invoking user to the database.
+     *
+     * @param initiative - Initiative for which to parse and add the invoking user from.
+     * @returns The newly created person document.
+     * @see PersonDocument
+     */
     public static async addUser (initiative: IInitiative): Promise<PersonDocument> {
         LOGGER.verbose('Adding user if they do not exist...');
         const people = await PERSON_MODEL.find({ id: initiative.user.id }).exec();
@@ -73,6 +144,17 @@ export abstract class CommandBase {
             }).save();
         }
     }
+
+    /**
+     * Adds a given user to a target queue.
+     *
+     * @access public
+     * @static
+     * @param queues - A list of all queues to search through.
+     * @param queue - The name of the queue to which to add the user.
+     * @param user - The user to add to the queue.
+     * @returns The queue that was updated.
+     */
     public static addToQueue (queues: IQueue[], queue: string, user: IPerson): IQueue {
         const queueObject = queues.filter(i => i.name === queue)[0];
         const now = new Date();
@@ -84,6 +166,15 @@ export abstract class CommandBase {
         });
         return queueObject;
     }
+
+    /**
+     * Converts the queue into a string by listing it's members in order with timestamps.
+     *
+     * @access public
+     * @static
+     * @param queue - The queue to convert into a string.
+     * @returns The string; converted to a queue.
+     */
     public static queueToString (queue: IQueue): string {
         if (queue.members.length === 0) {
             return `Queue "${queue.name}" is empty`;
@@ -98,6 +189,18 @@ export abstract class CommandBase {
             return `Queue "${queue.name}":\n\n${memberList.join('\n')}`;
         }
     }
+
+    /**
+     * Removes a given user from a target queue.
+     *
+     * @access public
+     * @static
+     * @async
+     * @param queues - A list of all queues to search through.
+     * @param queue - The name of the queue to which to remove the user.
+     * @param user - The user to remove from the queue.
+     * @returns The queue that was updated.
+     */
     public static async removeFromQueue (queues: IQueue[], queue: string, user: IPerson): Promise<IQueue | string> {
         const queueObject = queues.filter(i => i.name === queue)[0];
         const idx = queueObject.members.findIndex(p => p.person.displayName === user.displayName);
@@ -136,6 +239,15 @@ export abstract class CommandBase {
             return queueObject;
         }
     }
+
+    /**
+     * Adds a given admin to a target project.
+     *
+     * @param project - The project on which to add the admin.
+     * @param user - The user to make an admin on the target project.
+     * @returns Success or error string.
+     * @todo Update this to throw an error instead of returning error or success strings.
+     */
     public static async addAdmin (project: ProjectDocument, user: IPerson): Promise<string> {
         if (project.admins.includes(user)) {
             return `"${user.displayName}" is already an admin.`;
@@ -149,15 +261,43 @@ export abstract class CommandBase {
             return `Successfully added "${user.displayName}" as an admin.`;
         }
     }
+
+    /**
+     * Converts a number of seconds into a time delta string.
+     *
+     * @param seconds - The number of seconds to convert to a time delta.
+     * @returns The string time delta.
+     */
     public static getTimeDelta (seconds: number): string {
         const begin = 11;
         const end = 8;
         return new Date(seconds * MILLISECONDS).toISOString().substr(begin, end);
     }
     // Maybe could be fixed if we use this: https://github.com/Microsoft/TypeScript/issues/4890
+
+    /**
+     * The authorization guard decorator for the given command object class.
+     *
+     * @param cls - The command object's class to check authorization for.
+     * @returns A class representing the newly decorated class with the guard.
+     * @todo Update this to throw an error instead of returning error string.
+     */
     public static authorized (cls: any): any { //eslint-disable-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
         return class extends cls {
+            /**
+             * The old relax function which is called from within the guard.
+             *
+             * @access private
+             * @readonly
+             */
             private readonly _relax = new cls().relax;
+            /**
+             * The guard function itself.
+             *
+             * @param initiative - The initiative from the user to relax.
+             * @returns String error or response from command object.
+             * @todo Update this to throw an error instead of returning error string.
+             */
             public async relax (initiative: IInitiative): Promise<string> {
                 LOGGER.debug(`Authorizing: "${initiative.user.id}"`);
                 LOGGER.debug(`Authorization Restriction: ${this.AUTHORIZATION}`);
@@ -192,6 +332,18 @@ export abstract class CommandBase {
         };
     }
 
+
+    /**
+     * This function should return an object of parse data.
+     * The existence of this object should tell the caller
+     * whether this command applies to the given string parameter.
+     *
+     * @param command - The command data to check for a match.
+     * @access public
+     * @async
+     * @returns Truthy or falsey value representing whether the check has
+     * succeeded and, if so, the data that was parsed.
+     */
     public async check (command: Record<string, string> | string): Promise<Record<string, string> | boolean | string | null | undefined> {
         LOGGER.debug(`Checking command: ${JSON.stringify(command, null, 2)}`);
         LOGGER.debug(`Checking against regex w/o arguments: ${this.command}`);

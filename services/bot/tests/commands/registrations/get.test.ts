@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "get registration" command.
+ * @author Ava Thorn
+ */
 import { Get } from '../../../src/commands/registrations/get';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { REGISTRATION_MODEL } from '../../../src/models/registration';

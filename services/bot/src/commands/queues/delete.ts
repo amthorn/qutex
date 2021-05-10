@@ -1,13 +1,28 @@
+/**
+ * @file The Command object for the "delete queue" command which deletes a target queue by name.
+ * @author Ava Thorn
+ */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 
 @CommandBase.authorized
 export class Delete extends CommandBase implements ICommand {
+    /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.DELETE;
     public readonly COMMAND_BASE: string = 'queue';
     public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Deletes a target queue';
+    /* eslint-enable jsdoc/require-jsdoc */
+
+    /**
+     * Deletes a target queue for the registered project.
+     *
+     * @access public
+     * @param initiative - The initiative for the operation.
+     * @async
+     * @returns The response string.
+     */
     public async relax (initiative: IInitiative): Promise<string> {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);

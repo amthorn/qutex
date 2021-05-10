@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "create project" command.
+ * @author Ava Thorn
+ */
 import { Create } from '../../../src/commands/projects/create';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import * as settings from '../../../src/settings.json';

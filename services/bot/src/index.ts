@@ -1,3 +1,8 @@
+/**
+ * @file This is the entrypoint file for starting up the bot. It is responsible for starting up the express routes,
+ * and the mongoDB connection.
+ * @author Ava Thorn
+ */
 /// <reference path="../types/index.d.ts" />
 
 import express from 'express';

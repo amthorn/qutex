@@ -1,3 +1,7 @@
+/**
+ * @file Test file for the "add me" command.
+ * @author Ava Thorn
+ */
 import { AddMe } from '../../../src/commands/queue/addMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';

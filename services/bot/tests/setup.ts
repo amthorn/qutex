@@ -1,6 +1,11 @@
+/**
+ * @file The setup file for the jest tests. This handles global setup and teardown.
+ * @author Ava Thorn
+ */
 import mongoose from 'mongoose';
 import { GET } from '../src/secrets';
-import { SUPER_ADMIN } from './util';
+import { SUPER_ADMIN, STRICT_DATE } from './util';
+import MockDate from 'mockdate';
 
 // Mock ENV vars
 process.env.VERSION = '99.99.99';
@@ -23,6 +28,9 @@ beforeAll(async () => {
         useUnifiedTopology: true
     });
 });
+beforeEach(() => {
+    MockDate.set(STRICT_DATE);
+});
 afterEach((done) => {
     /*
       Define clearDB function that will loop through all 
@@ -33,6 +41,7 @@ afterEach((done) => {
             done();
         }); // eslint-disable-line
     }
+    MockDate.reset();
 });
 
 afterAll(done => {

@@ -1,13 +1,28 @@
+/**
+ * @file The Command object for the "create queue" command which creates a target queue by name.
+ * @author Ava Thorn
+ */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
 
 @CommandBase.authorized
 export class Create extends CommandBase implements ICommand {
+    /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.CREATE;
     public readonly COMMAND_BASE: string = 'queue';
     public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Creates a target queue';
+    /* eslint-enable jsdoc/require-jsdoc */
+
+    /**
+     * Creates a queue for the current project.
+     *
+     * @access public
+     * @param initiative - The initiative for the operation.
+     * @async
+     * @returns The response string.
+     */
     public async relax (initiative: IInitiative): Promise<string> {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
