@@ -26,7 +26,7 @@ export class Delete extends CommandBase implements ICommand {
      */
     public async relax (initiative: IInitiative): Promise<string> {
         // Will always exist. If it doesn't, the authorizer should thrown a project not found error.
-        await PROJECT_MODEL.deleteOne(initiative.data).exec();
+        await PROJECT_MODEL.deleteOne({ name: initiative.data.name.toUpperCase() }).exec();
         return `Successfully deleted "${initiative.data.name.toUpperCase()}"`;
     }
 }

@@ -100,11 +100,11 @@ export abstract class CommandBase {
         const registrations = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
         // This is a special case for project delete where a registration is not needed.
         if (initiative.action.COMMAND_BASE === 'project' && initiative.action.COMMAND_TYPE === CommandType.DELETE) {
-            const projects = await PROJECT_MODEL.find({ name: initiative.data.name }).exec();
+            const projects = await PROJECT_MODEL.find({ name: initiative.data.name.toUpperCase() }).exec();
             if (projects.length > 0) {
                 return projects[0];
             } else {
-                return `A project with name "${initiative.data.name}" does not exist.`;
+                return `A project with name "${initiative.data.name.toUpperCase()}" does not exist.`;
             }
         } else if (registrations.length > 0) {
             const projects = await PROJECT_MODEL.find({ name: registrations[0].projectName }).exec();

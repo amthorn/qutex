@@ -25,6 +25,13 @@ describe('Delete project works appropriately', () => {
         expect(await new Delete().relax(TEST_INITIATIVE)).toEqual('Successfully deleted "PNAME"');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
     });
+    test('project is deleted when the project exists and user does have permissions case insensitive', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        await CREATE_PROJECT();
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
+        expect(await new Delete().relax({ ...TEST_INITIATIVE, data: { name: 'pname' } })).toEqual('Successfully deleted "PNAME"');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+    });
     test('project is not deleted when project exists and user does not have access', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         await CREATE_PROJECT();
