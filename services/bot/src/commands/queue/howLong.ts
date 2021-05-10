@@ -29,9 +29,9 @@ const MILLISECONDS = 1000;
  ***********
  * FORMULA *
  ***********
- * HowLong(0) = 0                                               --> No one is in the queue. How long is zero.
- * HowLong(1) = AvgHeadFlush(Head) - TimeElapsed                --> Only one person is in the queue; subtract time elapsed.
- * HowLong(N) = MAX(AvgHeadFlush(N) + HowLong(Relax(N-1)), 0)   --> Recursive all other cases.
+ * HowLong(0) = 0                                         --> No one is in the queue. How long is zero.
+ * HowLong(1) = MAX(AvgHeadFlush(Head) - TimeElapsed, 0)  --> Only one person is in the queue; subtract time elapsed.
+ * HowLong(N) = AvgHeadFlush(N) + HowLong(Relax(N-1))     --> Recursive all other cases.
  *
  */
 @CommandBase.authorized
@@ -78,7 +78,9 @@ export class HowLong extends CommandBase implements ICommand {
                 members.push((await PERSON_MODEL.find({ id: member.person.id }).exec())[0]);
             }
             LOGGER.debug(`Queue members are: ${JSON.stringify(members, null, 2)}`);
-            const howLong = this.howLong(members, subqueue[0]);
+            // How long can never be negative for any subqueue. The function can spit out negative numbers
+            // if the estimated wait time has already elapsed.
+            const howLong = Math.max(this.howLong(members, subqueue[0]), 0);
             LOGGER.verbose(`Average wait time: ${howLong}`);
 
             const phrase = subqueue.length === 1 ? 'is 1 person' : `are ${subqueue.length} people`;
@@ -114,6 +116,7 @@ export class HowLong extends CommandBase implements ICommand {
 
     /**
      * Get the estimated amount of time (in seconds) until the subqueue is flushed.
+     * How long can come out negative if the estimated queue time has already elapsed.
      *
      * @param subqueue - A list of people in the subqueue.
      * @param globalHead - The current head of the entire queue (not the subqueue).
@@ -130,8 +133,7 @@ export class HowLong extends CommandBase implements ICommand {
         } else {
             const time = this.averageHeadFlush(subqueue[0]) + this.howLong(subqueue.slice(1), globalHead);
             LOGGER.verbose(`Length: ${subqueue.length} - Time: ${time}`);
-            // How long can never be negative for any subqueue.
-            return Math.max(time, 0);
+            return time;
         }
     }
 }
