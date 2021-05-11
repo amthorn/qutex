@@ -3,4 +3,4 @@
  * @author Ava Thorn
  */
 
-export default jest.fn().mockImplementation(() => ({ data: 'mock respons' }));
+export default jest.fn().mockImplementation(() => ({ data: 'mock response' }));
