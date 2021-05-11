@@ -107,12 +107,7 @@ export abstract class CommandBase {
                 return `A project with name "${initiative.data.name.toUpperCase()}" does not exist.`;
             }
         } else if (registrations.length > 0) {
-            const projects = await PROJECT_MODEL.find({ name: registrations[0].projectName }).exec();
-            if (projects.length > 0) {
-                return projects[0];
-            } else {
-                throw Error('This destination is registered to a project that does not exist.');
-            }
+            return (await PROJECT_MODEL.find({ name: registrations[0].projectName }).exec())[0];
         } else {
             return 'There are no projects registered.';
         }
@@ -237,28 +232,6 @@ export abstract class CommandBase {
 
             await PERSON_MODEL.updateOne({ id: removed.person.id }, updateData).exec();
             return queueObject;
-        }
-    }
-
-    /**
-     * Adds a given admin to a target project.
-     *
-     * @param project - The project on which to add the admin.
-     * @param user - The user to make an admin on the target project.
-     * @returns Success or error string.
-     * @todo Update this to throw an error instead of returning error or success strings.
-     */
-    public static async addAdmin (project: ProjectDocument, user: IPerson): Promise<string> {
-        if (project.admins.includes(user)) {
-            return `"${user.displayName}" is already an admin.`;
-        } else {
-            project.admins.push(user);
-
-            // Save the project
-            await project.save();
-
-            // Return response
-            return `Successfully added "${user.displayName}" as an admin.`;
         }
     }
 

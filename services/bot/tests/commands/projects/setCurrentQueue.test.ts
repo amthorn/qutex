@@ -48,7 +48,7 @@ describe('Setting the current queue on a project works appropriately', () => {
             ...TEST_INITIATIVE,
             data: { name: queue.name },
             rawCommand: `set queue to ${queue.name}`
-        })).toEqual(`Successfully set "${queue.name}" as current queue`);
+        })).toEqual(`Successfully set "${queue.name}" as current queue.`);
         expect(project.currentQueue).toEqual(settings.DEFAULT_QUEUE_NAME);
         expect(await new List().relax({
             ...TEST_INITIATIVE,

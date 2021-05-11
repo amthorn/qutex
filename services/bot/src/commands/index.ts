@@ -30,7 +30,6 @@ import { HowLong } from './queue/howLong';
 import { Create as CreateAdmin } from './admins/create';
 import { List as ListAdmins } from './admins/list';
 import { Remove as RemoveAdmin } from './admins/remove';
-import { Card as AdminCard } from './admins/card';
 
 export default [
     // Status
@@ -50,7 +49,6 @@ export default [
     new CreateAdmin(),
     new ListAdmins(),
     new RemoveAdmin(),
-    new AdminCard(),
 
     // Registration
     new Register(),

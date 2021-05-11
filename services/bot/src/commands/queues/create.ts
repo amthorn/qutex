@@ -4,6 +4,7 @@
  */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
+import { ProjectDocument } from '../../models/project';
 
 @CommandBase.authorized
 export class Create extends CommandBase implements ICommand {
@@ -24,8 +25,9 @@ export class Create extends CommandBase implements ICommand {
      * @returns The response string.
      */
     public async relax (initiative: IInitiative): Promise<string> {
-        const project = await CommandBase.getProject(initiative);
-        if (typeof project === 'string') return String(project);
+        // Project will exist, if it doesn't it will error in the authorization guard.
+        // TODO: throw errors instead of returning strings
+        const project = await CommandBase.getProject(initiative) as ProjectDocument;
 
         // make sure a queue with that name doesn't already exist
         if (project.queues.filter(i => i.name === initiative.data.name.toUpperCase()).length > 0) {

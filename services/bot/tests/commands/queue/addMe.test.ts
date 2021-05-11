@@ -6,9 +6,8 @@ import { AddMe } from '../../../src/commands/queue/addMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, STRICT_DATE } from '../../util';
 
-const STRICT_DATE = 1620279788056;
 TEST_INITIATIVE.rawCommand = 'add me';
 TEST_INITIATIVE.action = new AddMe();
 

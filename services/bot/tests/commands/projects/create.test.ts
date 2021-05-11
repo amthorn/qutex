@@ -4,6 +4,7 @@
  */
 import { Create } from '../../../src/commands/projects/create';
 import { PROJECT_MODEL } from '../../../src/models/project';
+import { REGISTRATION_MODEL } from '../../../src/models/registration';
 import * as settings from '../../../src/settings.json';
 import { TEST_INITIATIVE } from '../../util';
 
@@ -50,5 +51,17 @@ describe('Create project works appropriately', () => {
         newProject.data.name = 'new project name';
         expect(await new Create().relax(newProject)).toEqual('Successfully created "NEW PROJECT NAME"');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(2);
+    });
+    test('creating multiple projects updates the registration appropriately', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'foo' } })).toEqual('Successfully created "FOO"');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
+        expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(1);
+        expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'FOO' })]);
+
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'bar' } })).toEqual('Successfully created "BAR"');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(2);
+        expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(1);
+        expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'BAR' })]);
     });
 });

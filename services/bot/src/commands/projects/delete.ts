@@ -4,6 +4,7 @@
  */
 import { CommandBase } from '../base';
 import { PROJECT_MODEL } from '../../models/project';
+import { REGISTRATION_MODEL } from '../../models/registration';
 import { Auth } from '../../enum';
 
 @CommandBase.authorized
@@ -27,6 +28,8 @@ export class Delete extends CommandBase implements ICommand {
     public async relax (initiative: IInitiative): Promise<string> {
         // Will always exist. If it doesn't, the authorizer should thrown a project not found error.
         await PROJECT_MODEL.deleteOne({ name: initiative.data.name.toUpperCase() }).exec();
+        // Delete all existing registrations for the project
+        await REGISTRATION_MODEL.deleteMany({ projectName: initiative.data.name.toUpperCase() }).exec();
         return `Successfully deleted "${initiative.data.name.toUpperCase()}"`;
     }
 }

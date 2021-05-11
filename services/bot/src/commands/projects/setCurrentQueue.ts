@@ -39,7 +39,7 @@ export class SetCurrentQueue extends CommandBase implements ICommand {
             // Save the project
             await project.save();
 
-            return `Successfully set "${project.currentQueue}" as current queue`;
+            return `Successfully set "${project.currentQueue}" as current queue.`;
         }
 
     }

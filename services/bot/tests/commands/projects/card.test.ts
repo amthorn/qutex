@@ -8,7 +8,7 @@ import * as projectCard from '../../../src/cards/project.json';
 import { BOT } from '../../../src/bot';
 import { TEST_INITIATIVE } from '../../util';
 
-TEST_INITIATIVE.data = { name: 'foo' };
+TEST_INITIATIVE.data = {};
 TEST_INITIATIVE.rawCommand = 'project';
 TEST_INITIATIVE.action = new Card();
 

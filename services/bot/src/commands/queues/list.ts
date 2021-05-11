@@ -5,6 +5,7 @@
  */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
+import { ProjectDocument } from '../../models/project';
 
 @CommandBase.authorized
 export class List extends CommandBase implements ICommand {
@@ -24,8 +25,9 @@ export class List extends CommandBase implements ICommand {
      * @returns The response string.
      */
     public async relax (initiative: IInitiative): Promise<string> {
-        const project = await CommandBase.getProject(initiative);
-        if (typeof project === 'string') return String(project);
+        // Project will exist, if it doesn't it will error in the authorization guard.
+        // TODO: throw errors instead of returning strings
+        const project = await CommandBase.getProject(initiative) as ProjectDocument;
         const queueString = project.queues.map((v, i) => `${i + 1}. ${v.name}${v.name === project.currentQueue ? ' \\*' : ''}`).join('\n');
 
         return `List of queues in project "${project.name}" are:\n\n${queueString}\n\n\\* indicates current queue.`;

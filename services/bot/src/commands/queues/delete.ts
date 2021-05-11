@@ -4,6 +4,7 @@
  */
 import { CommandBase } from '../base';
 import { Auth } from '../../enum';
+import { ProjectDocument } from '../../models/project';
 
 @CommandBase.authorized
 export class Delete extends CommandBase implements ICommand {
@@ -24,12 +25,13 @@ export class Delete extends CommandBase implements ICommand {
      * @returns The response string.
      */
     public async relax (initiative: IInitiative): Promise<string> {
-        const project = await CommandBase.getProject(initiative);
-        if (typeof project === 'string') return String(project);
+        // Project will exist, if it doesn't it will error in the authorization guard.
+        // TODO: throw errors instead of returning strings
+        const project = await CommandBase.getProject(initiative) as ProjectDocument;
         if (project.queues.filter(i => i.name === initiative.data.name.toUpperCase()).length === 0) {
-            return `Queue "${initiative.data.name.toUpperCase()}" doesn't exist on project "${project.name}"`;
+            return `Queue "${initiative.data.name.toUpperCase()}" doesn't exist on project "${project.name}".`;
         } else if (project.queues.length === 1) {
-            return 'You must have at least one queue configured on the project';
+            return 'You must have at least one queue configured on the project.';
         } else if (project.currentQueue === initiative.data.name.toUpperCase()) {
             return `Queue "${initiative.data.name}" is the current queue. You must change the current queue before you can delete it.`;
         } else {

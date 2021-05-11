@@ -46,6 +46,7 @@ export class Parser {
         } else if (messageData.personEmail) {
             destination.toPersonEmail = messageData.personEmail;
         }
+        LOGGER.verbose(`Destination: ${JSON.stringify(destination, null, 2)}`);
 
         let rawCommand = null;
         let debug = null;

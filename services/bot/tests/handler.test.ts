@@ -29,6 +29,20 @@ const MOCK_REQUEST = {
     }
 } as Request;
 
+const MOCK_ATTACHMENTACTION_REQUEST = {
+    'body': {
+        'resource': 'attachmentActions',
+        'data': {
+            'id': 'fooId',
+            'type': 'submit',
+            'messageId': 'fooMessageId',
+            'personId': 'fooPerson',
+            'roomId': 'fooRoomId',
+            'created': '2021-05-11T06:26:43.644Z'
+        }
+    }
+} as Request;
+
 describe('Handler is working', () => {
     test('handler appropriately checks message contents with no matching command', async () => {
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
@@ -103,6 +117,16 @@ describe('Handler is working', () => {
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            roomId: 'mockRoomId',
+            markdown: 'Successfully created "FOOBAR"'
+        });
+    });
+
+    test('handler appropriately handles card attachmentActions', async () => {
+        expect(await new Handler().handle(MOCK_ATTACHMENTACTION_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.attachmentActions.get).toHaveBeenCalledWith(MOCK_ATTACHMENTACTION_REQUEST.body.data.id);
         expect(BOT.messages.create).toHaveBeenCalledWith({
             roomId: 'mockRoomId',
             markdown: 'Successfully created "FOOBAR"'

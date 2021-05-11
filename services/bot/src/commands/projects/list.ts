@@ -10,7 +10,7 @@ import { LOGGER } from '../../logger';
 @CommandBase.authorized
 export class List extends CommandBase implements ICommand {
     /* eslint-disable jsdoc/require-jsdoc */
-    public readonly AUTHORIZATION: Auth = Auth.SUPER_ADMIN;
+    public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.LIST;
     public readonly COMMAND_BASE: string = 'projects';
     public readonly DESCRIPTION: string = 'Lists all available projects';
@@ -26,9 +26,16 @@ export class List extends CommandBase implements ICommand {
      */
     public async relax (initiative: IInitiative): Promise<string> {
         LOGGER.verbose(`Listing projects for user: ${initiative.user.id}`);
+        // Only return a list of projects that the user is an admin for.
         const projects = await PROJECT_MODEL.find({}).exec();
         if (projects.length > 0) {
-            const collectionString = projects.map((v, i) => `${i + 1}. ${v.name}`).join('\n');
+            const relevantProjects = [];
+            for (const project of projects) {
+                if (project.admins.map(i => i.id).includes(initiative.user.id)) {
+                    relevantProjects.push(project);
+                }
+            }
+            const collectionString = relevantProjects.map((v, i) => `${i + 1}. ${v.name}`).join('\n');
 
             return `List of projects are:\n\n${collectionString}`;
         } else {

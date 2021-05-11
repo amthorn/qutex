@@ -29,22 +29,22 @@ export class Create extends CommandBase implements ICommand {
      */
     public async relax (initiative: IInitiative): Promise<string> {
         LOGGER.verbose('Creating project...');
-        // Make sure project doesn't exist
-        initiative.data.name = initiative.data.name.toUpperCase();
-        return PROJECT_MODEL.find({ name: initiative.data.name }).then(async (existent) => {
+        const projectName = initiative.data.name.toUpperCase();
+        return PROJECT_MODEL.find({ name: projectName }).then(async (existent) => {
             let message = '';
             let level = 'verbose';
             if (existent.length > 0) {
-                message = `A project with name "${initiative.data.name}" already exists.`;
+                message = `A project with name "${projectName}" already exists.`;
                 level = 'warn';
             } else {
                 // Always create project with one default queue
-                const queue = { name: settings.DEFAULT_QUEUE_NAME.toUpperCase(), members: [] };
+                const queue = { name: settings.DEFAULT_QUEUE_NAME, members: [] };
                 // Always set the only existing queue to the project's current queue
                 // Always set the user as the only admin
 
                 const project = PROJECT_MODEL.build({
                     ...initiative.data,
+                    name: projectName,
                     queues: [queue],
                     currentQueue: queue.name,
                     admins: [initiative.user]
@@ -53,11 +53,25 @@ export class Create extends CommandBase implements ICommand {
                 // Save the project
                 const result = await project.save();
 
-                // Create registration for the newly created project.
-                await REGISTRATION_MODEL.build({
-                    destination: initiative.destination,
-                    projectName: project.name
-                }).save();
+                // Create or update the registration for the newly created project.
+                const registrations = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
+                LOGGER.verbose(`Found: ${JSON.stringify(registrations, null, 2)}`);
+                if (registrations.length > 0) {
+                    for (const registration of registrations) {
+                        LOGGER.verbose(`Updating: ${JSON.stringify(registration, null, 2)}`);
+                        await registration.update({
+                            destination: registration.destination,
+                            projectName: project.name
+                        }).exec();
+                    }
+                } else {
+                    const registration = {
+                        destination: initiative.destination,
+                        projectName: project.name
+                    };
+                    LOGGER.verbose(`Adding: ${JSON.stringify(registration, null, 2)}`);
+                    await REGISTRATION_MODEL.build(registration).save();
+                }
 
                 message = `Successfully created "${result.name}"`;
             }

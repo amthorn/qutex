@@ -33,14 +33,16 @@ describe('List project works appropriately', () => {
         expect(await new Create().relax(newProject)).toEqual('Successfully created "PROJECT2"');
         expect(await new List().relax(newProject)).toEqual('List of projects are:\n\n1. FOO\n2. PROJECT1\n3. PROJECT2');
     });
-    test('Errors when a project admin tries to list projects', async () => {
+    test('Only shows relevant projects when a project admin tries to list projects', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
-        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'foo' } })).toEqual('Successfully created "FOO"');
-        expect(await new List().relax({ ...TEST_INITIATIVE, user: PROJECT_ADMIN })).toEqual('You are not authorized to perform that action. Please ask an administrator.');
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'foo' }, user: PROJECT_ADMIN })).toEqual('Successfully created "FOO"');
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'bar' }, user: STANDARD_USER })).toEqual('Successfully created "BAR"');
+        expect(await new List().relax({ ...TEST_INITIATIVE, user: PROJECT_ADMIN })).toEqual('List of projects are:\n\n1. FOO');
     });
-    test('Errors when a non-admin tries to list projects', async () => {
+    test('Only shows relevant projects when a non-admin tries to list projects', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
-        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'foo' } })).toEqual('Successfully created "FOO"');
-        expect(await new List().relax({ ...TEST_INITIATIVE, user: STANDARD_USER })).toEqual('You are not authorized to perform that action. Please ask an administrator.');
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'foo' }, user: PROJECT_ADMIN })).toEqual('Successfully created "FOO"');
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'bar' }, user: STANDARD_USER })).toEqual('Successfully created "BAR"');
+        expect(await new List().relax({ ...TEST_INITIATIVE, user: STANDARD_USER })).toEqual('List of projects are:\n\n1. BAR');
     });
 });

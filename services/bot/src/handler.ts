@@ -55,7 +55,9 @@ export class Handler {
                 }
                 if (result) {
                     await this.handleDebug(initiative, request, result);
-                    return await BOT.messages.create({ markdown: result, ...initiative.destination });
+                    const message = { markdown: result, ...initiative.destination };
+                    LOGGER.info(`Sending to: ${JSON.stringify(message, null, 2)}`);
+                    return await BOT.messages.create(message);
                 }
             } catch (e) {
                 LOGGER.error(e.stack);

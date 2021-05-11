@@ -9,7 +9,7 @@ import { BOT } from '../../../src/bot';
 import { REGISTRATION_MODEL } from '../../../src/models/registration';
 import { TEST_INITIATIVE } from '../../util';
 
-TEST_INITIATIVE.data = { name: 'foo' };
+TEST_INITIATIVE.data = {};
 TEST_INITIATIVE.rawCommand = 'registration';
 TEST_INITIATIVE.action = new Card();
 
