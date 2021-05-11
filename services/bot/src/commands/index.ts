@@ -31,6 +31,8 @@ import { Create as CreateAdmin } from './admins/create';
 import { List as ListAdmins } from './admins/list';
 import { Remove as RemoveAdmin } from './admins/remove';
 
+import { Pun } from './eggs/pun';
+
 export default [
     // Status
     new GetStatus(),
@@ -66,7 +68,9 @@ export default [
     new QueueCard(),
     new AddMe(),
     new RemoveMe(),
-    new HowLong()
+    new HowLong(),
+
+    new Pun()
 ] as ICommand[];
 
 // For testing
