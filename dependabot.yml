@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/services/bot"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "avthorn"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "avthorn"
+  - package-ecosystem: "docker"
+    directory: "/services/bot"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "avthorn"

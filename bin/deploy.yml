@@ -11,10 +11,6 @@
     - name: Confirm?
       pause:
         prompt: Press return to continue. Press Ctrl+c and then "a" to abort
-    - name: Go to project source
-      ansible.builtin.shell:
-        cmd: ls -la
-        chdir: '{{ SRC }}'
     - name: Do deployment
       environment:
         QUTEX_RELEASE_DATE: "{{ QUTEX_RELEASE_DATE }}"
