@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: 15.14.0
       - uses: actions/checkout@master
-      - uses: actions/cache@v2
+      - uses: actions/cache@v2.1.5
         id: save-deps
         with:
           path: "**/node_modules"
@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 15.14.0
       - uses: actions/checkout@master
-      - uses: actions/cache@v2
+      - uses: actions/cache@v2.1.5
         id: save-deps
         with:
           path: "**/node_modules"
@@ -51,7 +51,7 @@ jobs:
         with:
           node-version: 15.14.0
       - uses: actions/checkout@master
-      - uses: actions/cache@v2
+      - uses: actions/cache@v2.1.5
         id: save-deps
         with:
           path: "**/node_modules"
