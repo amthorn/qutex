@@ -31,13 +31,17 @@ export class List extends CommandBase implements ICommand {
         if (projects.length > 0) {
             const relevantProjects = [];
             for (const project of projects) {
-                if (project.admins.map(i => i.id).includes(initiative.user.id)) {
+                if (project.admins.map(i => i.id).includes(initiative.user.id) || CommandBase.SUPER_ADMINS.includes(initiative.user.id)) {
                     relevantProjects.push(project);
                 }
             }
-            const collectionString = relevantProjects.map((v, i) => `${i + 1}. ${v.name}`).join('\n');
+            if (relevantProjects.length > 0) {
+                const collectionString = relevantProjects.map((v, i) => `${i + 1}. ${v.name}`).join('\n');
 
-            return `List of projects are:\n\n${collectionString}`;
+                return `List of projects are:\n\n${collectionString}`;
+            } else {
+                return 'You don\'t have access to any projects.';
+            }
         } else {
             return 'There are no projects configured.';
         }

@@ -1,6 +1,6 @@
 - name: deploy to prod
   gather_facts: no
-  hosts: webex-reminders
+  hosts: qutex
   tasks:
     - name: Release Date
       debug:
@@ -11,16 +11,18 @@
     - name: Confirm?
       pause:
         prompt: Press return to continue. Press Ctrl+c and then "a" to abort
-    - name: Tear down existing services
-      community.docker.docker_compose:
-        project_src: '{{ SRC }}'
-        state: absent
-    - name: stand up
+    - name: Go to project source
+      ansible.builtin.shell:
+        cmd: ls -la
+        chdir: '{{ SRC }}'
+    - name: Do deployment
       environment:
         QUTEX_RELEASE_DATE: "{{ QUTEX_RELEASE_DATE }}"
         QUTEX_VERSION: "{{ QUTEX_VERSION }}"
         QUTEX_IMAGE: docker.pkg.github.com/amthorn/qutex/qutex_bot:{{ QUTEX_VERSION }}
-      community.docker.docker_compose:
-        project_src: '{{ SRC }}'
-        state: present
-        pull: yes
+      ansible.builtin.shell:
+        chdir: '{{ SRC }}'
+        cmd: |
+          docker-compose pull
+          docker-compose down
+          docker-compose up -d

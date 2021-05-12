@@ -9,4 +9,4 @@ fi
 
 today=$(date +"%b %d, %Y")
 
-ansible-playbook bin/deploy.yml --extra-vars "QUTEX_RELEASE_DATE=\"$today\" QUTEX_VERSION=$1 SRC=\"qutex\"" -v
+ansible-playbook bin/deploy.yml  -i bin/hosts.yml --extra-vars "QUTEX_RELEASE_DATE=\"$today\" QUTEX_VERSION=$1 SRC=\"qutex\"" -v

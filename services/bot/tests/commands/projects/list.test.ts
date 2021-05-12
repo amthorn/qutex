@@ -45,4 +45,10 @@ describe('List project works appropriately', () => {
         expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'bar' }, user: STANDARD_USER })).toEqual('Successfully created "BAR"');
         expect(await new List().relax({ ...TEST_INITIATIVE, user: STANDARD_USER })).toEqual('List of projects are:\n\n1. BAR');
     });
+    test('Only shows relevant projects when a non-admin tries to list projects and has no project access', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'foo' }, user: PROJECT_ADMIN })).toEqual('Successfully created "FOO"');
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'bar' }, user: PROJECT_ADMIN })).toEqual('Successfully created "BAR"');
+        expect(await new List().relax({ ...TEST_INITIATIVE, user: STANDARD_USER })).toEqual('You don\'t have access to any projects.');
+    });
 });
