@@ -1,6 +1,8 @@
 version: '3.3'
 services:
     bot:
+        build:
+            context: ./services/bot
         command: start:dev
         tty: true
         environment:
@@ -9,6 +11,9 @@ services:
             - ./services/bot:/app
             - ./services/bot/tsconfig.json:/app/tsconfig.json
             - ./services/bot/package.json:/app/package.json
+    migrate:
+        build:
+            context: ./services/bot
     mongo:
         ports:
             - 27017:27017

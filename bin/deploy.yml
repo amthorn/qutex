@@ -1,0 +1,26 @@
+- name: deploy to prod
+  gather_facts: no
+  hosts: webex-reminders
+  tasks:
+    - name: Release Date
+      debug:
+        msg: >
+          Release Date: '{{ QUTEX_RELEASE_DATE }}'
+          Version: '{{ QUTEX_VERSION }}'
+          Image: 'docker.pkg.github.com/amthorn/qutex/qutex_bot:{{ QUTEX_VERSION }}'
+    - name: Confirm?
+      pause:
+        prompt: Press return to continue. Press Ctrl+c and then "a" to abort
+    - name: Tear down existing services
+      community.docker.docker_compose:
+        project_src: '{{ SRC }}'
+        state: absent
+    - name: stand up
+      environment:
+        QUTEX_RELEASE_DATE: "{{ QUTEX_RELEASE_DATE }}"
+        QUTEX_VERSION: "{{ QUTEX_VERSION }}"
+        QUTEX_IMAGE: docker.pkg.github.com/amthorn/qutex/qutex_bot:{{ QUTEX_VERSION }}
+      community.docker.docker_compose:
+        project_src: '{{ SRC }}'
+        state: present
+        pull: yes

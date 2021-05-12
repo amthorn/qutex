@@ -1,17 +1,21 @@
 version: '3.3'
 services:
     bot:
-        image: qutex_bot:latest
+        image: ${QUTEX_IMAGE:-qutex_bot:latest}
         restart: always
-        build:
-            context: ./services/bot
+        depends_on: 
+            - mongo
         ports:
             - 3000:3000
-        env_file:
-            - settings.env
-            - mongo.env
         environment:
             NODE_ENV: production
+            VERSION: ${QUTEX_VERSION}
+            RELEASE_DATE: ${QUTEX_RELEASE_DATE}
+            AUTHOR_NAME: Ava Thorn
+            AUTHOR_EMAIL: avatheavian@gmail.com
+            SUPER_ADMINS: '["Y2lzY29zcGFyazovL3VzL1BFT1BMRS9kODRkZjI1MS1iYmY3LTRlZTEtOTM1OS00Y2I0MGIyOTBhN2I"]'
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_DATABASE: qutex
         secrets:
             - token
             - mongoPassword
@@ -20,17 +24,14 @@ services:
             interval: 1m30s
             timeout: 10s
             retries: 3
-            start_period: 20s
     migrate:
         depends_on: 
             - mongo
-        image: qutex_bot:latest
-        build:
-            context: ./services/bot
-        env_file:
-            - mongo.env
+        image: ${QUTEX_IMAGE:-qutex_bot:latest}
         environment:
             NODE_ENV: production
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_DATABASE: qutex
         secrets:
             - mongoPassword
         entrypoint: node_modules/migrate-mongo/bin/migrate-mongo.js
@@ -40,9 +41,9 @@ services:
     mongo:
         image: mongo:4.4.5
         restart: always
-        env_file:
-            - mongo.env
         environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_DATABASE: qutex
             MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongoPassword
         volumes:
             - mongo_volume:/data/db
