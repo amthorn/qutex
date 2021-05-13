@@ -4,6 +4,27 @@
  */
 
 /**
+ * A snapshot of a queue across history.
+ */
+interface IHistoryQueue {
+
+    /**
+     * The name of the queue.
+     */
+    name: string;
+
+    /**
+     * An ordered list of members in the queue. Members at the beginning of the list are at the front of the queue.
+     */
+    members: IQueueMember[];
+
+    /**
+     * The time at which this snapshot of the queue was taken.
+     */
+    time: Date;
+}
+
+/**
  * The interface for Qutex Queue; the main data manager objects for qutex.
  */
 interface IQueue {
@@ -17,6 +38,11 @@ interface IQueue {
      * An ordered list of members in the queue. Members at the beginning of the list are at the front of the queue.
      */
     members: IQueueMember[];
+
+    /**
+     * Snapshots of the queue across history. A new entry is added for each time the queue changes.
+     */
+    history: IHistoryQueue[];
 }
 
 /**

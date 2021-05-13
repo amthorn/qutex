@@ -11,7 +11,7 @@ export const PROJECT_NAME = 'PNAME';
 export const PROJECT_ADMIN = { id: 'adminId', displayName: 'ANAME' };
 export const STANDARD_USER = { id: 'standardId', displayName: 'STANDARDNAME' };
 export const SUPER_ADMIN = { id: 'superAdminId', displayName: 'SUPERANAME' };
-export const TEST_QUEUE: IQueue = { name: settings.DEFAULT_QUEUE_NAME, members: [] };
+export const TEST_QUEUE: IQueue = { name: settings.DEFAULT_QUEUE_NAME, members: [], history: [] };
 export const TEST_REGISTRATION: IRegistration = { destination: { toPersonId: 'notReal' }, projectName: PROJECT_NAME };
 export const TEST_PROJECT: IProject = {
     name: PROJECT_NAME,

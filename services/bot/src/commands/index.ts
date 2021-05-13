@@ -33,6 +33,8 @@ import { Remove as RemoveAdmin } from './admins/remove';
 
 import { Pun } from './eggs/pun';
 
+import { Get as getLargestQueueDepth } from './queue/getLargestQueueDepth';
+
 export default [
     // Status
     new GetStatus(),
@@ -70,7 +72,9 @@ export default [
     new RemoveMe(),
     new HowLong(),
 
-    new Pun()
+    new Pun(),
+
+    new getLargestQueueDepth()
 ] as ICommand[];
 
 // For testing

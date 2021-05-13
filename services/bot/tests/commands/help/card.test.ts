@@ -9,8 +9,8 @@ import { BOT } from '../../../src/bot';
 import { Auth } from '../../../src/enum';
 import { TEST_INITIATIVE } from '../../util';
 
-const ALL_COMMANDS = 23;
-const PUBLIC_COMMANDS = 17;
+const ALL_COMMANDS = 24;
+const PUBLIC_COMMANDS = 18;
 const PROJECT_ADMIN_COMMANDS = 5;
 const SUPER_ADMIN_COMMANDS = 1;
 TEST_INITIATIVE.rawCommand = 'help';

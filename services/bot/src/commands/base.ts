@@ -159,6 +159,11 @@ export abstract class CommandBase {
             enqueuedAt: now,
             atHeadTime: atHeadTime
         });
+        queueObject.history.push({
+            name: queueObject.name,
+            members: queueObject.members,
+            time: new Date()
+        });
         return queueObject;
     }
 
@@ -203,6 +208,11 @@ export abstract class CommandBase {
             return `User "${user.displayName}" was not found in queue "${queueObject.name}"`;
         } else {
             const removed = queueObject.members.splice(idx, 1)[0];
+            queueObject.history.push({
+                name: queueObject.name,
+                members: queueObject.members,
+                time: new Date()
+            });
             const now = new Date().getTime();
 
             // If we removed the person at the head of the queue and

@@ -34,7 +34,7 @@ export class Create extends CommandBase implements ICommand {
             return `Queue "${initiative.data.name.toUpperCase()}" already exists.`;
         } else {
             // Add the queue to the project
-            project.queues.push({ name: initiative.data.name.toUpperCase(), members: [] });
+            project.queues.push({ name: initiative.data.name.toUpperCase(), members: [], history: [] });
 
             // Save the project
             await project.save();
