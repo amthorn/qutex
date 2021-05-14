@@ -8,7 +8,7 @@
     "test": "jest -i",
     "start:dev": "nodemon",
     "build": "rimraf build && tsc",
-    "start": "node build/index.js",
+    "start": "node build/src/index.js",
     "lint": "eslint .",
     "qa": "yarn lint && yarn test",
     "start:up": "ts-node src/startup/startup.ts",
@@ -51,7 +51,6 @@
     "@types/node": "^15.0.3",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
-    "axios": "^0.21.1",
     "babel-jest": "^26.0.22",
     "eslint": "^7.26.0",
     "eslint-plugin-jsdoc": "^34.0.2",
@@ -72,6 +71,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.8",
     "webex": "1.119.6",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "axios": "^0.21.1"
   }
 }
