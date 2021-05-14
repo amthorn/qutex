@@ -53,7 +53,7 @@
     "@typescript-eslint/parser": "^4.23.0",
     "babel-jest": "^26.0.22",
     "eslint": "^7.26.0",
-    "eslint-plugin-jsdoc": "^34.0.2",
+    "eslint-plugin-jsdoc": "^34.2.1",
     "jest": "^26.6.3",
     "mockdate": "^3.0.5",
     "mrm-task-npm-docker": "^1.2.0",
@@ -70,7 +70,7 @@
     "migrate-mongo": "^8.2.2",
     "moment": "^2.29.1",
     "mongoose": "^5.12.8",
-    "webex": "1.119.6",
+    "webex": "1.119.7",
     "winston": "^3.3.3",
     "axios": "^0.21.1"
   }
