@@ -12,6 +12,6 @@ interface IChartJsImage {
     setConfig: (config: any) => IChartJsImage; //eslint-disable-line @typescript-eslint/no-explicit-any
     setWidth: (width: number) => IChartJsImage; //eslint-disable-line @typescript-eslint/no-unused-vars
     setHeight: (height: number) => undefined;
-    getShortUrl: () => string;
-    toBinary: () => string;
+    getShortUrl: () => Promise<string>;
+    toBinary: () => Promise<string>;
 }

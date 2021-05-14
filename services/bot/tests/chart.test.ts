@@ -10,8 +10,8 @@ describe('The Chart superclass works appropriately', () => {
     test('Chart class can be created with shortUrl and image binary can be retrieved', async () => {
         const chart = new Chart({});
         expect(chart.chart.setConfig).toBeCalledWith({});
-        expect(chart.url).toEqual('myShortUrl');
-        expect(chart.image).toEqual('myBinaryImage');
+        expect(await chart.url).toEqual('myShortUrl');
+        expect(await chart.image).toEqual('myBinaryImage');
 
     });
     test('Chart class can be created with non-empty configuration', async () => {
@@ -35,8 +35,8 @@ describe('The Queue Length History subclass works appropriately', () => {
         config.data.datasets[0].data = history.map(i => ({ y: i.members.length, x: i.time.toLocaleString() }));
 
         expect(chart.chart.setConfig).toBeCalledWith(config);
-        expect(chart.url).toEqual('myShortUrl');
-        expect(chart.image).toEqual('myBinaryImage');
+        expect(await chart.url).toEqual('myShortUrl');
+        expect(await chart.image).toEqual('myBinaryImage');
 
     });
     test('QueueLength class can be created with shortUrl and image binary can be retrieved and configuration is valid with a valid history', async () => {
@@ -107,8 +107,8 @@ describe('The Queue Length History subclass works appropriately', () => {
         config.data.datasets[0].data = history.map(i => ({ y: i.members.length, x: i.time.toLocaleString() }));
 
         expect(chart.chart.setConfig).toBeCalledWith(config);
-        expect(chart.url).toEqual('myShortUrl');
-        expect(chart.image).toEqual('myBinaryImage');
+        expect(await chart.url).toEqual('myShortUrl');
+        expect(await chart.image).toEqual('myBinaryImage');
 
     });
     test('QueueLength class test ticker', async () => {

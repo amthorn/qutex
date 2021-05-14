@@ -40,7 +40,7 @@ export class Chart {
      * 
      * @returns The short URL.
      */
-    public get url (): string {
+    public get url (): Promise<string> {
         return this.CHART.getShortUrl();
     }
 
@@ -49,7 +49,7 @@ export class Chart {
      * 
      * @returns The binary image data.
      */
-    public get image (): string {
+    public get image (): Promise<string> {
         return this.CHART.toBinary();
     }
 

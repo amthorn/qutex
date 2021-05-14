@@ -34,7 +34,7 @@ export class Get extends CommandBase implements ICommand {
 
         const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
         if (queue.history.length > 0) {
-            const chart = new QueueLength(queue).url;
+            const chart = await new QueueLength(queue).url;
 
             LOGGER.verbose(`Chart: ${chart}`);
 
