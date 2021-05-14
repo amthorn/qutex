@@ -111,4 +111,13 @@ describe('The Queue Length History subclass works appropriately', () => {
         expect(chart.image).toEqual('myBinaryImage');
 
     });
+    test('QueueLength class test ticker', async () => {
+        /* eslint-disable @typescript-eslint/no-magic-numbers */
+        expect(QUEUE_LENGTH_CONFIG.options.scales.yAxes[0].ticks.callback(1)).toEqual(1);
+        expect(QUEUE_LENGTH_CONFIG.options.scales.yAxes[0].ticks.callback(1.5)).toEqual(null);
+        expect(QUEUE_LENGTH_CONFIG.options.scales.yAxes[0].ticks.callback(0.1)).toEqual(null);
+        expect(QUEUE_LENGTH_CONFIG.options.scales.yAxes[0].ticks.callback(10)).toEqual(10);
+        expect(QUEUE_LENGTH_CONFIG.options.scales.yAxes[0].ticks.callback(10.1)).toEqual(null);
+        /* eslint-enable @typescript-eslint/no-magic-numbers */
+    });
 });
