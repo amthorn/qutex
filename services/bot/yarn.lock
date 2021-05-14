@@ -2773,6 +2773,14 @@ char-regex@^1.0.2:
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
+chartjs-to-image@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/chartjs-to-image/-/chartjs-to-image-1.0.4.tgz#7a7ec0069c3d35bdb076653191f3d6e5a4570117"
+  integrity sha512-9Oh5dnWf2PUIIdl6ORgsM8GukoM29I9vutytDrC10Iw+K4xQ0DjtXTPdv95XG+fEU1H/+OzU9BWQdKC59tVIhg==
+  dependencies:
+    axios "^0.21.1"
+    javascript-stringify "^2.0.1"
+
 chokidar@^3.2.2:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.1.tgz#ee9ce7bbebd2b79f49f304799d5468e31e14e68a"
@@ -4671,6 +4679,11 @@ javascript-state-machine@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/javascript-state-machine/-/javascript-state-machine-3.1.0.tgz#06eeb2136a6a19ae1b56105c25caec283dd5cd14"
   integrity sha512-BwhYxQ1OPenBPXC735RgfB+ZUG8H3kjsx8hrYTgWnoy6TPipEy4fiicyhT2lxRKAXq9pG7CfFT8a2HLr6Hmwxg==
+
+javascript-stringify@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/javascript-stringify/-/javascript-stringify-2.1.0.tgz#27c76539be14d8bd128219a2d731b09337904e79"
+  integrity sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==
 
 jest-changed-files@^26.6.2:
   version "26.6.2"

@@ -33,7 +33,10 @@ import { Remove as RemoveAdmin } from './admins/remove';
 
 import { Pun } from './eggs/pun';
 
-import { Get as getLargestQueueDepth } from './queue/getLargestQueueDepth';
+import { Get as GetLargestQueueDepth } from './queue/getLargestQueueDepth';
+
+import { Card as StatisticsCard } from './graphs/card';
+import { Get as GetQueueLengthHistory } from './graphs/queueLengthHistory';
 
 export default [
     // Status
@@ -71,10 +74,14 @@ export default [
     new AddMe(),
     new RemoveMe(),
     new HowLong(),
+    new GetLargestQueueDepth(),
 
+    // Eggs
     new Pun(),
 
-    new getLargestQueueDepth()
+    // Graphs
+    new GetQueueLengthHistory(),
+    new StatisticsCard()
 ] as ICommand[];
 
 // For testing

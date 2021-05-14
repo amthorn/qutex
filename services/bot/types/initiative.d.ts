@@ -71,4 +71,9 @@ interface IInitiative {
      */
     mentions: string[];
 
+    /**
+     * This is the time that the initiative was received. It is useful when storing in mongo.
+     */
+    time?: Date;
+
 }

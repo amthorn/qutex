@@ -49,7 +49,7 @@ export class Parser {
         LOGGER.verbose(`Destination: ${JSON.stringify(destination, null, 2)}`);
 
         let rawCommand = null;
-        let debug = null;
+        let isDebug = false;
 
         if (messageData.text) {
             // Response send in text, not as response from a card
@@ -61,7 +61,7 @@ export class Parser {
             const rawSplit = messageData.text.split('|').map((i: string) => i.trim());
             rawCommand = rawSplit[0];
             const modifiers = rawSplit.splice(1).map((i: string) => i.toLowerCase());
-            debug = modifiers.includes('debug');
+            isDebug = modifiers.includes('debug');
         } else {
             // Response is from a card
             LOGGER.info('Response is from a card. normalizing...');
@@ -89,7 +89,7 @@ export class Parser {
         return {
             rawCommand: rawCommand instanceof Object ? rawCommand.action : rawCommand,
             destination: destination,
-            debug: debug,
+            debug: isDebug,
             user: user,
             data: commandData.data,
             action: commandData.action,

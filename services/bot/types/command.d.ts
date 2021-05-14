@@ -25,8 +25,6 @@ const enum CommandType {
 
 /**
  * The interface for command objects.
- *
- * @interface
  */
 interface ICommand {
     /**
@@ -46,6 +44,7 @@ interface ICommand {
      * @access public
      */
     relax: (initiative: Initiative) => Promise<string>;
+
     /**
      * This is a helper property which is implemented on the base class that can construct
      * the value of the target command.

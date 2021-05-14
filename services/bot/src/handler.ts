@@ -9,6 +9,7 @@ import { Request } from 'express';
 import { Parser } from './parser';
 import { BOT } from './bot';
 import { LOGGER } from './logger';
+import { INITIATIVE_MODEL } from './models/initiative';
 
 export class Handler {
     /**
@@ -45,7 +46,11 @@ export class Handler {
                 LOGGER.debug(request.body);
                 const initiative = await this.parser.parse(request);
                 let result = null;
+                LOGGER.info('Command issued');
                 if (initiative.action) {
+                    // When the command is invalid, sometimes it cannot be stored in mongo
+                    // Thus only dump the initiative to mongo when we know the command was valid.
+                    await INITIATIVE_MODEL.build({ ...initiative, time: new Date() }).save();
                     LOGGER.info(`user: ${initiative.user.displayName}`);
                     LOGGER.info(`command: ${initiative.rawCommand}`);
                     LOGGER.info(`action: ${JSON.stringify(initiative.action, null, 2)}`);
