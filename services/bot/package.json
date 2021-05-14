@@ -71,7 +71,7 @@
     "migrate-mongo": "^8.2.2",
     "moment": "^2.29.1",
     "mongoose": "^5.12.8",
-    "webex": "1.119.6",
+    "webex": "1.119.7",
     "winston": "^3.3.3"
   }
 }
