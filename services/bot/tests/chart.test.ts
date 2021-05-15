@@ -12,7 +12,6 @@ describe('The Chart superclass works appropriately', () => {
         expect(chart.chart.setConfig).toBeCalledWith({});
         expect(await chart.url).toEqual('myShortUrl');
         expect(await chart.image).toEqual('myBinaryImage');
-
     });
     test('Chart class can be created with non-empty configuration', async () => {
         expect(new Chart({ 'foo': 'bar' }).chart.setConfig).toBeCalledWith({ 'foo': 'bar' });

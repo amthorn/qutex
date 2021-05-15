@@ -7,7 +7,9 @@ import { PersonDocument, PERSON_MODEL } from '../models/person';
 import { REGISTRATION_MODEL } from '../models/registration';
 import { LOGGER } from '../logger';
 import { Auth } from '../enum';
+import { BOT } from '../bot';
 import moment from 'moment';
+import * as settings from '../settings.json';
 
 
 const MILLISECONDS = 1000;
@@ -130,13 +132,20 @@ export abstract class CommandBase {
         } else {
             // Person does not exist; add to database
             LOGGER.verbose(`Person '${initiative.user.displayName}' does not exist; creating...`);
-            return await PERSON_MODEL.build({
+            const result = await PERSON_MODEL.build({
                 ...initiative.user,
                 inQueueCount: 0,
                 inQueueSeconds: 0,
                 atHeadSeconds: 0,
                 atHeadCount: 0
             }).save();
+            // A person is being stored in the database for the first time, send them a direct message with
+            // information as it relates to the privacy policy
+            await BOT.messages.create({
+                toPersonId: initiative.user.id,
+                markdown: settings.PRIVACY_POLICY_MESSAGE.replace('AUTHOR_EMAIL', process.env.AUTHOR_EMAIL || '')
+            });
+            return result;
         }
     }
 
