@@ -5,6 +5,8 @@
 import { AddMe } from '../../../src/commands/queue/addMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
+import { BOT } from '../../../src/bot';
+import * as settings from '../../../src/settings.json';
 import MockDate from 'mockdate';
 import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, STRICT_DATE } from '../../util';
 
@@ -37,6 +39,10 @@ describe('Adding me to a queue works appropriately', () => {
         // validate
         const people = await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec();
         expect(people).toHaveLength(1);
+        expect(BOT.messages.create).toBeCalledWith({
+            toPersonId: TEST_INITIATIVE.user.id,
+            markdown: settings.PRIVACY_POLICY_MESSAGE.replace('AUTHOR_EMAIL', process.env.AUTHOR_EMAIL || '')
+        });
         expect(people[0]).toEqual(expect.objectContaining({
             ...TEST_INITIATIVE.user,
             atHeadCount: 0,

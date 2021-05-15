@@ -1,3 +1,4 @@
 {
-    "DEFAULT_QUEUE_NAME": "DEFAULT"
+    "DEFAULT_QUEUE_NAME": "DEFAULT",
+    "PRIVACY_POLICY_MESSAGE": "Hello!\n\nSome of your data has been stored in the Qutex management system. This data includes:\n\n1. Your webex ID\n2. Your webex email\n3. Your display name\n\nThis data is not used for anything other than providing Qutex services. You can read more about how your data is used and stored in our [Privacy Policy](https://github.com/amthorn/qutex/wiki/Privacy-Policy). You can request the removal of your personal data by sending an email to AUTHOR_EMAIL. If your data is removed, Qutex will no longer be able to provide services to any projects that require your data."
 }
