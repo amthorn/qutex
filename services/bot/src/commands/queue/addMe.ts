@@ -27,7 +27,7 @@ export class AddMe extends CommandBase implements ICommand {
         if (typeof project === 'string') return String(project);
 
         // Create user if they don't exist
-        const user = await CommandBase.addUser(initiative);
+        const user = await CommandBase.addUser(initiative.user.id, initiative.user.displayName);
 
         // Add to end of queue
         const queue = CommandBase.addToQueue(project.queues, project.currentQueue, user);

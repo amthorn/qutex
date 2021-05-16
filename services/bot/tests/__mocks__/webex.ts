@@ -4,7 +4,7 @@
  */
 
 const MOCK_MESSAGE = { text: 'foo', personId: 'fooPersonId' };
-const MOCK_PERSON = { id: 'fooId' };
+const MOCK_PERSON = { id: 'fooId', displayName: 'foo name' };
 const MOCK_ATTACHMENT_ACTION = {
     'roomId': 'mockRoomId',
     'roomType': 'group',

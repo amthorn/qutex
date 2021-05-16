@@ -37,6 +37,7 @@ describe('Removing me from a queue works appropriately', () => {
         expect(queue.members).toHaveLength(0);
         expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`User "${STANDARD_USER.displayName}" was not found in queue "DEFAULT"`);
         expect(queue.members).toHaveLength(0);
+        expect(await PERSON_MODEL.find({ id: STANDARD_USER.id }).exec()).toHaveLength(0);
     });
 
     test('errors when there is someone in the queue but its not the user', async () => {

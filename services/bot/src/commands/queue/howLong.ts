@@ -13,22 +13,22 @@ const MILLISECONDS = 1000;
 /**
  * Formula for calculating "how long" until a person reaches the head of the queue is...
  *
- *************
+ *===========*
  * VARIABLES *
- *************
+ *===========*
  * Head = The member currently at the head of the queue.
  * TimeElapsed = Time elapsed since the current queue head was put at the head.
  *
- *************
+ *===========*
  * FUNCTIONS *
- *************
+ *===========*
  * AvgHeadFlush(N) = Average time to flush member N from the head of the queue.
  * Relax(N) = The current queue except with the current head removed and all the members shifted up one.
  *
  *
- ***********
+ *=========*
  * FORMULA *
- ***********
+ *=========*
  * HowLong(0) = 0                                         --> No one is in the queue. How long is zero.
  * HowLong(1) = MAX(AvgHeadFlush(Head) - TimeElapsed, 0)  --> Only one person is in the queue; subtract time elapsed.
  * HowLong(N) = AvgHeadFlush(N) + HowLong(Relax(N-1))     --> Recursive all other cases.

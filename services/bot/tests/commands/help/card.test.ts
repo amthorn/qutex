@@ -9,9 +9,9 @@ import { BOT } from '../../../src/bot';
 import { Auth } from '../../../src/enum';
 import { TEST_INITIATIVE } from '../../util';
 
-const ALL_COMMANDS = 26;
+const ALL_COMMANDS = 28;
 const PUBLIC_COMMANDS = 20;
-const PROJECT_ADMIN_COMMANDS = 5;
+const PROJECT_ADMIN_COMMANDS = 7;
 const SUPER_ADMIN_COMMANDS = 1;
 TEST_INITIATIVE.rawCommand = 'help';
 TEST_INITIATIVE.action = new HelpCard();

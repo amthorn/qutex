@@ -13,6 +13,14 @@ import * as settings from '../settings.json';
 
 
 const MILLISECONDS = 1000;
+
+/**
+ * 
+ */
+interface IRemoveFromQueueUser {
+    id: string;
+    displayName: string;
+}
 export abstract class CommandBase {
 
     /**
@@ -118,22 +126,24 @@ export abstract class CommandBase {
     /**
      * Adds the invoking user to the database.
      *
-     * @param initiative - Initiative for which to parse and add the invoking user from.
+     * @param id - The id for the user to add.
+     * @param displayName - The display name for the user to add.
      * @returns The newly created person document.
      * @see PersonDocument
      */
-    public static async addUser (initiative: IInitiative): Promise<PersonDocument> {
+    public static async addUser (id: string, displayName: string): Promise<PersonDocument> {
         LOGGER.verbose('Adding user if they do not exist...');
-        const people = await PERSON_MODEL.find({ id: initiative.user.id }).exec();
+        const people = await PERSON_MODEL.find({ id: id }).exec();
         if (people.length > 0) {
             // person already exists, do nothing but return
             LOGGER.verbose(`Person '${JSON.stringify(people[0], null, 2)}' already exists.`);
             return people[0];
         } else {
             // Person does not exist; add to database
-            LOGGER.verbose(`Person '${initiative.user.displayName}' does not exist; creating...`);
+            LOGGER.verbose(`Person '${displayName}' does not exist; creating...`);
             const result = await PERSON_MODEL.build({
-                ...initiative.user,
+                id: id,
+                displayName: displayName,
                 inQueueCount: 0,
                 inQueueSeconds: 0,
                 atHeadSeconds: 0,
@@ -142,7 +152,7 @@ export abstract class CommandBase {
             // A person is being stored in the database for the first time, send them a direct message with
             // information as it relates to the privacy policy
             await BOT.messages.create({
-                toPersonId: initiative.user.id,
+                toPersonId: id,
                 markdown: settings.PRIVACY_POLICY_MESSAGE.replace('AUTHOR_EMAIL', process.env.AUTHOR_EMAIL || '')
             });
             return result;
@@ -208,9 +218,11 @@ export abstract class CommandBase {
      * @param queues - A list of all queues to search through.
      * @param queue - The name of the queue to which to remove the user.
      * @param user - The user to remove from the queue.
+     * @param user.id - The user ID for the user to remove from the queue.
+     * @param user.displayName - The display name for the user to remove from the queue.
      * @returns The queue that was updated.
      */
-    public static async removeFromQueue (queues: IQueue[], queue: string, user: IPerson): Promise<IQueue | string> {
+    public static async removeFromQueue (queues: IQueue[], queue: string, user: IRemoveFromQueueUser): Promise<IQueue | string> {
         const queueObject = queues.filter(i => i.name === queue)[0];
         const idx = queueObject.members.findIndex(p => p.person.displayName === user.displayName);
         if (idx === -1) {
@@ -247,6 +259,10 @@ export abstract class CommandBase {
             updateData.$inc.inQueueCount = 1;
             LOGGER.verbose(`Increasing 'inQueueTime' of '${removed.person.displayName}' by ${inQueueSeconds}`);
             LOGGER.verbose(removed.person);
+
+            // Create user if they don't exist
+            await this.addUser(user.id, user.displayName);
+
             LOGGER.verbose(await PERSON_MODEL.find({ id: removed.person.id }).exec());
 
             await PERSON_MODEL.updateOne({ id: removed.person.id }, updateData).exec();

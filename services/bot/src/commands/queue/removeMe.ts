@@ -27,11 +27,8 @@ export class RemoveMe extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
-        // Create user if they don't exist
-        const user = await CommandBase.addUser(initiative);
-
         // remove only the first instance
-        const queue = await CommandBase.removeFromQueue(project.queues, project.currentQueue, user);
+        const queue = await CommandBase.removeFromQueue(project.queues, project.currentQueue, { id: initiative.user.id, displayName: initiative.user.displayName });
         if (typeof queue === 'string') return String(queue);
 
         // Save the project
@@ -48,6 +45,6 @@ export class RemoveMe extends CommandBase implements ICommand {
             tag += ', you\'re at the front of the queue!';
         }
         // Return response
-        return `Successfully removed "${user.displayName}" from queue "${project.currentQueue}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
+        return `Successfully removed "${initiative.user.displayName}" from queue "${project.currentQueue}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
     }
 }
