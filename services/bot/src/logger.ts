@@ -5,7 +5,7 @@
 import { createLogger, format, transports } from 'winston';
 
 export const LOGGER = createLogger({
-    level: process.env.NODE_ENV === 'production' ? 'info' : (process.env.QUTEX_TESTING && process.argv.indexOf('--silent') <= 0 ? 'warn' : 'verbose'),
+    level: process.env.NODE_ENV === 'production' ? 'info' : process.env.QUTEX_TESTING && process.argv.indexOf('--silent') <= 0 ? 'warn' : 'verbose',
     format: format.combine(
         format.colorize({ all: true }),
         format.timestamp(),
