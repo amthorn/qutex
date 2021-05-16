@@ -4,15 +4,8 @@
  */
 import { createLogger, format, transports } from 'winston';
 
-let level = 'verbose';
-
-if (process.env.NODE_ENV === 'production') {
-    level = 'info';
-} else if (process.env.QUTEX_TESTING && process.argv.indexOf('--silent') <= 0) {
-    level = 'warn';
-}
 export const LOGGER = createLogger({
-    level: level,
+    level: process.env.NODE_ENV === 'production' ? 'info' : process.env.QUTEX_TESTING && process.argv.indexOf('--silent') <= 0 ? 'warn' : 'verbose',
     format: format.combine(
         format.colorize({ all: true }),
         format.timestamp(),
@@ -29,4 +22,4 @@ export const LOGGER = createLogger({
         new transports.File({ filename: 'combined.log' })
     ]
 });
-LOGGER.info(`LOG LEVEL: ${level}`);
+LOGGER.info(`LOG LEVEL: ${LOGGER.level}`);
