@@ -27,6 +27,6 @@ export class Get extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
         const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
-        return CommandBase.queueToString(queue);
+        return [CommandBase.queueToString(queue), await CommandBase.getHowLong(queue, initiative.user)].join('\n\n');
     }
 }

@@ -594,7 +594,7 @@ describe('getting "how long" for a queue errors when it should', () => {
         expect(queue.members).toHaveLength(1);
         expect(queue.members[0].person).toEqual(expect.objectContaining(person));
 
-        expect(await new HowLong().relax({ ...TEST_INITIATIVE, user: person })).toEqual('You are already at the head of the queue');
+        expect(await new HowLong().relax({ ...TEST_INITIATIVE, user: person })).toEqual('You are at the head of the queue so you have no estimated wait time!');
         expect(queue.members).toHaveLength(1);
     });
 });
