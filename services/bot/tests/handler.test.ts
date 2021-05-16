@@ -85,6 +85,21 @@ describe('Handler is working', () => {
                 'no sleep and my social life has plumetted. But I guess I\'m:\n\n200 OK'
         });
     });
+
+    test('handler appropriately checks message contents and fails if not an exact match', async () => {
+        BOT.messages.get.mockReturnValueOnce({ text: 'okay get status', personId: 'mockPersonId' });
+        BOT.people.get.mockReturnValue({ id: MOCK_REQUEST.body.data.personId, displayName: 'mockDisplayName' });
+        BOT.people.get.mockReturnValue({ id: 'whateverId', displayName: 'mockDisplayName' });
+
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.people.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.personId);
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            toPersonId: 'mockPersonId',
+            markdown: 'Command not recognized. Try using "help" for more information.'
+        });
+    });
     test('handler appropriately checks message contents and sends response for get status using person email', async () => {
         BOT.messages.get.mockReturnValueOnce({ text: 'get status', personEmail: 'mockPersonEmail' });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);

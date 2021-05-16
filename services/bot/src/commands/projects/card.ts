@@ -13,7 +13,7 @@ export class Card extends CommandBase implements ICommand {
     /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CARD;
-    public readonly COMMAND_BASE: string = '^project(s?)$';
+    public readonly COMMAND_BASE: string = 'project(s?)';
     public readonly DESCRIPTION: string = 'Shows the card relating to Qutex Projects';
     /* eslint-enable jsdoc/require-jsdoc */
 

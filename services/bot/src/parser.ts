@@ -27,7 +27,9 @@ export class Parser {
         } else { // if (request.body.resource == 'messages') {
             messageData = await BOT.messages.get(messageId);
         }
-        
+
+        LOGGER.verbose(`Message Data: ${JSON.stringify(messageData, null, 2)}`);
+
         const person = await BOT.people.get(request.body.data.personId);
         const user: Record<string, string> = { id: request.body.data.personId, displayName: person.displayName };
 

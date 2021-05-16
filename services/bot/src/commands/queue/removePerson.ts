@@ -12,8 +12,8 @@ export class RemovePerson extends CommandBase implements ICommand {
     /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
-    public readonly COMMAND_BASE: string = '^remove person';
-    public readonly ARGS: string = '{name:[\\w\\s]+}$';
+    public readonly COMMAND_BASE: string = 'remove person';
+    public readonly ARGS: string = '{name:[\\w\\s]+}';
     public readonly DESCRIPTION: string = 'Removes a tagged person from the current queue';
     /* eslint-enable jsdoc/require-jsdoc */
 

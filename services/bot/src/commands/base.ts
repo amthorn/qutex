@@ -149,12 +149,15 @@ export abstract class CommandBase {
                 atHeadSeconds: 0,
                 atHeadCount: 0
             }).save();
-            // A person is being stored in the database for the first time, send them a direct message with
-            // information as it relates to the privacy policy
-            await BOT.messages.create({
-                toPersonId: id,
-                markdown: settings.PRIVACY_POLICY_MESSAGE.replace('AUTHOR_EMAIL', process.env.AUTHOR_EMAIL || '')
-            });
+            // Don't ping bots since they have a tendency to bounce back and forth forever in their DMs
+            if ((await BOT.people.get(id)).emails.filter((i: string) => i.endsWith('@webex.bot')).length === 0) {
+                // A person is being stored in the database for the first time, send them a direct message with
+                // information as it relates to the privacy policy
+                await BOT.messages.create({
+                    toPersonId: id,
+                    markdown: settings.PRIVACY_POLICY_MESSAGE.replace('AUTHOR_EMAIL', process.env.AUTHOR_EMAIL || '')
+                });
+            }
             return result;
         }
     }
@@ -460,11 +463,11 @@ export abstract class CommandBase {
         LOGGER.debug(`Checking command: ${JSON.stringify(command, null, 2)}`);
         LOGGER.debug(`Checking against regex w/o arguments: ${this.command}`);
         LOGGER.debug(`Checking against regex w/ arguments: ${this.commandWithArgs}`);
-        if (typeof command === 'object' && command.action.toLowerCase().match(new RegExp(this.command))) {
+        if (typeof command === 'object' && command.action.toLowerCase().match(new RegExp(`^\\s*${this.command}\\s*$`))) {
             LOGGER.debug(`Match against command w/o arguments: ${this.command}`);
             return Object.assign({}, command);
         } else if (typeof command !== 'object') {
-            const template = new RegExp(this.commandWithArgs.replace(/\{(.*?):(.*?)\}/g, '(?<$1>$2)'));
+            const template = new RegExp(`^${this.commandWithArgs.replace(/\{(.*?):(.*?)\}/g, '(?<$1>$2)')}$`);
             const result = command.toLowerCase().match(template);
             if (result !== null) {
                 LOGGER.verbose(`Match against command w/ arguments: ${this.commandWithArgs}`);

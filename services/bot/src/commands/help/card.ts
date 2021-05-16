@@ -14,7 +14,7 @@ export class Card extends CommandBase implements ICommand {
     /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.CARD;
-    public readonly COMMAND_BASE: string = '^(get\\s|show\\s)?help$';
+    public readonly COMMAND_BASE: string = '(get\\s|show\\s)?help';
     public readonly DESCRIPTION: string = 'Shows this card';
     /* eslint-enable jsdoc/require-jsdoc */
 

@@ -46,7 +46,6 @@ export class Handler {
                 LOGGER.debug(request.body);
                 const initiative = await this.parser.parse(request);
                 let result = null;
-                LOGGER.info('Command issued');
                 if (initiative.action) {
                     // When the command is invalid, sometimes it cannot be stored in mongo
                     // Thus only dump the initiative to mongo when we know the command was valid.
