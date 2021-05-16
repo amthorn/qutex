@@ -47,6 +47,7 @@
     "@types/axios": "^0.14.0",
     "@types/express": "^4.16.1",
     "@types/jest": "^26.0.22",
+    "@types/mock-fs": "^4.13.0",
     "@types/mongoose": "^5.10.5",
     "@types/node": "^15.0.3",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
@@ -55,6 +56,7 @@
     "eslint": "^7.26.0",
     "eslint-plugin-jsdoc": "^34.2.1",
     "jest": "^26.6.3",
+    "mock-fs": "^4.14.0",
     "mockdate": "^3.0.5",
     "mrm-task-npm-docker": "^1.2.0",
     "ngrok": "^4.0.1",
@@ -65,13 +67,13 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "chartjs-to-image": "^1.0.4",
     "express": "^4.16.4",
     "migrate-mongo": "^8.2.2",
     "moment": "^2.29.1",
     "mongoose": "^5.12.9",
     "webex": "1.119.7",
-    "winston": "^3.3.3",
-    "axios": "^0.21.1"
+    "winston": "^3.3.3"
   }
 }

@@ -20,9 +20,9 @@ const MOCK_REQUEST = {
         'status': 'active',
         'actorId': 'Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mNWIzNjE4Ny1jOGRkLTQ3MjctOGIyZi1mOWM0NDdmMjkwNDY',
         'data': {
-            'id': 'Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTJkYjNiZTAtNDNiZC0xMWU2LThhZTktZGQ1YjNkZmM1NjVk',
-            'roomId': 'Y2lzY29zcGFyazovL3VzL1JPT00vYmJjZWIxYWQtNDNmMS0zYjU4LTkxNDctZjE0YmIwYzRkMTU0',
-            'personId': 'Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mNWIzNjE4Ny1jOGRkLTQ3MjctOGIyZi1mOWM0NDdmMjkwNDY',
+            'id': 'dataId',
+            'roomId': 'mockRequestRoomId',
+            'personId': 'STANDARDNAME',
             'personEmail': 'ava@example.com',
             'created': '2015-10-18T14:26:16.000Z'
         }
@@ -48,6 +48,7 @@ describe('Handler is working', () => {
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
     });
+
     test('handler appropriately does nothing when message originator is the bot', async () => {
         BOT.people.get.mockReturnValueOnce({ id: MOCK_REQUEST.body.data.personId });
         expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
@@ -123,6 +124,68 @@ describe('Handler is working', () => {
         });
     });
 
+    test('handler appropriately handles the case when data is parsed from command when there is a mentioned user', async () => {
+        BOT.messages.get.mockReturnValueOnce({
+            text: 'create project foobar',
+            roomId: 'mockRoomId',
+            roomType: 'group',
+            mentionedPeople: ['mentionedId']
+        });
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            roomId: 'mockRoomId',
+            markdown: 'Successfully created "FOOBAR"'
+        });
+    });
+
+    test('handler appropriately handles the case when data is parsed from command and debug is true', async () => {
+        BOT.messages.get.mockReturnValueOnce({ text: 'create project foobar | debug', roomId: 'mockRoomId', roomType: 'group' });
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            roomId: 'mockRoomId',
+            markdown: 'Successfully created "FOOBAR"'
+        });
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            roomId: 'mockRoomId',
+            markdown: `\`\`\` json\n${JSON.stringify({
+                'request': {
+                    'id': 'dataId',
+                    'roomId': 'mockRequestRoomId',
+                    'personId': 'STANDARDNAME',
+                    'personEmail': 'ava@example.com',
+                    'created': '2015-10-18T14:26:16.000Z'
+                },
+                'initiative': {
+                    'rawCommand': 'create project foobar',
+                    'destination': {
+                        'roomId': 'mockRoomId'
+                    },
+                    'debug': true,
+                    'user': {
+                        'id': 'STANDARDNAME',
+                        'displayName': 'mockDisplayName'
+                    },
+                    'data': {
+                        'name': 'foobar'
+                    },
+                    'action': {
+                        'AUTHORIZATION': 'none',
+                        'COMMAND_TYPE': 'create',
+                        'COMMAND_BASE': 'project',
+                        'ARGS': '{name:[\\w\\s]+}',
+                        'DESCRIPTION': 'Creates a target project'
+                    },
+                    'mentions': []
+                },
+                'result': 'Successfully created "FOOBAR"'
+            }, null, 2)}\n\`\`\``
+        });
+    });
+
     test('handler appropriately handles card attachmentActions', async () => {
         expect(await new Handler().handle(MOCK_ATTACHMENTACTION_REQUEST)).toEqual(undefined);
         expect(BOT.people.get).toHaveBeenCalledWith('me');
@@ -131,5 +194,38 @@ describe('Handler is working', () => {
             roomId: 'mockRoomId',
             markdown: 'Successfully created "FOOBAR"'
         });
+    });
+});
+
+describe('Handler errors as it should', () => {
+    test('Handler sends a response even in the event of a catastrophic error', async () => {
+        BOT.messages.get.mockImplementation(() => {
+            throw new Error('THIS IS AN EXPECTED ERROR');
+        });
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            roomId: 'mockRequestRoomId',
+            markdown: 'An unexpected error occurred. Please open an issue by using the "help" command:\nError: THIS IS AN EXPECTED ERROR'
+        });
+    });
+    test('Handler doesnt die when catastrophic error occurs during handling of catastrophic error', async () => {
+        BOT.messages.get.mockImplementation(() => {
+            throw new Error('THIS IS AN EXPECTED ERROR');
+        });
+        BOT.messages.create.mockImplementation(() => {
+            throw new Error('THIS IS AN EXPECTED ERROR THAT HAPPENED DURING HANDLING OF THE OTHER ERROR');
+        });
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+
+        // This command should error, but will have been called regardless
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            roomId: 'mockRequestRoomId',
+            markdown: 'An unexpected error occurred. Please open an issue by using the "help" command:\nError: THIS IS AN EXPECTED ERROR'
+        });
+        expect(BOT.messages.create).toThrowError('THIS IS AN EXPECTED ERROR THAT HAPPENED DURING HANDLING OF THE OTHER ERROR');
     });
 });
