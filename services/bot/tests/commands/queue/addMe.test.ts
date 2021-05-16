@@ -8,10 +8,26 @@ import { PERSON_MODEL } from '../../../src/models/person';
 import { BOT } from '../../../src/bot';
 import * as settings from '../../../src/settings.json';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, STRICT_DATE } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, SUPER_ADMIN, STRICT_DATE } from '../../util';
 
 TEST_INITIATIVE.rawCommand = 'add me';
 TEST_INITIATIVE.action = new AddMe();
+
+describe('Adding me to a queue errors when it should', () => {
+
+    test('errors when no projects are configured', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual('There are no projects registered.');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+    });
+
+    test('errors when no projects are configured and super admin is invoker', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new AddMe().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual('There are no projects registered.');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+    });
+
+})
 
 describe('Adding me to a queue works appropriately', () => {
     beforeAll(() => {
@@ -21,11 +37,6 @@ describe('Adding me to a queue works appropriately', () => {
         MockDate.reset();
     });
 
-    test('errors when no projects are configured', async () => {
-        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
-        expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual('There are no projects registered.');
-        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
-    });
     test('adds me successfully and validates side effects when project exists', async () => {
         let project = await CREATE_PROJECT();
         let queue = project.queues.filter(i => i.name === project.currentQueue)[0];
