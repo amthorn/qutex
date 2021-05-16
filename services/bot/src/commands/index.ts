@@ -24,6 +24,8 @@ import { Get as GetQueue } from './queue/get';
 
 import { AddMe } from './queue/addMe';
 import { RemoveMe } from './queue/removeMe';
+import { AddPerson } from './queue/addPerson';
+import { RemovePerson } from './queue/removePerson';
 import { Card as QueueCard } from './queue/card';
 import { HowLong } from './queue/howLong';
 
@@ -75,6 +77,8 @@ export default [
     new RemoveMe(),
     new HowLong(),
     new GetLargestQueueDepth(),
+    new AddPerson(),
+    new RemovePerson(),
 
     // Eggs
     new Pun(),
