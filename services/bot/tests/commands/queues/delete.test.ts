@@ -55,6 +55,11 @@ describe('Deleting a queue errors appropriately', () => {
         expect(await new Delete().relax(TEST_INITIATIVE)).toEqual('There are no projects registered.');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
     });
+    test('Deleting a queue is not possible when no projects are configured and super admin is the invoker', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new Delete().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual('There are no projects registered.');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+    });
     test('Cannot delete a queue that does not exist (DEFAULT)', async () => {
         const project = await CREATE_PROJECT();
         expect(await new Create().relax(TEST_INITIATIVE)).toEqual(

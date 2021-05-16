@@ -25,9 +25,10 @@ export class Delete extends CommandBase implements ICommand {
      * @returns The response string.
      */
     public async relax (initiative: IInitiative): Promise<string> {
-        // Project will exist, if it doesn't it will error in the authorization guard.
         // TODO: throw errors instead of returning strings
+        // Project may not exist if super admin is the invoker
         const project = await CommandBase.getProject(initiative) as ProjectDocument;
+        if (typeof project === 'string') return String(project);
         if (project.queues.filter(i => i.name === initiative.data.name.toUpperCase()).length === 0) {
             return `Queue "${initiative.data.name.toUpperCase()}" doesn't exist on project "${project.name}".`;
         } else if (project.queues.length === 1) {

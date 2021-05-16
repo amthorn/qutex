@@ -150,7 +150,7 @@ export abstract class CommandBase {
                 atHeadCount: 0
             }).save();
             // Don't ping bots since they have a tendency to bounce back and forth forever in their DMs
-            if ((await BOT.people.get(id)).emails.filter((i: string) => i.endsWith('@webex.bot')).length === 0) {
+            if ((await BOT.people.get(id)).emails.filter((i: string) => i.endsWith('@webex.bot') || i.endsWith('@sparkbot.io')).length === 0) {
                 // A person is being stored in the database for the first time, send them a direct message with
                 // information as it relates to the privacy policy
                 await BOT.messages.create({
@@ -393,7 +393,7 @@ export abstract class CommandBase {
 
                 if (isAuthorized) {
                     LOGGER.verbose('Authorized');
-                    return await this._relax(initiative);
+                    return this._relax(initiative);
                 } else {
                     LOGGER.verbose('Unauthorized');
                     // deny by default

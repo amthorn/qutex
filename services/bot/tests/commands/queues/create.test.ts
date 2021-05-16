@@ -14,7 +14,13 @@ TEST_INITIATIVE.rawCommand = 'create queue foo';
 TEST_INITIATIVE.action = new Create();
 TEST_INITIATIVE.user = PROJECT_ADMIN;
 
-describe('Create queue works appropriately', () => {
+describe('Creating a queue errors when it should', () => {
+
+    test('errors when no projects are configured and super admin is invoker', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new Create().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual('There are no projects registered.');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+    });
     test('creating a queue is not possible when no projects are configured', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Create().relax(TEST_INITIATIVE)).toEqual('There are no projects registered.');
@@ -52,6 +58,20 @@ describe('Create queue works appropriately', () => {
         expect(projects[0].queues[1].members).toHaveLength(0);
         expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
     });
+    test('Cannot create queue if issued by standard user', async () => {
+        await CREATE_PROJECT();
+        expect(await new Create().relax({ ...TEST_INITIATIVE, user: STANDARD_USER })).toEqual('You are not authorized to perform that action. Please ask an administrator.');
+        const projects = await PROJECT_MODEL.find({}).exec();
+
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
+        expect(projects[0].queues).toHaveLength(1);
+        expect(projects[0].queues[0]).toEqual(expect.objectContaining({ name: settings.DEFAULT_QUEUE_NAME }));
+        expect(projects[0].queues[0].members).toHaveLength(0);
+        expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
+    });
+});
+
+describe('Create queue works appropriately', () => {
     test('Create queue successfully for super admin', async () => {
         const project = await CREATE_PROJECT();
         expect(await new Create().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual(
@@ -80,17 +100,6 @@ describe('Create queue works appropriately', () => {
         expect(projects[0].queues[0].members).toHaveLength(0);
         expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name.toUpperCase() }));
         expect(projects[0].queues[1].members).toHaveLength(0);
-        expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
-    });
-    test('Cannot create queue if issued by standard user', async () => {
-        await CREATE_PROJECT();
-        expect(await new Create().relax({ ...TEST_INITIATIVE, user: STANDARD_USER })).toEqual('You are not authorized to perform that action. Please ask an administrator.');
-        const projects = await PROJECT_MODEL.find({}).exec();
-
-        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
-        expect(projects[0].queues).toHaveLength(1);
-        expect(projects[0].queues[0]).toEqual(expect.objectContaining({ name: settings.DEFAULT_QUEUE_NAME }));
-        expect(projects[0].queues[0].members).toHaveLength(0);
         expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
     });
     test('Can create a queue with the same name as the default queue if the default queue does not exist', async () => {

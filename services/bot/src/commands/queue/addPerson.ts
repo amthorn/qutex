@@ -7,6 +7,7 @@ import { Auth } from '../../enum';
 import { BOT } from '../../bot';
 import { ProjectDocument } from '../../models/project';
 
+
 @CommandBase.authorized
 export class AddPerson extends CommandBase implements ICommand {
     /* eslint-disable jsdoc/require-jsdoc */
@@ -26,9 +27,9 @@ export class AddPerson extends CommandBase implements ICommand {
      * @returns The response string.
      */
     public async relax (initiative: IInitiative): Promise<string> {
-        // Project will exist, if it doesn't it will error in the authorization guard.
-        // TODO: throw errors instead of returning strings
+        // Project may not exist if super admin is the invoker
         const project = await CommandBase.getProject(initiative) as ProjectDocument;
+        if (typeof project === 'string') return String(project);
 
         if (initiative.mentions.length > 1) {
             return 'You cannot add more than one person at once';
