@@ -36,7 +36,67 @@ describe('Getting a queue works appropriately', () => {
             `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
         );
         expect(await new Get().relax(TEST_INITIATIVE)).toEqual(
-            `Queue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
+            `Queue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n\nYou are at the head of the queue so you have no estimated wait time!`
         );
+    });
+    test('Returns how long when there are multiple people in front, all have saved queue data', async () => {
+        let project = await CREATE_PROJECT();
+        const person1 = { id: 'user1', displayName: 'user one' };
+        /* eslint-disable @typescript-eslint/no-magic-numbers */
+        // There's a lot of magic numbers here, ignore the linter for this section
+        await PERSON_MODEL.build({
+            ...person1,
+            inQueueCount: 5,
+            inQueueSeconds: 30,
+            atHeadSeconds: 100,
+            atHeadCount: 3
+        }).save();
+        await new AddMe().relax({ ...TEST_INITIATIVE, user: person1 });
+
+        const person2 = { id: 'user2', displayName: 'user two' };
+        await PERSON_MODEL.build({
+            ...person2,
+            inQueueCount: 10,
+            inQueueSeconds: 583,
+            atHeadSeconds: 283,
+            atHeadCount: 6
+        }).save();
+        await new AddMe().relax({ ...TEST_INITIATIVE, user: person2 });
+
+        const person3 = { id: 'user3', displayName: 'user three' };
+        await PERSON_MODEL.build({
+            ...person3,
+            inQueueCount: 123,
+            inQueueSeconds: 28378,
+            atHeadSeconds: 2939,
+            atHeadCount: 52
+        }).save();
+        await new AddMe().relax({ ...TEST_INITIATIVE, user: person3 });
+
+        project = (await PROJECT_MODEL.find({}).exec())[0];
+        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+
+        expect(queue.members).toHaveLength(3);
+        expect(queue.members[0].person).toEqual(expect.objectContaining(person1));
+        expect(queue.members[1].person).toEqual(expect.objectContaining(person2));
+        expect(queue.members[2].person).toEqual(expect.objectContaining(person3));
+
+        MockDate.set(STRICT_DATE + 10000); // should reduce "how long" by 10 seconds
+        // should be (100/3) + (283/6) - 10 = 70.5 seconds = 00:01:10
+        expect(await new Get().relax({ ...TEST_INITIATIVE, user: person3 })).toEqual(
+            'Queue "DEFAULT":\n\n1. user one (May 6, 2021 01:43:08 AM EST)\n2. user two (May 6, 2021 01:43:08 AM EST)\n3. user three (May 6, 2021 01:43:08 AM EST)\n\nGiven that there are 2 people ahead of you. Your estimated wait time is 00:01:10'
+        );
+
+        // should be (100/3) + (283/6) - 30 = 50.5 seconds = 00:00:50
+        MockDate.set(STRICT_DATE + 30000); // should reduce "how long" by 30 seconds
+        expect(await new Get().relax({ ...TEST_INITIATIVE, user: person2 })).toEqual(
+            'Queue "DEFAULT":\n\n1. user one (May 6, 2021 01:43:08 AM EST)\n2. user two (May 6, 2021 01:43:08 AM EST)\n3. user three (May 6, 2021 01:43:08 AM EST)\n\nGiven that there is 1 person ahead of you. Your estimated wait time is 00:00:03'
+        );
+
+        expect(queue.members).toHaveLength(3);
+        expect(queue.members[0].person).toEqual(expect.objectContaining(person1));
+        expect(queue.members[1].person).toEqual(expect.objectContaining(person2));
+        expect(queue.members[2].person).toEqual(expect.objectContaining(person3));
+        /* eslint-enable @typescript-eslint/no-magic-numbers */
     });
 });
