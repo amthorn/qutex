@@ -26,8 +26,7 @@ describe('Adding me to a queue errors when it should', () => {
         expect(await new AddMe().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual('There are no projects registered.');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
     });
-
-})
+});
 
 describe('Adding me to a queue works appropriately', () => {
     beforeAll(() => {

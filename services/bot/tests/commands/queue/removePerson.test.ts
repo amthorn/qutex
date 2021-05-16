@@ -9,7 +9,7 @@ import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
 import * as settings from '../../../src/settings.json';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, PROJECT_ADMIN, STRICT_DATE } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, PROJECT_ADMIN, SUPER_ADMIN, STRICT_DATE } from '../../util';
 
 const FIVE_SECONDS = 5000;
 const USER_ID = 'fooId';
@@ -21,6 +21,12 @@ describe('Removing a person from a queue errors when it should', () => {
     test('errors when no projects are configured', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new RemovePerson().relax(TEST_INITIATIVE)).toEqual('There are no projects registered.');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+    });
+
+    test('errors when no projects are configured and super admin is invoker', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new RemovePerson().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual('There are no projects registered.');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
     });
     test('errors when standard user tries to execute', async () => {
