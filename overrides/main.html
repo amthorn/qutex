@@ -12,5 +12,17 @@
 
   gtag('config', 'UA-197134757-1');
   gtag('send','pageview');
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  });
 </script>
 {% endblock %}
