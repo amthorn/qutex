@@ -8,6 +8,7 @@ coverage/
 .DS_Store
 token
 mongoPassword
+site/
 
 # Jekyll
 docs/_site
