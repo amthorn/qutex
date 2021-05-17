@@ -16,7 +16,7 @@ theme:
   icon:
     repo: fontawesome/brands/github
   name: material
-  logo: ./images/logoSquareSmall.png
+  logo: ./docs/images/logoSquareSmall.png
   custom_dir: docs/overrides
   features:
     - header.autohide
