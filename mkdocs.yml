@@ -1,0 +1,53 @@
+
+site_name: Qutex
+repo_url: https://github.com/amthorn/qutex
+site_description: The documentation pages for qutex
+site_author: Ava Thorn
+copyright: Copyright &copy; 2021 Ava Thorn
+strict: true
+edit_uri: ''
+google_analytics:
+  - "G-Q8RDDR5M1Y"
+  - "auto"
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/amthorn
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/ava-thorn-384059135/
+theme:
+  icon:
+    repo: fontawesome/brands/github
+  name: material
+  logo: ./images/logoSquareSmall.png
+  custom_dir: docs/overrides
+  features:
+    - header.autohide
+  palette:
+    - scheme: default
+      primary: blue
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+    
+markdown_extensions:
+  - admonition            # Permits admonitions
+  - pymdownx.details      # Permits collapsible admonitions
+  - pymdownx.superfences  # Permits code within admonitions
+  - attr_list             # Permits aligning images left/right
+nav:
+    - Introduction: index.md
+    - Authorization: authorization.md
+    - Projects: projects.md
+    - Registrations: registrations.md
+    - Queues: queues.md
+    - Administration: administration.md
+    - Analytics: analytics.md
+    - Easter Eggs: eggs.md
+    - API: api.md
+    - Troubleshooting: troubleshooting.md
+    - Known Issues: known_issues.md
