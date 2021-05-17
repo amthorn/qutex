@@ -4,14 +4,14 @@
 
 {% block analytics %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-197134757-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-32FSC6LBFV"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-197134757-1');
-  gtag('send','pageview');
+  gtag('config', 'G-32FSC6LBFV');
+  gtag('send','page_view');
   /* Register handler to log search on blur */
   document.addEventListener("DOMContentLoaded", () => {
     if (document.forms.search) {
@@ -19,7 +19,7 @@
       query.addEventListener("blur", function() {
         if (this.value) {
           var path = document.location.pathname;
-          ga("send", "pageview", path + "?q=" + this.value)
+          ga("send", "page_view", path + "?q=" + this.value)
         }
       })
     }
