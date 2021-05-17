@@ -74,6 +74,13 @@
                                     },
                                     {
                                         "type": "TextBlock",
+                                        "text": "Documentation:",
+                                        "weight": "Lighter",
+                                        "color": "Light",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
                                         "text": "Support & Issues:",
                                         "weight": "Lighter",
                                         "color": "Light",
@@ -101,6 +108,13 @@
                                     {
                                         "type": "TextBlock",
                                         "text": "",
+                                        "color": "Light",
+                                        "weight": "Lighter",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "[https://docs.qutexbot.com/](docs.qutexbot.com)",
                                         "color": "Light",
                                         "weight": "Lighter",
                                         "spacing": "Small"

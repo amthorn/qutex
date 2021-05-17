@@ -6,9 +6,6 @@ site_author: Ava Thorn
 copyright: Copyright &copy; 2021 Ava Thorn
 strict: true
 edit_uri: ''
-google_analytics:
-  - "G-Q8RDDR5M1Y"
-  - "auto"
 extra:
   social:
     - icon: fontawesome/brands/github
