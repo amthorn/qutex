@@ -49,7 +49,7 @@
   gtag('js', new Date());
 
   gtag('config', 'G-32FSC6LBFV');
-  gtag('send','page_view');
+  gtag('send','pageview');
   /* Register handler to log search on blur */
   document.addEventListener("DOMContentLoaded", () => {
     if (document.forms.search) {
@@ -57,7 +57,7 @@
       query.addEventListener("blur", function() {
         if (this.value) {
           var path = document.location.pathname;
-          ga("send", "page_view", path + "?q=" + this.value)
+          ga("send", "pageview", path + "?q=" + this.value)
         }
       })
     }
