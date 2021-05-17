@@ -7,6 +7,9 @@
 
 Qutex is a basic webex queue management system which can be used to manage a resource between many people in a common webex space or web UI.
 
+
+Visit our [documentation page](https://docs.qutexbot.com/) for more information!
+
 <img width=600 src="/docs/images/projectCard.png"/>
 
 
