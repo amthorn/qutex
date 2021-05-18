@@ -40,6 +40,8 @@
     
     
     
+      <link rel="stylesheet" href="../css/hint.min.css">
+    
     
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-32FSC6LBFV"></script>
@@ -259,6 +261,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../command_list/" class="md-nav__link">
+        Command List
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../authorization/" class="md-nav__link">
         Authorization
       </a>
@@ -337,20 +354,6 @@
         <li class="md-nav__item">
   <a href="#listing-all-projects" class="md-nav__link">
     Listing All Projects
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-admins-to-the-project" class="md-nav__link">
-    Adding Admins to the Project
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#removing-admins-from-the-project" class="md-nav__link">
-    Removing Admins from the Project
   </a>
   
 </li>
@@ -543,20 +546,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#adding-admins-to-the-project" class="md-nav__link">
-    Adding Admins to the Project
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#removing-admins-from-the-project" class="md-nav__link">
-    Removing Admins from the Project
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -572,13 +561,88 @@
                 
                 <h1 id="projects">Projects</h1>
 <h2 id="what-is-a-project">What is a Project?</h2>
+<p>A project is essentially a collection of <a href="../queues">queues</a>. Only one queue within a project can be set as the <a href="../queues/#what-is-the-current-queue">current queue</a>. Additionally, a project contains <a href="../administration">administrators</a> who are responsible for administrating the project.</p>
 <h2 id="creating-a-new-project">Creating a New Project</h2>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>You can create a qutex project with the command:</p>
+<div class="tabbed-set" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>create project &lt;project_name&gt;
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Valid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>create project valid
+</code></pre></div>
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Invalid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>create project NOT&amp;^%VALID
+</code></pre></div>
+</div>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*create project [\w\s]+\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="important" open="open"><summary>Important</summary><p>You cannot create a project if the location you are in already has a project registered.</p>
+</details>
+<details class="warning" open="open"><summary>Warning</summary><p>Project names must be unique in qutex. Thus, you cannot create a project with a name that already exists. Additionally, the name of the project can only contain lowercase and uppercase alphabetical characters, spaces, and the underscore.</p>
+</details>
+<details class="note" open="open"><summary>Note</summary><p>Your project will automatically be put in uppercase regardless of how it was entered</p>
+</details>
+<details class="example" open="open"><summary>Example</summary><p><img src="../images/createProject.png" width=350/></p>
+</details>
+<details class="note" open="open"><summary>Note</summary><p>Whenever you are in a room, you must tag Qutex before the command in order for Qutex to respond.</p>
+</details>
+<p>When you issue the <code>create project</code> command, Qutex will create a project for you with a <a href="../queues/#what-is-the-default-queue">default queue</a> (named "DEFAULT"), it will <a href="../registrations">register your location</a> to the newly created project, and it will <a href="../administration">assign you as an admin</a> of the project.</p>
+<p>???+
+    You can verify your project was created by issueing the <a href="#listing-all-projects"><code>list projects</code> command</a></p>
 <h2 id="modifying-a-project-name">Modifying A Project Name</h2>
-<p>Unfortunately, modifying the name of an existing project is not currently possible with Qutex. You would need to delete the project and create a new one with the new name.</p>
+<p>Unfortunately, modifying the name of an existing project is not currently possible with Qutex. You would need to <a href="#deleting-a-project">delete the project</a> and <a href="#creating-a-new-project">create a new one</a> with the new name.</p>
 <h2 id="deleting-a-project">Deleting A Project</h2>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section require project administrator access.">
+    <a href="/authorization/#project-administrator"><font color="orange" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.69 9.69 0 0 1 12 20.92 9.69 9.69 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53z"/></svg></span></font>Project Admin</a>
+</span></p>
+<p>You can delete a qutex project with the following command:</p>
+<div class="tabbed-set" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>delete project &lt;project_name&gt;
+</code></pre></div>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Valid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>delete project valid
+</code></pre></div>
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Invalid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>delete project NOT&amp;^%VALID
+</code></pre></div>
+</div>
+<input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><label for="__tabbed_2_4">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*(delete|remove) project [\w\s]+\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="warning" open="open"><summary>Warning</summary><p>Deleting a project is not reversible. The data will be permanantly deleted.</p>
+</details>
+<details class="warning" open="open"><summary>Warning</summary><p>When a project is deleted, all corresponding registrations for all destinations will also be deleted.</p>
+</details>
+<details class="success" open="open"><summary>Success</summary><p>You can verify your project was deleted by issuing the <a href="#listing-all-projects"><code>list projects</code> command</a></p>
+</details>
 <h2 id="listing-all-projects">Listing All Projects</h2>
-<h2 id="adding-admins-to-the-project">Adding Admins to the Project</h2>
-<h2 id="removing-admins-from-the-project">Removing Admins from the Project</h2>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>Listing all projects that you have access to is possible with qutex by issuing the following command:</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>list projects
+</code></pre></div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*list projects\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="note" open="open"><summary>Note</summary><p>The only projects that will show up are projects that you have access to. This is determined by the projects on which you are a <a href="/authorization/#project-administrators">project administrator</a>. Your projects will not show up for others and you will not see others' projects.</p>
+</details>
                 
               
               
