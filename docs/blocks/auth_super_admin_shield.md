@@ -1,0 +1,1 @@
+<span class="tooltip hint--top" aria-label="Super Administrator"><a href="/authorization/#super-administrator"><font color="red" size=4>:material-shield-star:</font></a></span>

@@ -3,6 +3,7 @@
  * @author Ava Thorn
  */
 import { Remove } from '../../../src/commands/admins/remove';
+import { Create } from '../../../src/commands/admins/create';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { CREATE_PROJECT, TEST_INITIATIVE, PROJECT_ADMIN, STANDARD_USER, SUPER_ADMIN } from '../../util';
 import { BOT } from '../../../src/bot';
@@ -19,25 +20,35 @@ describe('Remove admin works appropriately', () => {
         let project = await CREATE_PROJECT();
         expect(project.admins).toHaveLength(1);
         expect(project.admins[0]).toEqual(expect.objectContaining(PROJECT_ADMIN));
+        BOT.people.get.mockReturnValueOnce(NEW_ADMIN);
+        expect(await new Create().relax(TEST_INITIATIVE)).toEqual(`Successfully added "${NEW_ADMIN.displayName}" as an admin.`);
+        project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+        expect(project.admins[1]).toEqual(expect.objectContaining(NEW_ADMIN));
+        expect(project.admins).toHaveLength(2);
         TEST_INITIATIVE.mentions = [PROJECT_ADMIN.id];
         TEST_INITIATIVE.user = PROJECT_ADMIN;
         // Set up mock to received admin GET request
         BOT.people.get.mockReturnValueOnce(PROJECT_ADMIN);
         expect(await new Remove().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${PROJECT_ADMIN.displayName}" as an admin.`);
         project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
-        expect(project.admins).toHaveLength(0);
+        expect(project.admins).toHaveLength(1);
     });
     test('Removes appropriately when user is an admin and caller is super admin', async () => {
         let project = await CREATE_PROJECT();
         expect(project.admins).toHaveLength(1);
         expect(project.admins[0]).toEqual(expect.objectContaining(PROJECT_ADMIN));
+        BOT.people.get.mockReturnValueOnce(NEW_ADMIN);
+        expect(await new Create().relax(TEST_INITIATIVE)).toEqual(`Successfully added "${NEW_ADMIN.displayName}" as an admin.`);
+        project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+        expect(project.admins[1]).toEqual(expect.objectContaining(NEW_ADMIN));
+        expect(project.admins).toHaveLength(2);
         TEST_INITIATIVE.mentions = [PROJECT_ADMIN.id];
         TEST_INITIATIVE.user = SUPER_ADMIN;
         // Set up mock to received admin GET request
         BOT.people.get.mockReturnValueOnce(PROJECT_ADMIN);
         expect(await new Remove().relax(TEST_INITIATIVE)).toEqual(`Successfully removed "${PROJECT_ADMIN.displayName}" as an admin.`);
         project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
-        expect(project.admins).toHaveLength(0);
+        expect(project.admins).toHaveLength(1);
     });
 });
 
@@ -59,6 +70,18 @@ describe('Remove admin errors when it should', () => {
         project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
         expect(project.admins).toHaveLength(1);
         expect(project.admins[0]).toEqual(expect.objectContaining(PROJECT_ADMIN));
+    });
+    test('Errors when there is only one admin on the project', async () => {
+        let project = await CREATE_PROJECT();
+        expect(project.admins).toHaveLength(1);
+        expect(project.admins[0]).toEqual(expect.objectContaining(PROJECT_ADMIN));
+        TEST_INITIATIVE.mentions = [PROJECT_ADMIN.id];
+        TEST_INITIATIVE.user = PROJECT_ADMIN;
+        // Set up mock to received admin GET request
+        BOT.people.get.mockReturnValueOnce(PROJECT_ADMIN);
+        expect(await new Remove().relax(TEST_INITIATIVE)).toEqual('You must have at least one admin on the project, please assign another admin before you remove the final admin.');
+        project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+        expect(project.admins).toHaveLength(1);
     });
     test('Errors when no admin is tagged', async () => {
         let project = await CREATE_PROJECT();

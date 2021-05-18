@@ -42,6 +42,8 @@ export class Remove extends CommandBase implements ICommand {
         const admin = await BOT.people.get(initiative.mentions[0]);
         if (!project.admins.map(i => i.id).includes(admin.id)) {
             msg = `"${admin.displayName}" is not an admin.`;
+        } else if (project.admins.length === 1) {
+            msg = 'You must have at least one admin on the project, please assign another admin before you remove the final admin.';
         } else {
             project.admins = project.admins.filter(i => i.id !== admin.id);
 

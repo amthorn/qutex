@@ -16,7 +16,7 @@ theme:
   icon:
     repo: fontawesome/brands/github
   name: material
-  logo: ./docs/images/logoSquareSmall.png
+  logo: images/logoSquareSmall.png
   custom_dir: docs/overrides
   features:
     - header.autohide
@@ -30,14 +30,25 @@ theme:
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
-    
+plugins:
+  - search
+  - tooltips
+  - macros:
+      include_dir: docs/blocks
 markdown_extensions:
   - admonition            # Permits admonitions
   - pymdownx.details      # Permits collapsible admonitions
+  - pymdownx.tabbed       # Permits tabs in code blocks/admonitions
   - pymdownx.superfences  # Permits code within admonitions
   - attr_list             # Permits aligning images left/right
+  - pymdownx.emoji:       # Used for displaying icons
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+extra_css:
+  - css/hint.min.css
 nav:
     - Introduction: index.md
+    - Command List: command_list.md
     - Authorization: authorization.md
     - Projects: projects.md
     - Registrations: registrations.md
