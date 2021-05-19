@@ -12,6 +12,12 @@ extra:
       link: https://github.com/amthorn
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/ava-thorn-384059135/
+extra_css:
+  - css/hint.min.css
+extra_javascript:
+  - js/config.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 theme:
   icon:
     repo: fontawesome/brands/github
@@ -44,18 +50,18 @@ markdown_extensions:
   - pymdownx.emoji:       # Used for displaying icons
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
-extra_css:
-  - css/hint.min.css
+  - pymdownx.arithmatex:  # Allows mathematical formulas (used in some of the analytics and the "how long" command)
+      generic: true
 nav:
     - Introduction: index.md
-    - Command List: command_list.md
     - Authorization: authorization.md
     - Projects: projects.md
-    - Registrations: registrations.md
     - Queues: queues.md
+    - Registrations: registrations.md
     - Administration: administration.md
     - Analytics: analytics.md
-    - Easter Eggs: eggs.md
+    - Command List: command_list.md
     - API: api.md
+    - Easter Eggs: eggs.md
     - Troubleshooting: troubleshooting.md
     - Known Issues: known_issues.md

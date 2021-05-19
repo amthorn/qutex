@@ -75,7 +75,7 @@ You can delete a qutex project with the following command:
     ^\s*(delete|remove) project [\w\s]+\s*$
     ```
 
-???+ warning
+???+ danger
     Deleting a project is not reversible. The data will be permanantly deleted.
 
 ???+ warning

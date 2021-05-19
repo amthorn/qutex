@@ -2,13 +2,15 @@
 
 ## What is an Administrator?
 
+An administrator is someone that is responsible for managing a project and all its components. This includes anything that is stored under the project, which includes [queues](/queues) and other administrators.
+
 ## Administrator Privileges
 
-### Responsibilities
-
-### Limitations
+Administrator privileges are the permissions that a project administrator has. This includes running commands that are not runnable by anyone else. A list of those commands can be found [here](/command_list)
 
 ### Recommendations
+
+All project administrators should manage the users for that project with respect.
 
 ## Adding Administrators
 
