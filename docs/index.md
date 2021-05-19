@@ -1,4 +1,10 @@
-# Qutex Documentation
+
+<figure>
+  <img src="./images/logoSmall.png" width=350/>
+</figure>
+
+
+# Welcome to the Qutex Documentation Page!
 
 ## Introduction
 
@@ -30,7 +36,7 @@ You can create a qutex project with the command:
 Where `<project_name>` is replaced with the name of the project you want to create.
 
 ???+ warning
-    Project names must be unique in qutex. Thus, you cannot create a project with a name that already exists. Additionally, the name of the project can only contain lowercase and uppercae alphabetical characters, spaces, and the underscore.
+    Project names must be unique in qutex. Thus, you cannot create a project with a name that already exists. Additionally, the name of the project can only contain lowercase and uppercase alphabetical characters, spaces, and the underscore.
 
 ???+ note
     Your project will automatically be put in uppercase regardless of how it was entered
@@ -41,9 +47,7 @@ Where `<project_name>` is replaced with the name of the project you want to crea
 ???+ note
     Whenever you are in a room, you must tag Qutex before the command in order for Qutex to respond.
 
-When you issue the `create project` command, Qutex will create a project for you with a [default queue](./queues/#what-is-the-default-queue) (named "DEFAULT"),
-it will [register your location](./registrations) to the newly created project, and it will [assign you as an admin](./administration)
-of the project.
+When you issue the `create project` command, Qutex will create a project for you with a [default queue](./queues/#what-is-the-default-queue) (named "DEFAULT"), it will [register your location](./registrations) to the newly created project, and it will [assign you as an admin](./administration) of the project.
 
 Now you can begin using Qutex with the [add me](./queues/#adding-myself-into-a-queue) or [add person](./queues/#adding-others-into-a-queue) command!
 

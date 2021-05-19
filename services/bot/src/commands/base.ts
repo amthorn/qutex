@@ -467,7 +467,7 @@ export abstract class CommandBase {
             LOGGER.debug(`Match against command w/o arguments: ${this.command}`);
             return Object.assign({}, command);
         } else if (typeof command !== 'object') {
-            const template = new RegExp(`^${this.commandWithArgs.replace(/\{(.*?):(.*?)\}/g, '(?<$1>$2)')}$`);
+            const template = new RegExp(`^\\s*${this.commandWithArgs.replace(/\{(.*?):(.*?)\}/g, '(?<$1>$2)')}\\s*$`);
             const result = command.toLowerCase().match(template);
             if (result !== null) {
                 LOGGER.verbose(`Match against command w/ arguments: ${this.commandWithArgs}`);

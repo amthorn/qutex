@@ -47,10 +47,15 @@ describe('Create project works appropriately', () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Create().relax(TEST_INITIATIVE)).toEqual('Successfully created "FOO"');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
-        const newProject = TEST_INITIATIVE;
-        newProject.data.name = 'new project name';
-        expect(await new Create().relax(newProject)).toEqual('Successfully created "NEW PROJECT NAME"');
+        expect(await new Create().relax({ ...TEST_INITIATIVE, destination: { toPersonId: 'foo' }, data: { name: 'new project name' } })).toEqual('Successfully created "NEW PROJECT NAME"');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(2);
+    });
+    test('project is not created when a project is already configured, no conflict, but already registered', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await new Create().relax(TEST_INITIATIVE)).toEqual('Successfully created "FOO"');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'new project name' } })).toEqual('This destination is already registered to a project');
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
     });
     test('creating multiple projects updates the registration appropriately', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
@@ -59,9 +64,9 @@ describe('Create project works appropriately', () => {
         expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(1);
         expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'FOO' })]);
 
-        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'bar' } })).toEqual('Successfully created "BAR"');
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'bar' }, destination: { toPersonId: 'foo' } })).toEqual('Successfully created "BAR"');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(2);
-        expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(1);
-        expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'BAR' })]);
+        expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(2);
+        expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'FOO' }), expect.objectContaining({ projectName: 'BAR' })]);
     });
 });

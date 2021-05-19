@@ -23,14 +23,14 @@ describe('Delete project works appropriately', () => {
     test('project is deleted and all registrations deleted when the project exists and user does have permissions', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'PNAME' } })).toEqual('Successfully created "PNAME"');
-        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'PROJECT2' } })).toEqual('Successfully created "PROJECT2"');
-        expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'PROJECT2' })]);
+        expect(await new Create().relax({ ...TEST_INITIATIVE, data: { name: 'PROJECT2' }, destination: { toPersonId: 'foo' } })).toEqual('Successfully created "PROJECT2"');
+        expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'PNAME' }), expect.objectContaining({ projectName: 'PROJECT2' })]);
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(2);
         expect((await PROJECT_MODEL.find({}).exec())[0]).toEqual(expect.objectContaining({ name: 'PNAME' }));
         expect((await PROJECT_MODEL.find({}).exec())[1]).toEqual(expect.objectContaining({ name: 'PROJECT2' }));
         expect(await new Delete().relax({ ...TEST_INITIATIVE, data: { name: 'project2' } })).toEqual('Successfully deleted "PROJECT2"');
         expect(await PROJECT_MODEL.find({}).exec()).toEqual([expect.objectContaining({ name: 'PNAME' })]);
-        expect(await REGISTRATION_MODEL.find({}).exec()).toHaveLength(0);
+        expect(await REGISTRATION_MODEL.find({}).exec()).toEqual([expect.objectContaining({ projectName: 'PNAME' })]);
     });
     test('project is deleted and all registrations deleted when the project exists and user does have permissions case insensitive', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);

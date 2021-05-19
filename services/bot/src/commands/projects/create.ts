@@ -36,6 +36,8 @@ export class Create extends CommandBase implements ICommand {
             if (existent.length > 0) {
                 message = `A project with name "${projectName}" already exists.`;
                 level = 'warn';
+            } else if ((await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec()).length > 0) {
+                message = 'This destination is already registered to a project';
             } else {
                 // Always create project with one default queue
                 const queue = { name: settings.DEFAULT_QUEUE_NAME, members: [] };
@@ -54,25 +56,15 @@ export class Create extends CommandBase implements ICommand {
                 const result = await project.save();
 
                 // Create or update the registration for the newly created project.
-                const registrations = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
+                const registrations = (await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec())[0];
                 LOGGER.verbose(`Found: ${JSON.stringify(registrations, null, 2)}`);
-                if (registrations.length > 0) {
-                    for (const registration of registrations) {
-                        LOGGER.verbose(`Updating: ${JSON.stringify(registration, null, 2)}`);
-                        await registration.update({
-                            destination: registration.destination,
-                            projectName: project.name
-                        }).exec();
-                    }
-                } else {
-                    const registration = {
-                        destination: initiative.destination,
-                        projectName: project.name
-                    };
-                    LOGGER.verbose(`Adding: ${JSON.stringify(registration, null, 2)}`);
-                    await REGISTRATION_MODEL.build(registration).save();
-                }
-
+                const registration = {
+                    destination: initiative.destination,
+                    projectName: project.name
+                };
+                LOGGER.verbose(`Adding: ${JSON.stringify(registration, null, 2)}`);
+                await REGISTRATION_MODEL.build(registration).save();
+                
                 message = `Successfully created "${result.name}"`;
             }
             LOGGER.log(level, message);

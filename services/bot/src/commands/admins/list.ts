@@ -32,6 +32,7 @@ export class List extends CommandBase implements ICommand {
 
             return `List of admins are:\n\n${collectionString}`;
         } else {
+            // This should never be possible
             return 'There are no admins configured.';
         }
     }
