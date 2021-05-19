@@ -261,21 +261,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../command_list/" class="md-nav__link">
-        Command List
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../authorization/" class="md-nav__link">
         Authorization
       </a>
@@ -306,8 +291,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../registrations/" class="md-nav__link">
-        Registrations
+      <a href="../queues/" class="md-nav__link">
+        Queues
       </a>
     </li>
   
@@ -321,8 +306,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../queues/" class="md-nav__link">
-        Queues
+      <a href="../registrations/" class="md-nav__link">
+        Registrations
       </a>
     </li>
   
@@ -391,13 +376,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#largest-queue-depth" class="md-nav__link">
-    Largest Queue Depth
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#queue-length-history" class="md-nav__link">
     Queue Length History
   </a>
@@ -420,8 +398,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../eggs/" class="md-nav__link">
-        Easter Eggs
+      <a href="../command_list/" class="md-nav__link">
+        Command List
       </a>
     </li>
   
@@ -437,6 +415,21 @@
     <li class="md-nav__item">
       <a href="../api/" class="md-nav__link">
         API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eggs/" class="md-nav__link">
+        Easter Eggs
       </a>
     </li>
   
@@ -505,13 +498,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#largest-queue-depth" class="md-nav__link">
-    Largest Queue Depth
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#queue-length-history" class="md-nav__link">
     Queue Length History
   </a>
@@ -533,8 +519,24 @@
                 
                 <h1 id="analytics">Analytics</h1>
 <h2 id="graphs">Graphs</h2>
-<h2 id="largest-queue-depth">Largest Queue Depth</h2>
 <h2 id="queue-length-history">Queue Length History</h2>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>You can use Qutex to generate some basic graphs that show statistical trends in the data that is collected by Qutex. One such graph is the graph of Queue Length over time. Qutex will also respond a link by which you can view your chart in a browser or download the chart. You can get this graph by invoking the following command:</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>get queue length history
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*get queue length history\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="example" open="open"><summary>Example</summary><p><img src="../images/queueLengthHistory.png" width=350/></p>
+</details>
+<details class="note" open="open"><summary>Note</summary><p>To get these graphs, Qutex leverages <a href="https://quickchart.io/">QuickChart</a> to build and generate the graphs. No personal data is sent here. See the <a href="https://github.com/amthorn/qutex/wiki/Privacy-Policy">Qutex Privacy Policy</a> for more information.</p>
+</details>
                 
               
               
@@ -568,13 +570,13 @@
         </a>
       
       
-        <a href="../eggs/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../command_list/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Easter Eggs
+              Command List
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -633,6 +635,12 @@
     
     
       <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+        <script src="../js/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

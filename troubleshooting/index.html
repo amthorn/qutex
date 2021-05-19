@@ -261,21 +261,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../command_list/" class="md-nav__link">
-        Command List
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../authorization/" class="md-nav__link">
         Authorization
       </a>
@@ -306,8 +291,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../registrations/" class="md-nav__link">
-        Registrations
+      <a href="../queues/" class="md-nav__link">
+        Queues
       </a>
     </li>
   
@@ -321,8 +306,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../queues/" class="md-nav__link">
-        Queues
+      <a href="../registrations/" class="md-nav__link">
+        Registrations
       </a>
     </li>
   
@@ -366,8 +351,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../eggs/" class="md-nav__link">
-        Easter Eggs
+      <a href="../command_list/" class="md-nav__link">
+        Command List
       </a>
     </li>
   
@@ -383,6 +368,21 @@
     <li class="md-nav__item">
       <a href="../api/" class="md-nav__link">
         API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eggs/" class="md-nav__link">
+        Easter Eggs
       </a>
     </li>
   
@@ -532,10 +532,50 @@
                 
                 
                 <h1 id="troubleshooting">Troubleshooting</h1>
+<p>When working with Qutex, often you may find that you need to either troubleshoot a particular workflow or somehow otherwise debug. There are a few things that can help here.</p>
 <h2 id="help-command">Help Command</h2>
+<p>The help command will return a <a href="https://developer.webex.com/docs/api/guides/cards">webex card</a> containing the available commands that exist as well as their authorization levels. It will also display some basic information about the release, the documentation, the author, the release date, and a link where you can open issues.</p>
 <h2 id="using-debug-mode">Using Debug mode</h2>
+<p>If you add <code>| debug</code> to the end of any command, Qutex will return the debug information to you within your webex client. This can be very useful for debugging how Qutex operated on the command that you sent and can be key to determining why a particular workflow is not working, should that occur.</p>
+<details class="example" open="open"><summary>Example</summary><p><code>pun | debug</code></p>
+<p><div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;request&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;Y2lzY29zcGFyazovL3VzL01FU1NBR0UvNmI0ZDQgibberish&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;roomId&quot;</span><span class="p">:</span> <span class="s2">&quot;Y2lzY29zcGFyazovL3VzL1JPT00vMGE0ZGY1ZDAtNDgibberish&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;roomType&quot;</span><span class="p">:</span> <span class="s2">&quot;group&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;personId&quot;</span><span class="p">:</span> <span class="s2">&quot;Y2lzY29zcGFyazovL3VzL1BFT1BMRS9kODRkZgibberish&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;personEmail&quot;</span><span class="p">:</span> <span class="s2">&quot;avatheavian@gmail.com&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;mentionedPeople&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Y2lzY29zcGFyazovL3VzL1BFT1BMRS82MGQ5ZmQ4ZS0gibberish&quot;</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;created&quot;</span><span class="p">:</span> <span class="s2">&quot;2021-05-19T05:59:48.630Z&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;initiative&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;rawCommand&quot;</span><span class="p">:</span> <span class="s2">&quot;pun&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;destination&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;roomId&quot;</span><span class="p">:</span> <span class="s2">&quot;Y2lzY29zcGFyazovL3VzL1JPT00vMGE0ZGY1ZDAtNDgibberish&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;debug&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;Y2lzY29zcGFyazovL3VzL1BFT1BMRS9kODRkZgibberish&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Ava Thorn&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;AUTHORIZATION&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;COMMAND_TYPE&quot;</span><span class="p">:</span> <span class="s2">&quot;operation&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;COMMAND_BASE&quot;</span><span class="p">:</span> <span class="s2">&quot;pun&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;DESCRIPTION&quot;</span><span class="p">:</span> <span class="s2">&quot;Returns a pun:) hehe&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;mentions&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;A magician was driving down the street and then he turned into a driveway.&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+A magician was driving down the street and then he turned into a driveway.</p>
+</details>
 <h2 id="further-support">Further Support</h2>
-<p>TODO</p>
+<p>If you are still having issues or have any feature requests, feel free to open a new issue <a href="https://github.com/amthorn/qutex/issues">here</a>. I'd be happy to help:)</p>
                 
               
               
@@ -554,7 +594,7 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../api/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../eggs/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -563,7 +603,7 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              API
+              Easter Eggs
             </div>
           </div>
         </a>
@@ -634,6 +674,12 @@
     
     
       <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+        <script src="../js/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

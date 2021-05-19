@@ -261,21 +261,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../command_list/" class="md-nav__link">
-        Command List
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../authorization/" class="md-nav__link">
         Authorization
       </a>
@@ -293,21 +278,6 @@
     <li class="md-nav__item">
       <a href="../projects/" class="md-nav__link">
         Projects
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../registrations/" class="md-nav__link">
-        Registrations
       </a>
     </li>
   
@@ -396,30 +366,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setting-the-current-queue" class="md-nav__link">
-    Setting the Current Queue
-  </a>
-  
-    <nav class="md-nav" aria-label="Setting the Current Queue">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#what-is-the-current-queue" class="md-nav__link">
     What is the Current Queue?
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="What is the Current Queue?">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-to-get-the-current-queue" class="md-nav__link">
-    How to Get the Current Queue
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-to-change-the-current-queue" class="md-nav__link">
-    How to Change the Current Queue
+  <a href="#changing-the-current-queue" class="md-nav__link">
+    Changing the Current Queue
   </a>
   
 </li>
@@ -479,6 +435,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#getting-largest-queue-depth" class="md-nav__link">
+    Getting Largest Queue Depth
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -488,6 +451,21 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../registrations/" class="md-nav__link">
+        Registrations
+      </a>
     </li>
   
 
@@ -530,8 +508,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../eggs/" class="md-nav__link">
-        Easter Eggs
+      <a href="../command_list/" class="md-nav__link">
+        Command List
       </a>
     </li>
   
@@ -547,6 +525,21 @@
     <li class="md-nav__item">
       <a href="../api/" class="md-nav__link">
         API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eggs/" class="md-nav__link">
+        Easter Eggs
       </a>
     </li>
   
@@ -650,30 +643,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setting-the-current-queue" class="md-nav__link">
-    Setting the Current Queue
-  </a>
-  
-    <nav class="md-nav" aria-label="Setting the Current Queue">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#what-is-the-current-queue" class="md-nav__link">
     What is the Current Queue?
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="What is the Current Queue?">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#how-to-get-the-current-queue" class="md-nav__link">
-    How to Get the Current Queue
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-to-change-the-current-queue" class="md-nav__link">
-    How to Change the Current Queue
+  <a href="#changing-the-current-queue" class="md-nav__link">
+    Changing the Current Queue
   </a>
   
 </li>
@@ -733,6 +712,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#getting-largest-queue-depth" class="md-nav__link">
+    Getting Largest Queue Depth
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -753,28 +739,301 @@
                 
                 <h1 id="queues">Queues</h1>
 <h2 id="what-is-a-queue">What is a Queue?</h2>
+<p>A queue is the bread and butter of Qutex. It is the main component of a project. Queues are what manage the individual people for a particular resource. There can be multiple queues on a project. But only one queue is set as the <a href="/queues/#what-is-the-default-queue">default queue.</a>. In qutex, <em>people</em> are stored in queues. Individuals can <a href="/queues/#adding-myself-into-a-queue">add</a>/<a href="/queues/#removing-myself-from-a-queue">remove</a> themselves or <a href="/queues/#adding-others-into-a-queue">add</a>/<a href="/queues/#removing-others-from-a-queue">remove</a> others.</p>
 <h2 id="creating-a-new-queue">Creating a New Queue</h2>
-<!-- TO AVA: NAMING RESTRICTIONS \w -->
-
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section require project administrator access.">
+    <a href="/authorization/#project-administrator"><font color="orange" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.69 9.69 0 0 1 12 20.92 9.69 9.69 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53z"/></svg></span></font>Project Admin</a>
+</span></p>
+<p>You can create a qutex queue with the command:</p>
+<div class="tabbed-set" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>create queue &lt;queue_name&gt;
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Valid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>create queue valid
+</code></pre></div>
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Invalid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>create queue NOT&amp;^%VALID
+</code></pre></div>
+</div>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*create queue [\w\s]+\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="warning" open="open"><summary>Warning</summary><p>Queue names must be unique in qutex. Thus, you cannot create a queue with a name that already exists. Additionally, the name of the queue can only contain lowercase and uppercase alphabetical characters, spaces, and the underscore.</p>
+</details>
+<details class="note" open="open"><summary>Note</summary><p>Your queue will automatically be put in uppercase regardless of how it was entered</p>
+</details>
+<p>When you issue the <code>create queue</code> command, Qutex will create an empty queue for you. This queue will not be utilized until you set it as the <a href="/queues/#changing-the-current-queue">current queue</a>.</p>
+<details class="success" open="open"><summary>Success</summary><p>You can verify your queue was created by issueing the <a href="/queues/#listing-the-queues-in-a-project"><code>list queues</code> command</a></p>
+</details>
 <h2 id="modifying-a-queue-name">Modifying a Queue Name</h2>
 <p>Unfortunately, modifying the name of an existing queue is not currently possible with Qutex. You would need to delete the queue and create a new one with the new name.</p>
 <h2 id="deleting-a-queue">Deleting a Queue</h2>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section require project administrator access.">
+    <a href="/authorization/#project-administrator"><font color="orange" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.69 9.69 0 0 1 12 20.92 9.69 9.69 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53z"/></svg></span></font>Project Admin</a>
+</span></p>
+<p>You can delete a qutex queue with the command:</p>
+<div class="tabbed-set" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>delete queue &lt;queue_name&gt;
+</code></pre></div>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Valid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>delete queue valid
+</code></pre></div>
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Invalid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>delete queue NOT&amp;^%VALID
+</code></pre></div>
+</div>
+<input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><label for="__tabbed_2_4">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*delete queue [\w\s]+\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="warning" open="open"><summary>Warning</summary><p>There must always be at least one queue configured on each project. If you try to delete the final queue on a project, you will not be permitted to do so.</p>
+</details>
+<details class="warning" open="open"><summary>Warning</summary><p>You cannot delete the current queue. All projects require one current queue at all times. If you try to delete the current queue, you will not be permitted to do so.</p>
+</details>
+<details class="danger" open="open"><summary>Danger</summary><p>Queue deletions are permanant and they cannot be recovered after deletion.</p>
+</details>
+<details class="success" open="open"><summary>Success</summary><p>You can verify your queue was deleted by issueing the <a href="/queues/#listing-the-queues-in-a-project"><code>list queues</code> command</a></p>
+</details>
 <h2 id="listing-the-queues-in-a-project">Listing the Queues in a Project</h2>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>Listing all queues in a project is possible with qutex by issuing the following command:</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>list queues
+</code></pre></div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*list queues\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="note" open="open"><summary>Note</summary><p>When you list the queues, an asterisk (*) will appear next to the current queue. You can change this by using the <code>set current queue to</code>(/queues/#changing-the-current-queue) command</p>
+</details>
 <h2 id="what-is-the-default-queue">What is the Default Queue?</h2>
 <p>The default queue is the queue that is automatically created in your project when it is first <a href="../projects/#creating-a-new-project">created</a>. The name of this queue is always "DEFAULT". You can immediately begin using the default queue after a project has been created without needing to manually create a queue. However, you are also able to <a href="../queues/#creating-a-new-queue">create your own queue</a> if you so choose. You are not limitted by the existing of the default queue in any way.</p>
-<h2 id="setting-the-current-queue">Setting the Current Queue</h2>
-<!-- TO AVA: note that a project requires at least one current queue at all times. -->
-
-<h3 id="what-is-the-current-queue">What is the Current Queue?</h3>
-<h3 id="how-to-get-the-current-queue">How to Get the Current Queue</h3>
-<h3 id="how-to-change-the-current-queue">How to Change the Current Queue</h3>
+<h2 id="what-is-the-current-queue">What is the Current Queue?</h2>
+<p>In qutex, any action you perform on a queue within a project is always performed on the current queue. Because you can have multiple queues in a project, you are able to change the current queue as the needs of your resource management demands.</p>
+<h3 id="changing-the-current-queue">Changing the Current Queue</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>You can change the current queue using the following command:</p>
+<div class="tabbed-set" data-tabs="4:4"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>set current queue to &lt;queue_name&gt;
+</code></pre></div>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Valid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>set current queue to valid
+</code></pre></div>
+</div>
+<input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><label for="__tabbed_4_3">Invalid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>set current queue to NOT&amp;^%VALID
+</code></pre></div>
+</div>
+<input id="__tabbed_4_4" name="__tabbed_4" type="radio" /><label for="__tabbed_4_4">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*set (current )?queue to [\w\s]+\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="note" open="open"><summary>Note</summary><p>Every project must always have one and only one current queue at a time. If you try to delete the current queue, you will not be permitted to do so until the current queue is changed.</p>
+</details>
+<details class="success" open="open"><summary>Success</summary><p>You can verify the current queue was changed by issueing the <a href="/queues/#listing-the-queues-in-a-project"><code>list queues</code> command</a></p>
+</details>
 <h2 id="using-a-queue">Using a Queue</h2>
 <h3 id="adding-myself-into-a-queue">Adding Myself into a Queue</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>You can add yourself to the current queue using the following command:</p>
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>add me
+</code></pre></div>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*add me\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="note" open="open"><summary>Note</summary><p>You can add yourself as many times as you want into a project.</p>
+</details>
+<details class="success" open="open"><summary>Success</summary><p>You can verify that you were added to the current queue by issueing the <a href="/queues/#showing-the-members-in-a-queue"><code>get queue</code> command</a></p>
+</details>
 <h3 id="removing-myself-from-a-queue">Removing Myself from a Queue</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>You can remove yourself from the current queue using the following command:</p>
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>remove me
+</code></pre></div>
+</div>
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*remove me\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="note" open="open"><summary>Note</summary><p>If you exist more than once within the queue, the <em>front-most</em> queue position will be removed.</p>
+</details>
+<details class="success" open="open"><summary>Success</summary><p>You can verify that you were removed from the current queue by issueing the <a href="/queues/#showing-the-members-in-a-queue"><code>get queue</code> command</a></p>
+</details>
 <h3 id="adding-others-into-a-queue">Adding others into a Queue</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section require project administrator access.">
+    <a href="/authorization/#project-administrator"><font color="orange" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.69 9.69 0 0 1 12 20.92 9.69 9.69 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53z"/></svg></span></font>Project Admin</a>
+</span></p>
+<p>You can add other members within the same space to the current queue using the following command:</p>
+<div class="tabbed-set" data-tabs="7:4"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>add person &lt;queue_name&gt;
+</code></pre></div>
+</div>
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Valid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>add person valid
+</code></pre></div>
+</div>
+<input id="__tabbed_7_3" name="__tabbed_7" type="radio" /><label for="__tabbed_7_3">Invalid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>add person NOT&amp;^%VALID
+</code></pre></div>
+</div>
+<input id="__tabbed_7_4" name="__tabbed_7" type="radio" /><label for="__tabbed_7_4">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*add person .+\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="important" open="open"><summary>Important</summary><p>You must <strong>tag</strong> the person to add them into the queue.</p>
+</details>
+<details class="success" open="open"><summary>Success</summary><p>You can verify that you successfully added the target person to the current queue by issueing the <a href="/queues/#showing-the-members-in-a-queue"><code>get queue</code> command</a></p>
+</details>
 <h3 id="removing-others-from-a-queue">Removing Others from a Queue</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section require project administrator access.">
+    <a href="/authorization/#project-administrator"><font color="orange" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m0 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.13 12A9.69 9.69 0 0 1 12 20.92 9.69 9.69 0 0 1 6.87 17c-.34-.5-.63-1-.87-1.53 0-1.65 2.71-3 6-3s6 1.32 6 3c-.24.53-.53 1.03-.87 1.53z"/></svg></span></font>Project Admin</a>
+</span></p>
+<p>You can remove other members within the same space from the current queue using the following command:</p>
+<div class="tabbed-set" data-tabs="8:4"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>remove person &lt;queue_name&gt;
+</code></pre></div>
+</div>
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Valid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>remove person valid
+</code></pre></div>
+</div>
+<input id="__tabbed_8_3" name="__tabbed_8" type="radio" /><label for="__tabbed_8_3">Invalid Example</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>remove person NOT&amp;^%VALID
+</code></pre></div>
+</div>
+<input id="__tabbed_8_4" name="__tabbed_8" type="radio" /><label for="__tabbed_8_4">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*remove person .+\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="important" open="open"><summary>Important</summary><p>You must <strong>tag</strong> the person to remove them into the queue.</p>
+</details>
+<details class="note" open="open"><summary>Note</summary><p>If you exist more than once within the queue, the <em>front-most</em> queue position will be removed.</p>
+</details>
+<details class="success" open="open"><summary>Success</summary><p>You can verify that you successfully removed the target person from the current queue by issueing the <a href="/queues/#showing-the-members-in-a-queue"><code>get queue</code> command</a></p>
+</details>
 <h3 id="showing-the-members-in-the-queue">Showing the Members in the Queue</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>You can list out the members of  a queue by issueing the following command:</p>
+<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>get queue
+</code></pre></div>
+</div>
+<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*get queue\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="example" open="open"><summary>Example</summary><div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">2 Users</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>Queue &quot;DEFAULT&quot;:
+
+    1. Ava Thorn (May 19, 2021 12:55:01 AM EST)
+    2. Bill Nye (May 19, 2021 12:55:05 AM EST)
+</code></pre></div>
+</div>
+<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">Empty</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>Queue &quot;DEFAULT&quot; is empty
+</code></pre></div>
+</div>
+</div>
+</details>
 <h3 id="getting-estimated-time-remaining-for-me">Getting Estimated Time Remaining for Me</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>Qutex can give you an estimated time remaining until you are moved to the head of the queue. The formulas to do this are outline below:</p>
+<details class="info" open="open"><summary>Formula</summary><div class="tabbed-set" data-tabs="11:3"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1"><span class="arithmatex">\(f(\gamma, n)\)</span></label><div class="tabbed-content">
+<p><span class="arithmatex">\(f\)</span> is the function to calculate how long until a person in queue position <span class="arithmatex">\(n\)</span> reaches the head of the queue.</p>
+<div class="arithmatex">\[
+\begin{equation*}
+f(\gamma, n)=\begin{cases}
+        0 \quad &amp;\text{if} \, n = 0\\
+        \max(g(\gamma, 0) - \alpha,  0)  \quad &amp;\text{if} \, n = 1 \\
+        g(\gamma, n) + f(h(\theta), n-1)) \quad &amp;\text{if} \, n \notin {0,1} \\
+    \end{cases}
+\end{equation*}
+\]</div>
+<p><span class="arithmatex">\(\gamma\)</span> represents the current queue data.
+<span class="arithmatex">\(\alpha\)</span> is the amount of time that has elapsed since the current head of the queue was promoted.<br></p>
+</div>
+<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2"><span class="arithmatex">\(g(\gamma, n)\)</span></label><div class="tabbed-content">
+<p><span class="arithmatex">\(g\)</span> is the function which calculates average time to flush a person, whom is currently at queue position <span class="arithmatex">\(n\)</span>, from the head of the queue.</p>
+<div class="arithmatex">\[
+\begin{equation*}
+g(\gamma, n)=\begin{cases}
+        0 \quad &amp;\text{if} \, n = 0\\
+        \frac{\beta}{|\beta|}  \quad &amp;\text{if} \, n \neq 0 \\
+    \end{cases}
+\end{equation*}
+\]</div>
+<p><span class="arithmatex">\(\beta\)</span> is the number of seconds total that the person at position <span class="arithmatex">\(n\)</span> in <span class="arithmatex">\(\gamma\)</span> has ever been at the head of the queue.<br>
+<span class="arithmatex">\(|\beta|\)</span> is the number of times that the person at position <span class="arithmatex">\(n\)</span> in <span class="arithmatex">\(\gamma\)</span> has ever been at the head of the queue.<br></p>
+</div>
+<input id="__tabbed_11_3" name="__tabbed_11" type="radio" /><label for="__tabbed_11_3"><span class="arithmatex">\(h(\gamma)\)</span></label><div class="tabbed-content">
+<p><span class="arithmatex">\(h\)</span> is a function that produces the current queue except with the current head removed and all the members shifted up one.</p>
+</div>
+</div>
+</details>
+<details class="note" open="open"><summary>Note</summary><p>This is just an estimation and can never be 100% accurate</p>
+</details>
+<p>To get this estimation, you can use the following command: </p>
+<div class="tabbed-set" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>how long
+</code></pre></div>
+</div>
+<input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*how long\s*$
+</code></pre></div>
+</div>
+</div>
+<details class="example" open="open"><summary>Example</summary><p>Given that there is 1 person ahead of you. Your estimated wait time is 00:01:51</p>
+</details>
+<h3 id="getting-largest-queue-depth">Getting Largest Queue Depth</h3>
+<p><span class="tooltip hint--right" aria-label="The commands listed in this section do not have any access restriction.">
+    <a href="/authorization/#none"><font color="green" size=4><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></span></font>Public</a>
+</span></p>
+<p>Qutex can give you the largest queue depth for a given queue over the entire lifetime of that queue. You can do this by invoking the following command:</p>
+<div class="tabbed-set" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Generic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>get largest queue depth
+</code></pre></div>
+</div>
+<input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">Regex</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>^\s*get largest queue depth\s*$
+</code></pre></div>
+</div>
+</div>
+<p>Once invoked, Qutex will return the maximum depth that the queue has ever been as well as the date and time of when that depth last occurred.</p>
+<details class="example" open="open"><summary>Example</summary><p>Largest Depth is: 1
+This occurred at: Thu May 13 2021 04:52:29 GMT+0000 (Coordinated Universal Time)</p>
+</details>
                 
               
               
@@ -793,7 +1052,7 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../registrations/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../projects/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -802,19 +1061,19 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Registrations
+              Projects
             </div>
           </div>
         </a>
       
       
-        <a href="../administration/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../registrations/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Administration
+              Registrations
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -873,6 +1132,12 @@
     
     
       <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+        <script src="../js/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
