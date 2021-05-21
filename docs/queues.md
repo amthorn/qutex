@@ -102,7 +102,7 @@ The default queue is the queue that is automatically created in your project whe
 
 ## What is the Current Queue?
 
-In qutex, any action you perform on a queue within a project is always performed on the current queue. Because you can have multiple queues in a project, you are able to change the current queue as the needs of your resource management demands.
+In qutex, any action you perform on a queue within a project is, by default, performed on the current queue. Because you can have multiple queues in a project, you are able to change the current queue as the needs of your resource management demands. You can also use the [queue suffix](/queues/#operating-on-non-current-queues) with relevant commands to operate on non-current queues.
 
 ### Changing the Current Queue
 
@@ -134,6 +134,29 @@ You can change the current queue using the following command:
     You can verify the current queue was changed by issueing the [`list queues` command](/queues/#listing-the-queues-in-a-project)
 
 ## Using a Queue
+
+### Operating on Non-Current Queues
+
+{% include "public.md" %}
+
+By default, all the commands in this section operate on the [current queue](/queues/#what-is-the-current-queue). However, for any of these commands, you can operate on the non-current queue by adding the following to the end of any of the commands:
+
+=== "Generic"
+    ```
+    on queue <queue_name>
+    ```
+=== "Valid Example"
+    ```
+    add person valid on queue validQ
+    ```
+=== "Invalid Example"
+    ```
+    add person valid on queue NOT&^%VALID
+    ```
+=== "Regex"
+    ```
+    ^\s*((to|on|for|with|from) queue {queue:[\\w\\s]+})?\s*$
+    ```
 
 ### Adding Myself into a Queue
 

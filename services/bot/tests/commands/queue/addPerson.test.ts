@@ -7,7 +7,7 @@ import { AddPerson } from '../../../src/commands/queue/addPerson';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, PROJECT_ADMIN, SUPER_ADMIN, STRICT_DATE } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, PROJECT_ADMIN, SUPER_ADMIN, STRICT_DATE, CREATE_QUEUE } from '../../util';
 
 const USER_ID = 'fooId';
 const USER_DISPLAY_NAME = 'foo name';
@@ -89,7 +89,36 @@ describe('Adding a person to a queue works appropriately', () => {
         expect(queue.members[0].person).toEqual(expect.objectContaining({ id: USER_ID, displayName: USER_DISPLAY_NAME }));
     });
     test('adds me successfully to non-default queue and validates side effects when project exists', async () => {
-        // TODO: do this when "set queue" tests are written
+        let project = await CREATE_PROJECT();
+        let queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        expect(queue.members).toHaveLength(0);
+        expect(project.admins).toEqual(expect.arrayContaining([expect.objectContaining(TEST_PROJECT.admins[0])]));
+        expect(await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec()).toHaveLength(0);
+        await CREATE_QUEUE(project, 'FOO');
+
+        expect(await new AddPerson().relax({ ...TEST_INITIATIVE, user: PROJECT_ADMIN })).toEqual(
+            `Successfully added "${USER_DISPLAY_NAME}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${USER_DISPLAY_NAME} (May 6, 2021 01:43:08 AM EST)`
+        );
+        expect(await new AddPerson().relax({ ...TEST_INITIATIVE, user: PROJECT_ADMIN, data: { queue: 'FOO' } })).toEqual(
+            `Successfully added "${USER_DISPLAY_NAME}" to queue "FOO".\n\nQueue "FOO":\n\n1. ${USER_DISPLAY_NAME} (May 6, 2021 01:43:08 AM EST)`
+        );
+
+        // refresh project object
+        project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+        queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        expect(queue.members).toHaveLength(1);
+        expect(queue.members[0]).toEqual(expect.objectContaining({
+            atHeadTime: new Date('2021-05-06T05:43:08.056Z'),
+            enqueuedAt: new Date('2021-05-06T05:43:08.056Z')
+        }));
+        expect(queue.members[0].person).toEqual(expect.objectContaining({ id: USER_ID, displayName: USER_DISPLAY_NAME }));
+        queue = project.queues.filter(i => i.name === 'FOO')[0];
+        expect(queue.members).toHaveLength(1);
+        expect(queue.members[0]).toEqual(expect.objectContaining({
+            atHeadTime: new Date('2021-05-06T05:43:08.056Z'),
+            enqueuedAt: new Date('2021-05-06T05:43:08.056Z')
+        }));
+        expect(queue.members[0].person).toEqual(expect.objectContaining({ id: USER_ID, displayName: USER_DISPLAY_NAME }));
     });
     test('Can add person when they already exist', async () => {
         let project = await CREATE_PROJECT();

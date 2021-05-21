@@ -29,7 +29,7 @@ export class Create extends CommandBase implements ICommand {
      */
     public async relax (initiative: IInitiative): Promise<string> {
         LOGGER.verbose('Creating project...');
-        const projectName = initiative.data.name.toUpperCase();
+        const projectName = initiative.data.name?.toUpperCase();
         return PROJECT_MODEL.find({ name: projectName }).then(async (existent) => {
             let message = '';
             let level = 'verbose';

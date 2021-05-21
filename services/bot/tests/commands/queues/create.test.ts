@@ -43,10 +43,10 @@ describe('Creating a queue errors when it should', () => {
     test('Cannot create a queue that already exists (NON-DEFAULT)', async () => {
         const project = await CREATE_PROJECT();
         expect(await new Create().relax(TEST_INITIATIVE)).toEqual(
-            `Created queue "${TEST_INITIATIVE.data.name.toUpperCase()}" on project "${project.name.toUpperCase()}" successfully.`
+            `Created queue "${TEST_INITIATIVE.data.name?.toUpperCase()}" on project "${project.name.toUpperCase()}" successfully.`
         );
         expect(await new Create().relax(TEST_INITIATIVE)).toEqual(
-            `Queue "${TEST_INITIATIVE.data.name.toUpperCase()}" already exists.`
+            `Queue "${TEST_INITIATIVE.data.name?.toUpperCase()}" already exists.`
         );
         const projects = await PROJECT_MODEL.find({}).exec();
 
@@ -54,7 +54,7 @@ describe('Creating a queue errors when it should', () => {
         expect(projects[0].queues).toHaveLength(2);
         expect(projects[0].queues[0]).toEqual(expect.objectContaining({ name: settings.DEFAULT_QUEUE_NAME }));
         expect(projects[0].queues[0].members).toHaveLength(0);
-        expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name.toUpperCase() }));
+        expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name?.toUpperCase() }));
         expect(projects[0].queues[1].members).toHaveLength(0);
         expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
     });
@@ -75,7 +75,7 @@ describe('Create queue works appropriately', () => {
     test('Create queue successfully for super admin', async () => {
         const project = await CREATE_PROJECT();
         expect(await new Create().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual(
-            `Created queue "${TEST_INITIATIVE.data.name.toUpperCase()}" on project "${project.name}" successfully.`
+            `Created queue "${TEST_INITIATIVE.data.name?.toUpperCase()}" on project "${project.name}" successfully.`
         );
         const projects = await PROJECT_MODEL.find({}).exec();
 
@@ -83,14 +83,14 @@ describe('Create queue works appropriately', () => {
         expect(projects[0].queues).toHaveLength(2);
         expect(projects[0].queues[0]).toEqual(expect.objectContaining({ name: settings.DEFAULT_QUEUE_NAME }));
         expect(projects[0].queues[0].members).toHaveLength(0);
-        expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name.toUpperCase() }));
+        expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name?.toUpperCase() }));
         expect(projects[0].queues[1].members).toHaveLength(0);
         expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
     });
     test('Create queue successfully for project admin', async () => {
         const project = await CREATE_PROJECT();
         expect(await new Create().relax({ ...TEST_INITIATIVE, user: PROJECT_ADMIN })).toEqual(
-            `Created queue "${TEST_INITIATIVE.data.name.toUpperCase()}" on project "${project.name}" successfully.`
+            `Created queue "${TEST_INITIATIVE.data.name?.toUpperCase()}" on project "${project.name}" successfully.`
         );
         const projects = await PROJECT_MODEL.find({}).exec();
 
@@ -98,21 +98,21 @@ describe('Create queue works appropriately', () => {
         expect(projects[0].queues).toHaveLength(2);
         expect(projects[0].queues[0]).toEqual(expect.objectContaining({ name: settings.DEFAULT_QUEUE_NAME }));
         expect(projects[0].queues[0].members).toHaveLength(0);
-        expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name.toUpperCase() }));
+        expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name?.toUpperCase() }));
         expect(projects[0].queues[1].members).toHaveLength(0);
         expect(projects[0].currentQueue).toStrictEqual(settings.DEFAULT_QUEUE_NAME);
     });
     test('Can create a queue with the same name as the default queue if the default queue does not exist', async () => {
         const project = await CREATE_PROJECT();
         expect(await new Create().relax(TEST_INITIATIVE)).toEqual(
-            `Created queue "${TEST_INITIATIVE.data.name.toUpperCase()}" on project "${project.name}" successfully.`
+            `Created queue "${TEST_INITIATIVE.data.name?.toUpperCase()}" on project "${project.name}" successfully.`
         );
         expect(await new SetCurrentQueue().relax({
             ...TEST_INITIATIVE,
             rawCommand: `set queue to ${TEST_INITIATIVE.data.name}`,
             data: { name: TEST_INITIATIVE.data.name }
         })).toEqual(
-            `Successfully set "${TEST_INITIATIVE.data.name.toUpperCase()}" as current queue.`
+            `Successfully set "${TEST_INITIATIVE.data.name?.toUpperCase()}" as current queue.`
         );
         expect(await new Delete().relax({
             ...TEST_INITIATIVE,
@@ -130,10 +130,10 @@ describe('Create queue works appropriately', () => {
 
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(1);
         expect(projects[0].queues).toHaveLength(2);
-        expect(projects[0].queues[0]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name.toUpperCase() }));
+        expect(projects[0].queues[0]).toEqual(expect.objectContaining({ name: TEST_INITIATIVE.data.name?.toUpperCase() }));
         expect(projects[0].queues[0].members).toHaveLength(0);
         expect(projects[0].queues[1]).toEqual(expect.objectContaining({ name: settings.DEFAULT_QUEUE_NAME }));
         expect(projects[0].queues[1].members).toHaveLength(0);
-        expect(projects[0].currentQueue).toStrictEqual(TEST_INITIATIVE.data.name.toUpperCase());
+        expect(projects[0].currentQueue).toStrictEqual(TEST_INITIATIVE.data.name?.toUpperCase());
     });
 });

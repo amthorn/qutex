@@ -9,7 +9,7 @@ import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
 import * as settings from '../../../src/settings.json';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, PROJECT_ADMIN, SUPER_ADMIN, STRICT_DATE } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, PROJECT_ADMIN, SUPER_ADMIN, STRICT_DATE, CREATE_QUEUE } from '../../util';
 
 const FIVE_SECONDS = 5000;
 const USER_ID = 'fooId';
@@ -107,8 +107,35 @@ describe('Removing a person from a queue works appropriately', () => {
         project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
         expect(project.queues.filter(i => i.name === project.currentQueue)[0].members).toHaveLength(0);
     });
-    test('adds me successfully to non-default queue and validates side effects when project exists', async () => {
-        // TODO: do this when "set queue" tests are written
+    test('removes a person successfully to non-default queue and validates side effects when project exists', async () => {
+        let project = await CREATE_PROJECT();
+        await CREATE_QUEUE(project, 'FOO');
+        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        expect(queue.members).toHaveLength(0);
+        expect(project.admins).toEqual(expect.arrayContaining([expect.objectContaining(TEST_PROJECT.admins[0])]));
+        expect(await PERSON_MODEL.find({ id: USER_ID }).exec()).toHaveLength(0);
+
+        expect(await new AddPerson().relax({ ...TEST_INITIATIVE, user: PROJECT_ADMIN, data: { queue: 'FOO' } })).toEqual(
+            `Successfully added "${USER_DISPLAY_NAME}" to queue "FOO".\n\nQueue "FOO":\n\n1. ${USER_DISPLAY_NAME} (May 6, 2021 01:43:08 AM EST)`
+        );
+        expect(await new RemovePerson().relax({ ...TEST_INITIATIVE, user: PROJECT_ADMIN, data: { queue: 'FOO' } })).toEqual(
+            `Successfully removed "${USER_DISPLAY_NAME}" from queue "FOO".\n\nQueue "FOO" is empty`
+        );
+        // validate
+        const people = await PERSON_MODEL.find({ id: USER_ID }).exec();
+        expect(people).toHaveLength(1);
+        expect(people[0]).toEqual(expect.objectContaining({
+            id: USER_ID,
+            displayName: USER_DISPLAY_NAME,
+            atHeadCount: 1,
+            atHeadSeconds: 0,
+            inQueueCount: 1,
+            inQueueSeconds: 0
+        }));
+
+        // refresh project object
+        project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+        expect(project.queues.filter(i => i.name === 'FOO')[0].members).toHaveLength(0);
     });
     describe('Correctly tags someone else when, after removal, they are at the head of the queue and in a group', () => {
         let project: IProject | undefined = undefined;

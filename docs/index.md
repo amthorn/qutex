@@ -8,8 +8,8 @@
 
 ## Introduction
 
-Qutex is a basic Queue Management System that was designed as a Webex bot. The primary goal was to provide a system,
-interactable within Webex, that can be used to manage shared resources or any other task where a queue might be helpful.
+Qutex is a basic Queue Management System that was designed as a Cisco Webex bot. The primary goal was to provide a system,
+interactable within Cisco Webex, that can be used to manage shared resources or any other task where a queue might be helpful.
 It can be used to manage who is using a particular resource or it can be used to track whose turn it is to perform a
 particular task, such as doing Agile retrospectives or restocking the refridgerator.
 

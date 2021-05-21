@@ -31,17 +31,18 @@ export class Create extends CommandBase implements ICommand {
         if (typeof project === 'string') return String(project);
 
         // make sure a queue with that name doesn't already exist
-        if (project.queues.filter(i => i.name === initiative.data.name.toUpperCase()).length > 0) {
-            return `Queue "${initiative.data.name.toUpperCase()}" already exists.`;
+        if (project.queues.filter(i => i.name === initiative.data.name?.toUpperCase()).length > 0) {
+            return `Queue "${initiative.data.name?.toUpperCase()}" already exists.`;
         } else {
             // Add the queue to the project
-            project.queues.push({ name: initiative.data.name.toUpperCase(), members: [], history: [] });
+            // name must exist or command won't match
+            project.queues.push({ name: (initiative.data.name as string).toUpperCase(), members: [], history: [] });
 
             // Save the project
             await project.save();
 
             // Return response
-            return `Created queue "${initiative.data.name.toUpperCase()}" on project "${project.name}" successfully.`;
+            return `Created queue "${(initiative.data.name as string).toUpperCase()}" on project "${project.name}" successfully.`;
         }
     }
 }

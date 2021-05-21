@@ -5,6 +5,8 @@
 import { Handler } from '../src/handler';
 import { BOT } from '../src/bot';
 import { Request } from 'express';
+import { PROJECT_MODEL } from '../src/models/project';
+import { CREATE_PROJECT, CREATE_QUEUE } from './util';
 
 const MOCK_REQUEST = {
     'body': {
@@ -139,6 +141,25 @@ describe('Handler is working', () => {
         });
     });
 
+    test('handler appropriately handles queue specification', async () => {
+        let project = await CREATE_PROJECT();
+        const queue = await CREATE_QUEUE(project, 'FOO');
+        expect(queue.members).toHaveLength(0);
+        BOT.messages.get.mockReturnValueOnce({ text: 'add me to queue FOO', personId: 'notReal' });
+        BOT.people.get.mockReturnValue({ id: MOCK_REQUEST.body.data.personId, displayName: 'mockDisplayName' });
+        BOT.people.get.mockReturnValue({ id: 'whateverId', displayName: 'mockDisplayName', emails: ['mockEmail'] });
+        expect(await new Handler().handle(MOCK_REQUEST)).toEqual(undefined);
+        project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+        expect(project.queues.filter(i => i.name === project.currentQueue)[0].members).toHaveLength(0);
+        expect(project.queues.filter(i => i.name === 'FOO')[0].members).toHaveLength(1);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            toPersonId: 'notReal',
+            markdown: 'Successfully added "mockDisplayName" to queue "FOO".\n\nQueue "FOO":\n\n1. mockDisplayName (May 6, 2021 01:43:08 AM EST)'
+        });
+    });
+
     test('handler appropriately handles the case when data is parsed from command when there is a mentioned user', async () => {
         BOT.messages.get.mockReturnValueOnce({
             text: 'create project foobar',
@@ -188,6 +209,7 @@ describe('Handler is working', () => {
                         'name': 'foobar'
                     },
                     'action': {
+                        'QUEUE': false,
                         'AUTHORIZATION': 'none',
                         'COMMAND_TYPE': 'create',
                         'COMMAND_BASE': 'project',

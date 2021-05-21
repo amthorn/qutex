@@ -29,15 +29,15 @@ export class Delete extends CommandBase implements ICommand {
         // Project may not exist if super admin is the invoker
         const project = await CommandBase.getProject(initiative) as ProjectDocument;
         if (typeof project === 'string') return String(project);
-        if (project.queues.filter(i => i.name === initiative.data.name.toUpperCase()).length === 0) {
-            return `Queue "${initiative.data.name.toUpperCase()}" doesn't exist on project "${project.name}".`;
+        if (project.queues.filter(i => i.name === initiative.data.name?.toUpperCase()).length === 0) {
+            return `Queue "${initiative.data.name?.toUpperCase()}" doesn't exist on project "${project.name}".`;
         } else if (project.queues.length === 1) {
             return 'You must have at least one queue configured on the project.';
-        } else if (project.currentQueue === initiative.data.name.toUpperCase()) {
+        } else if (project.currentQueue === initiative.data.name?.toUpperCase()) {
             return `Queue "${initiative.data.name}" is the current queue. You must change the current queue before you can delete it.`;
         } else {
             // Always convert to uppercase
-            const queueName = initiative.data.name.toUpperCase();
+            const queueName = initiative.data.name?.toUpperCase();
 
             // Remove queue, effectively deleting it
             project.queues = project.queues.filter(i => i.name !== queueName);

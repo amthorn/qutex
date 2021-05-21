@@ -7,7 +7,7 @@ import { AddMe } from '../../../src/commands/queue/addMe';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_OTHER_USER, STRICT_DATE } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_OTHER_USER, STRICT_DATE, CREATE_QUEUE } from '../../util';
 
 TEST_INITIATIVE.rawCommand = 'remove me';
 TEST_INITIATIVE.action = new HowLong();
@@ -64,6 +64,65 @@ describe('getting "how long" for a queue works appropriately', () => {
         // should be (100/3) + (283/6) + (2939/52) - 30 = 107.01923076923077 seconds = 00:01:47
         MockDate.set(STRICT_DATE + 30000); // should reduce "how long" by 30 seconds
         expect(await new HowLong().relax(TEST_INITIATIVE)).toEqual('Given that there are 3 people ahead of you. Your estimated wait time is 00:01:47');
+
+        expect(queue.members).toHaveLength(3);
+        expect(queue.members[0].person).toEqual(expect.objectContaining(person1));
+        expect(queue.members[1].person).toEqual(expect.objectContaining(person2));
+        expect(queue.members[2].person).toEqual(expect.objectContaining(person3));
+        /* eslint-enable @typescript-eslint/no-magic-numbers */
+    });
+    test('When user is not in the queue, returns the total length of time to get to the head for non-default queue', async () => {
+        let project = await CREATE_PROJECT();
+        await CREATE_QUEUE(project, 'FOO');
+        const person1 = { id: 'user1', displayName: 'user one' };
+        /* eslint-disable @typescript-eslint/no-magic-numbers */
+        // There's a lot of magic numbers here, ignore the linter for this section
+        await PERSON_MODEL.build({
+            ...person1,
+            inQueueCount: 5,
+            inQueueSeconds: 30,
+            atHeadSeconds: 100,
+            atHeadCount: 3
+        }).save();
+        await new AddMe().relax({ ...TEST_INITIATIVE, user: person1, data: { queue: 'FOO' } });
+
+        const person2 = { id: 'user2', displayName: 'user two' };
+        await PERSON_MODEL.build({
+            ...person2,
+            inQueueCount: 10,
+            inQueueSeconds: 583,
+            atHeadSeconds: 283,
+            atHeadCount: 6
+        }).save();
+        await new AddMe().relax({ ...TEST_INITIATIVE, user: person2, data: { queue: 'FOO' } });
+
+        const person3 = { id: 'user3', displayName: 'user three' };
+        await PERSON_MODEL.build({
+            ...person3,
+            inQueueCount: 123,
+            inQueueSeconds: 28378,
+            atHeadSeconds: 2939,
+            atHeadCount: 52
+        }).save();
+        await new AddMe().relax({ ...TEST_INITIATIVE, user: person3, data: { queue: 'FOO' } });
+
+        project = (await PROJECT_MODEL.find({}).exec())[0];
+        const queue = project.queues.filter(i => i.name === 'FOO')[0];
+
+        expect(queue.members).toHaveLength(3);
+        expect(queue.members[0].person).toEqual(expect.objectContaining(person1));
+        expect(queue.members[1].person).toEqual(expect.objectContaining(person2));
+        expect(queue.members[2].person).toEqual(expect.objectContaining(person3));
+
+        MockDate.set(STRICT_DATE + 10000); // should reduce "how long" by 10 seconds
+        // should be (100/3) + (283/6) + (2939/52) - 10 = 127.01923076923077 seconds = 00:02:07
+        expect(await new HowLong().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual(
+            'Given that there are 3 people ahead of you. Your estimated wait time is 00:02:07'
+        );
+
+        // should be (100/3) + (283/6) + (2939/52) - 30 = 107.01923076923077 seconds = 00:01:47
+        MockDate.set(STRICT_DATE + 30000); // should reduce "how long" by 30 seconds
+        expect(await new HowLong().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual('Given that there are 3 people ahead of you. Your estimated wait time is 00:01:47');
 
         expect(queue.members).toHaveLength(3);
         expect(queue.members[0].person).toEqual(expect.objectContaining(person1));

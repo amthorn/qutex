@@ -14,6 +14,7 @@ export class RemovePerson extends CommandBase implements ICommand {
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'remove person';
     public readonly ARGS: string = '{name:.+}';
+    public readonly QUEUE: boolean = true;
     public readonly DESCRIPTION: string = 'Removes a tagged person from the current queue';
     /* eslint-enable jsdoc/require-jsdoc */
 
@@ -31,6 +32,9 @@ export class RemovePerson extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative) as ProjectDocument;
         if (typeof project === 'string') return String(project);
 
+        // Get queue
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+
         if (initiative.mentions.length > 1) {
             return 'You cannot remove more than one person at once';
         } else if (initiative.mentions.length == 0) {
@@ -40,7 +44,7 @@ export class RemovePerson extends CommandBase implements ICommand {
         const webexPerson = await BOT.people.get(webexId);
 
         // remove only the first instance
-        const queue = await CommandBase.removeFromQueue(project.queues, project.currentQueue, { id: webexId, displayName: webexPerson.displayName });
+        const queue = await CommandBase.removeFromQueue(project.queues, queueName, { id: webexId, displayName: webexPerson.displayName });
         if (typeof queue === 'string') return String(queue);
 
         // Save the project
@@ -57,6 +61,6 @@ export class RemovePerson extends CommandBase implements ICommand {
             tag += ', you\'re at the front of the queue!';
         }
         // Return response
-        return `Successfully removed "${webexPerson.displayName}" from queue "${project.currentQueue}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
+        return `Successfully removed "${webexPerson.displayName}" from queue "${queueName}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
     }
 }

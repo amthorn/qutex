@@ -16,6 +16,7 @@ export class AddPerson extends CommandBase implements ICommand {
     public readonly COMMAND_BASE: string = 'add person';
     public readonly ARGS: string = '{name:.+}';
     public readonly DESCRIPTION: string = 'Adds a tagged person to the current queue';
+    public readonly QUEUE: boolean = true;
     /* eslint-enable jsdoc/require-jsdoc */
 
     /**
@@ -42,13 +43,16 @@ export class AddPerson extends CommandBase implements ICommand {
         // Create user if they don't exist
         const user = await CommandBase.addUser(webexId, webexPerson.displayName);
 
+        // Get queue
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+
         // Add to end of queue
-        const queue = CommandBase.addToQueue(project.queues, project.currentQueue, user);
+        const queue = CommandBase.addToQueue(project.queues, queueName, user);
 
         // Save the project
         await project.save();
 
         // Return response
-        return `Successfully added "${user.displayName}" to queue "${project.currentQueue}".\n\n${CommandBase.queueToString(queue)}`;
+        return `Successfully added "${user.displayName}" to queue "${queueName}".\n\n${CommandBase.queueToString(queue)}`;
     }
 }
