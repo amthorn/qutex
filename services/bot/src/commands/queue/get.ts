@@ -10,8 +10,7 @@ export class Get extends CommandBase implements ICommand {
     /* eslint-disable jsdoc/require-jsdoc */
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.GET;
-    public readonly COMMAND_BASE: string = 'queue';
-    public readonly ARGS: string = '{queue:[\\w\\s]+}?';
+    public readonly COMMAND_BASE: string = 'queue( {queue:[\\w\\s]+})?';
     public readonly DESCRIPTION: string = 'Gets the current queue and shows the contents of the queue';
     /* eslint-enable jsdoc/require-jsdoc */
 

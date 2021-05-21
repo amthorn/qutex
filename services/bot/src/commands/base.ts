@@ -13,7 +13,7 @@ import * as settings from '../settings.json';
 
 
 const MILLISECONDS = 1000;
-const QUEUE_SUFFIX = '((to|on|for|with|from) queue {queue:[\\w\\s]+})?';
+const QUEUE_SUFFIX = '( (to|on|for|with|from) queue {queue:[\\w\\s]+})?';
 
 /**
  * This is used for managing the argument for the removeFromQueue function's "user" argument.
@@ -73,7 +73,7 @@ export abstract class CommandBase {
      */
     public get commandWithArgs (): string {
         let tempCommand = this.ARGS ? [this.command, this.ARGS].join(' ') : this.command;
-        tempCommand = this.QUEUE ? [tempCommand, QUEUE_SUFFIX].join(' ') : tempCommand;
+        tempCommand = this.QUEUE ? tempCommand + QUEUE_SUFFIX : tempCommand;
         return tempCommand.trim();
     }
 

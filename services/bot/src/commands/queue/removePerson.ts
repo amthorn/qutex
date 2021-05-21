@@ -13,7 +13,7 @@ export class RemovePerson extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'remove person';
-    public readonly ARGS: string = '{name:.+}';
+    public readonly ARGS: string = '{name:.+?}';
     public readonly QUEUE: boolean = true;
     public readonly DESCRIPTION: string = 'Removes a tagged person from the current queue';
     /* eslint-enable jsdoc/require-jsdoc */
