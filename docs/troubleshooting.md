@@ -4,11 +4,11 @@ When working with Qutex, often you may find that you need to either troubleshoot
 
 ## Help Command
 
-The help command will return a [webex card](https://developer.webex.com/docs/api/guides/cards) containing the available commands that exist as well as their authorization levels. It will also display some basic information about the release, the documentation, the author, the release date, and a link where you can open issues.
+The help command will return a [Cisco Webex card](https://developer.webex.com/docs/api/guides/cards) containing the available commands that exist as well as their authorization levels. It will also display some basic information about the release, the documentation, the author, the release date, and a link where you can open issues.
 
 ## Using Debug mode
 
-If you add `| debug` to the end of any command, Qutex will return the debug information to you within your webex client. This can be very useful for debugging how Qutex operated on the command that you sent and can be key to determining why a particular workflow is not working, should that occur.
+If you add `| debug` to the end of any command, Qutex will return the debug information to you within your Cisco Webex client. This can be very useful for debugging how Qutex operated on the command that you sent and can be key to determining why a particular workflow is not working, should that occur.
 
 ???+ example
     `pun | debug`

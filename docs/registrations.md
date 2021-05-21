@@ -6,7 +6,7 @@ In Qutex, a registration is just a mapping of a project to a location. This mean
 
 ## What is a Location?
 
-A location is either a webex group (or room) or a direct message. Locations are registered to projects
+A location is either a Cisco Webex group (or room) or a direct message. Locations are registered to projects
 
 ## Changing the Registration
 

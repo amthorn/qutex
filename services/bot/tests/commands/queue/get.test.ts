@@ -7,7 +7,7 @@ import { Get } from '../../../src/commands/queue/get';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, STRICT_DATE } from '../../util';
+import { CREATE_PROJECT, TEST_INITIATIVE, TEST_PROJECT, STANDARD_USER, STRICT_DATE, CREATE_QUEUE } from '../../util';
 
 TEST_INITIATIVE.rawCommand = 'get queue';
 TEST_INITIATIVE.action = new Get();
@@ -38,6 +38,34 @@ describe('Getting a queue works appropriately', () => {
         expect(await new Get().relax(TEST_INITIATIVE)).toEqual(
             `Queue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n\nYou are at the head of the queue so you have no estimated wait time!`
         );
+    });
+    test('Gets non-default queue successfully when project exists', async () => {
+        let project = await CREATE_PROJECT();
+        await CREATE_QUEUE(project, 'FOO');
+        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        expect(queue.members).toHaveLength(0);
+        expect(project.admins).toEqual(expect.arrayContaining([expect.objectContaining(TEST_PROJECT.admins[0])]));
+        expect(await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec()).toHaveLength(0);
+
+        expect(await new AddMe().relax(TEST_INITIATIVE)).toEqual(
+            `Successfully added "${STANDARD_USER.displayName}" to queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
+        );
+        expect(await new Get().relax(TEST_INITIATIVE)).toEqual(
+            `Queue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n\nYou are at the head of the queue so you have no estimated wait time!`
+        );
+
+        expect(await new AddMe().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual(
+            `Successfully added "${STANDARD_USER.displayName}" to queue "FOO".\n\nQueue "FOO":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
+        );
+        expect(await new Get().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual(
+            `Queue "FOO":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n\nYou are at the head of the queue so you have no estimated wait time!`
+        );
+        project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+
+        const defaultQueue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        const newQueue = project.queues.filter(i => i.name === 'FOO')[0];
+        expect(defaultQueue.members).toHaveLength(1);
+        expect(newQueue.members).toHaveLength(1);
     });
     test('Returns how long when there are multiple people in front, all have saved queue data', async () => {
         let project = await CREATE_PROJECT();

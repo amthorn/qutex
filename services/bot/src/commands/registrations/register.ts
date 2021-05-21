@@ -26,7 +26,7 @@ export class Operation extends CommandBase implements ICommand {
      * @returns The response string.
      */
     public async relax (initiative: IInitiative): Promise<string> {
-        initiative.data.name = initiative.data.name.toUpperCase();
+        initiative.data.name = initiative.data.name?.toUpperCase();
         // Get the project
         const targetProjects = await PROJECT_MODEL.find({ name: initiative.data.name }).exec();
         const existent = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
@@ -54,7 +54,7 @@ export class Operation extends CommandBase implements ICommand {
             return msg;
         } else {
             // destination not registered
-            await REGISTRATION_MODEL.build({ destination: initiative.destination, projectName: initiative.data.name }).save();
+            await REGISTRATION_MODEL.build({ destination: initiative.destination, projectName: initiative.data.name as string }).save();
             return `Successfully registered to "${initiative.data.name}"`;
         }
 

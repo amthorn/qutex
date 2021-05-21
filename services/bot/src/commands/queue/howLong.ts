@@ -17,6 +17,7 @@ export class HowLong extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'how long';
+    public readonly QUEUE: boolean = true;
     public readonly DESCRIPTION: string = 'Get the estimated time remaining until user is at head of queue';
     /* eslint-enable jsdoc/require-jsdoc */
 
@@ -34,7 +35,10 @@ export class HowLong extends CommandBase implements ICommand {
 
         LOGGER.verbose('Getting the user if they exist...');
         const person = (await PERSON_MODEL.find({ id: initiative.user.id }).exec())[0];
-        const queueObject = project.queues.filter(i => i.name === project.currentQueue)[0];
+
+        // Get queue
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+        const queueObject = project.queues.filter(i => i.name === queueName)[0];
         return await CommandBase.getHowLong(queueObject, person);
     }
 }

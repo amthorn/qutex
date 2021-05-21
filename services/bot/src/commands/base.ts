@@ -13,6 +13,7 @@ import * as settings from '../settings.json';
 
 
 const MILLISECONDS = 1000;
+const QUEUE_SUFFIX = '((to|on|for|with|from) queue {queue:[\\w\\s]+})?';
 
 /**
  * This is used for managing the argument for the removeFromQueue function's "user" argument.
@@ -57,13 +58,23 @@ export abstract class CommandBase {
     public DESCRIPTION?: string;
 
     /**
+     * This defines whether or not the command permits the queue suffix.
+     *
+     * @access public
+     * @readonly
+     */
+    public QUEUE = false;
+
+    /**
      * Gets the command that contains the arguments.
      *
      * @access public
      * @returns The string command which contains arguments.
      */
     public get commandWithArgs (): string {
-        return this.ARGS ? [this.command, this.ARGS].join(' ') : this.command;
+        let tempCommand = this.ARGS ? [this.command, this.ARGS].join(' ') : this.command;
+        tempCommand = this.QUEUE ? [tempCommand, QUEUE_SUFFIX].join(' ') : tempCommand;
+        return tempCommand.trim();
     }
 
     /**
@@ -110,11 +121,11 @@ export abstract class CommandBase {
         const registrations = await REGISTRATION_MODEL.find({ destination: initiative.destination }).exec();
         // This is a special case for project delete where a registration is not needed.
         if (initiative.action.COMMAND_BASE === 'project' && initiative.action.COMMAND_TYPE === CommandType.DELETE) {
-            const projects = await PROJECT_MODEL.find({ name: initiative.data.name.toUpperCase() }).exec();
+            const projects = await PROJECT_MODEL.find({ name: initiative.data.name?.toUpperCase() }).exec();
             if (projects.length > 0) {
                 return projects[0];
             } else {
-                return `A project with name "${initiative.data.name.toUpperCase()}" does not exist.`;
+                return `A project with name "${initiative.data.name?.toUpperCase()}" does not exist.`;
             }
         } else if (registrations.length > 0) {
             return (await PROJECT_MODEL.find({ name: registrations[0].projectName }).exec())[0];
@@ -173,7 +184,9 @@ export abstract class CommandBase {
      * @returns The queue that was updated.
      */
     public static addToQueue (queues: IQueue[], queue: string, user: IPerson): IQueue {
-        const queueObject = queues.filter(i => i.name === queue)[0];
+        LOGGER.verbose(`Queue Name: ${queue}`);
+        LOGGER.verbose(`Queues: ${queues}`);
+        const queueObject = queues.filter(i => i.name === queue.toUpperCase())[0];
         const now = new Date();
         const atHeadTime = queueObject.members.length === 0 ? now : null;
         queueObject.members.push({

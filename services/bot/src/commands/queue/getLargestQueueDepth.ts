@@ -13,6 +13,7 @@ export class Get extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.GET;
     public readonly COMMAND_BASE: string = 'largest queue depth';
+    public readonly QUEUE: boolean = true;
     public readonly DESCRIPTION: string = 'Gets the largest queue depth and at what point that depth was achieved.';
     /* eslint-enable jsdoc/require-jsdoc */
 
@@ -28,7 +29,10 @@ export class Get extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
-        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        // Get queue
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+
+        const queue = project.queues.filter(i => i.name === queueName)[0];
 
         if (queue.history.length > 0) {
 

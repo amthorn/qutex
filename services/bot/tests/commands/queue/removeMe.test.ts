@@ -4,10 +4,10 @@
  */
 import { AddMe } from '../../../src/commands/queue/addMe';
 import { RemoveMe } from '../../../src/commands/queue/removeMe';
-import { PROJECT_MODEL } from '../../../src/models/project';
+import { PROJECT_MODEL, ProjectDocument } from '../../../src/models/project';
 import { PERSON_MODEL } from '../../../src/models/person';
 import MockDate from 'mockdate';
-import { CREATE_PROJECT, TEST_QUEUE_MEMBER, TEST_OTHER_USER, TEST_INITIATIVE, STANDARD_USER, STRICT_DATE } from '../../util';
+import { CREATE_PROJECT, TEST_QUEUE_MEMBER, TEST_OTHER_USER, TEST_INITIATIVE, STANDARD_USER, STRICT_DATE, CREATE_QUEUE } from '../../util';
 
 const TWO_SECONDS = 2000;
 const FOUR_SECONDS = 4000;
@@ -289,10 +289,65 @@ describe('Removing me from a queue works appropriately', () => {
             expect(await new RemoveMe().relax(testInitiativeRoom)).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "DEFAULT".\n\nQueue "DEFAULT":\n\n1. other user name (May 6, 2021 01:43:10 AM EST)\n\n<@personId:otherUser|other user name>, you're at the front of the queue!`);
         });
     });
-    test('removes me successfully to non-default queue and validates side effects when project exists', async () => {
-        // TODO: do this when "set queue" tests are written
-    });
-    test('errors when user is in a queue on the project, but not on the current queue', async () => {
-        // TODO: do this when "set queue" tests are written
+    describe('removes me successfully and validates side effects when project exists and user is in non-default queue', () => {
+        let project: IProject | undefined = undefined;
+        beforeEach(async () => {
+            MockDate.set(STRICT_DATE);
+            project = await CREATE_PROJECT();
+            await CREATE_QUEUE(project as ProjectDocument, 'FOO');
+            expect(await new AddMe().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual(
+                `Successfully added "${STANDARD_USER.displayName}" to queue "FOO".\n\nQueue "FOO":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)`
+            );
+
+            project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
+            const newQueue = project.queues.filter(i => i.name === 'FOO')[0];
+            expect(newQueue.members).toHaveLength(1);
+            expect(newQueue.members[0]).toEqual(expect.objectContaining({
+                atHeadTime: new Date('2021-05-06T05:43:08.056Z'),
+                enqueuedAt: new Date('2021-05-06T05:43:08.056Z')
+            }));
+            expect(newQueue.members[0].person).toEqual(expect.objectContaining(TEST_INITIATIVE.user));
+        });
+        afterEach(() => {
+            MockDate.reset();
+        });
+        test('validate', async () => {
+            MockDate.set(STRICT_DATE + FIVE_SECONDS);
+            expect(await new RemoveMe().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual(`Successfully removed "${STANDARD_USER.displayName}" from queue "FOO".\n\nQueue "FOO" is empty`);
+
+            // Verify
+            const person = (await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec())[0];
+            expect(person).toEqual(expect.objectContaining({
+                atHeadCount: 1,
+                atHeadSeconds: 5,
+                displayName: STANDARD_USER.displayName,
+                id: STANDARD_USER.id,
+                inQueueCount: 1,
+                inQueueSeconds: 5
+            }));
+
+            const resultProject = (await PROJECT_MODEL.find({ name: project?.name }).exec())[0];
+            const queue = resultProject.queues.filter(i => i.name === 'FOO')[0];
+            expect(queue.members).toHaveLength(0);
+        });
+        test('Validate error when user is removed from the default queue and they are in a non-default queue', async () => {
+            MockDate.set(STRICT_DATE + FIVE_SECONDS);
+            expect(await new RemoveMe().relax(TEST_INITIATIVE)).toEqual(`User "${STANDARD_USER.displayName}" was not found in queue "DEFAULT"`);
+
+            // Verify
+            const person = (await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec())[0];
+            expect(person).toEqual(expect.objectContaining({
+                atHeadCount: 0,
+                atHeadSeconds: 0,
+                displayName: STANDARD_USER.displayName,
+                id: STANDARD_USER.id,
+                inQueueCount: 0,
+                inQueueSeconds: 0
+            }));
+
+            const resultProject = (await PROJECT_MODEL.find({ name: project?.name }).exec())[0];
+            expect(resultProject.queues.filter(i => i.name === project?.currentQueue)[0].members).toHaveLength(0);
+            expect(resultProject.queues.filter(i => i.name === 'FOO')[0].members).toHaveLength(1);
+        });
     });
 });

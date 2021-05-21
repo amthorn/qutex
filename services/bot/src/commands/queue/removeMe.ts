@@ -12,6 +12,7 @@ export class RemoveMe extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'remove me';
+    public readonly QUEUE: boolean = true;
     public readonly DESCRIPTION: string = 'Removes the first occurrence of the user from the current queue';
     /* eslint-enable jsdoc/require-jsdoc */
 
@@ -27,8 +28,11 @@ export class RemoveMe extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
+        // Get queue
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+
         // remove only the first instance
-        const queue = await CommandBase.removeFromQueue(project.queues, project.currentQueue, { id: initiative.user.id, displayName: initiative.user.displayName });
+        const queue = await CommandBase.removeFromQueue(project.queues, queueName, { id: initiative.user.id, displayName: initiative.user.displayName });
         if (typeof queue === 'string') return String(queue);
 
         // Save the project
@@ -45,6 +49,6 @@ export class RemoveMe extends CommandBase implements ICommand {
             tag += ', you\'re at the front of the queue!';
         }
         // Return response
-        return `Successfully removed "${initiative.user.displayName}" from queue "${project.currentQueue}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
+        return `Successfully removed "${initiative.user.displayName}" from queue "${queueName}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
     }
 }

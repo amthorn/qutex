@@ -25,6 +25,22 @@ interface Destination {
 }
 
 /**
+ * Represents the data payload within the initiative.
+ */
+interface IInitiativeData {
+
+    /**
+     * The name of the entity for which the initiative applies.
+     */
+    name?: string;
+
+    /**
+     * Some commands allow for the specification of a custom non-default queue.
+     */
+    queue?: string;
+}
+
+/**
  * The is the interface for an initiative; a data container for moving relevant data to the command around the app
  * during various stages of processing.
  */
@@ -57,7 +73,7 @@ interface IInitiative {
     /**
      * This is the parsed data from the command that will be sent to the command engine.
      */
-    data: Record<string, string>;
+    data: IInitiativeData;
 
     /**
      * Whether or not this initiative is running in debug mode. Set by the user via a "| debug"

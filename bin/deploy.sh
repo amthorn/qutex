@@ -9,4 +9,7 @@ fi
 
 today=$(date +"%b %d, %Y")
 
+# Deploy the docs to docs.qutexbot.com
+mkdocs gh-deploy
+
 ansible-playbook bin/deploy.yml  -i bin/hosts.yml --extra-vars "QUTEX_RELEASE_DATE=\"$today\" QUTEX_VERSION=$1 SRC=\"qutex\"" -v

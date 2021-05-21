@@ -11,6 +11,7 @@ export class AddMe extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'add me';
+    public readonly QUEUE: boolean = true;
     public readonly DESCRIPTION: string = 'Adds the user to the current queue';
     /* eslint-enable jsdoc/require-jsdoc */
 
@@ -29,13 +30,16 @@ export class AddMe extends CommandBase implements ICommand {
         // Create user if they don't exist
         const user = await CommandBase.addUser(initiative.user.id, initiative.user.displayName);
 
+        // Get queue
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+
         // Add to end of queue
-        const queue = CommandBase.addToQueue(project.queues, project.currentQueue, user);
+        const queue = CommandBase.addToQueue(project.queues, queueName, user);
 
         // Save the project
         await project.save();
 
         // Return response
-        return `Successfully added "${user.displayName}" to queue "${project.currentQueue}".\n\n${CommandBase.queueToString(queue)}`;
+        return `Successfully added "${user.displayName}" to queue "${queueName}".\n\n${CommandBase.queueToString(queue)}`;
     }
 }

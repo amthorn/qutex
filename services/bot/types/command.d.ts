@@ -94,4 +94,12 @@ interface ICommand {
      */
     readonly AUTHORIZATION: Auth;
 
+    /**
+     * This defines whether or not the command permits the queue suffix.
+     *
+     * @access public
+     * @readonly
+     */
+    readonly QUEUE: boolean;
+
 }
