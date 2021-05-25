@@ -15,6 +15,7 @@ export class Get extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.NONE;
     public readonly COMMAND_TYPE: CommandType = CommandType.GET;
     public readonly COMMAND_BASE: string = 'queue length history';
+    public readonly QUEUE: boolean = true;
     public readonly DESCRIPTION: string = 'creates a graph of the queue length history';
     /* eslint-enable jsdoc/require-jsdoc */
 
@@ -32,7 +33,10 @@ export class Get extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
-        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        // Get queue
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+
+        const queue = project.queues.filter(i => i.name === queueName)[0];
         if (queue.history.length > 0) {
             const chart = await new QueueLength(queue).url;
 

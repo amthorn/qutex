@@ -24,7 +24,7 @@ export class Parser {
         let messageData = null;
         if (request.body.resource == 'attachmentActions') {
             messageData = await BOT.attachmentActions.get(messageId);
-        } else { // if (request.body.resource == 'messages') {
+        } else {
             messageData = await BOT.messages.get(messageId);
         }
 
@@ -36,6 +36,7 @@ export class Parser {
         const destination: Destination = {};
         const mentions: string[] = messageData.mentionedPeople || [];
 
+        LOGGER.verbose(`Mentions: ${mentions}`);
         // Email is not sent for attachmentActions. Thus, use the personId as first
         // priority so that "card" commands and regular text commands will have the same 
         // information parsed and correlated into mongo
