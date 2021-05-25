@@ -88,22 +88,80 @@ describe('Parser is working', () => {
 
     describe('add person', () => {
         test('Add person no queue specification', async () => {
-            BOT.messages.get.mockReturnValue({ text: 'add person FOO', mentionedPeople: ['fooId'] });
+            BOT.messages.get.mockReturnValue({ text: 'add person FOO', mentionedPeople: ['fooId2'] });
             const result = await new Parser().parse(MOCK_REQUEST);
             expect(result.action).toEqual(expect.objectContaining({
                 DESCRIPTION: 'Adds a tagged person to the current queue'
             }));
             expect(result.data).toEqual(expect.objectContaining({ queue: undefined }));
+            expect(result.mentions).toEqual(['fooId2']);
         });
         test('Add person with queue specification', async () => {
             await CREATE_QUEUE(project as ProjectDocument, 'FOOBAR');
             BOT.messages.get
-                .mockReturnValue({ text: 'add person FOO to queue FOOBAR', mentionedPeople: ['fooId'] });
+                .mockReturnValue({ text: 'add person FOO to queue FOOBAR', mentionedPeople: ['fooId2'] });
             const result = await new Parser().parse(MOCK_REQUEST);
             expect(result.action).toEqual(expect.objectContaining({
                 DESCRIPTION: 'Adds a tagged person to the current queue'
             }));
             expect(result.data).toEqual(expect.objectContaining({ name: 'foo', queue: 'foobar' }));
+            expect(result.mentions).toEqual(['fooId2']);
+        });
+    });
+    describe('get queue length history', () => {
+        test('get queue length history no queue specification', async () => {
+            BOT.messages.get.mockReturnValue({ text: 'get queue length history' });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            expect(result.action).toEqual(expect.objectContaining({
+                DESCRIPTION: 'creates a graph of the queue length history'
+            }));
+            expect(result.data).toEqual({ queue: undefined });
+        });
+        test('get queue length history with queue specification', async () => {
+            BOT.messages.get.mockReturnValue({ text: 'get queue length history for queue FOOBAR' });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            expect(result.action).toEqual(expect.objectContaining({
+                DESCRIPTION: 'creates a graph of the queue length history'
+            }));
+            expect(result.data).toEqual(expect.objectContaining({ queue: 'foobar' }));
+        });
+    });
+    describe('create admin', () => {
+        test('create admin no queue specification', async () => {
+            BOT.messages.get.mockReturnValue({ text: 'create admin FOO', mentionedPeople: ['fooId2'] });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            expect(result.action).toEqual(expect.objectContaining({
+                DESCRIPTION: 'Adds a target project admin'
+            }));
+            expect(result.data).toEqual({ name: 'foo' });
+            expect(result.mentions).toEqual(['fooId2']);
+        });
+        test('create admin with queue specification', async () => {
+            await CREATE_QUEUE(project as ProjectDocument, 'FOOBAR');
+            BOT.messages.get
+                .mockReturnValue({ text: 'create admin FOO on queue FOOBAR', mentionedPeople: ['fooId2'] });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            // Not a real command
+            expect(result.action).toEqual(undefined);
+        });
+    });
+    describe('remove admin', () => {
+        test('remove admin no queue specification', async () => {
+            BOT.messages.get.mockReturnValue({ text: 'remove admin FOO', mentionedPeople: ['fooId2'] });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            expect(result.action).toEqual(expect.objectContaining({
+                DESCRIPTION: 'Removes a user as a project admin'
+            }));
+            expect(result.data).toEqual({ name: 'foo' });
+            expect(result.mentions).toEqual(['fooId2']);
+        });
+        test('remove admin with queue specification', async () => {
+            await CREATE_QUEUE(project as ProjectDocument, 'FOOBAR');
+            BOT.messages.get
+                .mockReturnValue({ text: 'remove admin FOO on queue FOOBAR', mentionedPeople: ['fooId2'] });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            // Not a real command
+            expect(result.action).toEqual(undefined);
         });
     });
 

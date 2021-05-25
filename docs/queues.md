@@ -274,7 +274,7 @@ You can list out the members of  a queue by issueing the following command:
     ```
 === "Regex"
     ```
-    ^\s*get queue\s*$
+    ^\s*get queue( \w+)?\s*$
     ```
 
 ???+ example
