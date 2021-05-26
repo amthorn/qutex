@@ -49,12 +49,12 @@
     "@types/jest": "^26.0.22",
     "@types/mock-fs": "^4.13.0",
     "@types/mongoose": "^5.10.5",
-    "@types/node": "^15.6.0",
-    "@typescript-eslint/eslint-plugin": "^4.24.0",
-    "@typescript-eslint/parser": "^4.24.0",
+    "@types/node": "^15.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
     "babel-jest": "^26.0.22",
     "eslint": "^7.27.0",
-    "eslint-plugin-jsdoc": "^34.8.2",
+    "eslint-plugin-jsdoc": "^35.0.0",
     "jest": "^26.6.3",
     "mock-fs": "^5.0.0",
     "mockdate": "^3.0.5",
@@ -63,7 +63,7 @@
     "nodemon": "^2.0.7",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.5.5",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.0.0",
     "typescript": "^4.2.4"
   },
   "dependencies": {
@@ -72,9 +72,9 @@
     "express": "^4.16.4",
     "migrate-mongo": "^8.2.2",
     "moment": "^2.29.1",
-    "mongoose": "^5.12.10",
+    "mongoose": "^5.12.11",
     "string-similarity": "^4.0.4",
-    "webex": "1.120.0",
+    "webex": "1.120.2",
     "winston": "^3.3.3"
   }
 }
