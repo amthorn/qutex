@@ -39,6 +39,15 @@ describe('Getting a queue works appropriately', () => {
             `Queue "DEFAULT":\n\n1. ${STANDARD_USER.displayName} (May 6, 2021 01:43:08 AM EST)\n\nYou are at the head of the queue so you have no estimated wait time!`
         );
     });
+    test('Errors when queue doesnt exist', async () => {
+        const project = await CREATE_PROJECT();
+        expect(project.admins).toEqual(expect.arrayContaining([expect.objectContaining(TEST_PROJECT.admins[0])]));
+        expect(await PERSON_MODEL.find({ id: TEST_INITIATIVE.user.id }).exec()).toHaveLength(0);
+
+        expect(await new Get().relax({ ...TEST_INITIATIVE, data: { queue: 'foobar' } })).toEqual(
+            'Queue "FOOBAR" does not exist. Use \'list queues\' to show what queues are available.'
+        );
+    });
     test('Gets non-default queue successfully when project exists', async () => {
         let project = await CREATE_PROJECT();
         await CREATE_QUEUE(project, 'FOO');
