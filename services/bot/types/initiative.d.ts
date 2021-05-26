@@ -92,4 +92,9 @@ interface IInitiative {
      */
     time?: Date;
 
+    /**
+     * This object shows the similarity for the closest matched command if the command is unrecognized.
+     */
+    similarity: Record<string, Command | number>;
+
 }

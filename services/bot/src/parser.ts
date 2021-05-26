@@ -75,10 +75,16 @@ export class Parser {
         }
 
         let commandData: any = {}; //eslint-disable-line @typescript-eslint/no-explicit-any
+        const bestMatch = { 'similarity': 0.3, action: {} };
 
         // Determine the appropriate action
         for (const command of Commands) {
-            const data = await command.check(rawCommand);
+            const checkData = await command.check(rawCommand);
+            const data = checkData[0];
+            if (checkData[1] > bestMatch.similarity) {
+                bestMatch.similarity = checkData[1];
+                bestMatch.action = (command as any).commandWithArgs;
+            }
             // TODO: data type should be easier to work with
             if (data instanceof Object && data.action) delete data.action;
             if (data) {
@@ -96,6 +102,7 @@ export class Parser {
             user: user,
             data: commandData.data,
             action: commandData.action,
+            similarity: commandData ? bestMatch : {},
             mentions: mentions.filter(i => i !== me.id)
         };
 

@@ -99,7 +99,7 @@ describe('Handler is working', () => {
         expect(BOT.messages.get).toHaveBeenCalledWith(MOCK_REQUEST.body.data.id);
         expect(BOT.messages.create).toHaveBeenCalledWith({
             toPersonId: 'mockPersonId',
-            markdown: 'Command not recognized. Try using "help" for more information.'
+            markdown: 'Command not recognized. Try using "help" for more information. Closest command regex match is: (get|show) status'
         });
     });
     test('handler appropriately checks message contents and sends response for get status using person email', async () => {
@@ -215,6 +215,10 @@ describe('Handler is working', () => {
                         'COMMAND_BASE': 'project',
                         'ARGS': '{name:[\\w\\s]+}',
                         'DESCRIPTION': 'Creates a target project'
+                    },
+                    'similarity': {
+                        'similarity': 0.5454545454545454,
+                        'action': 'create project {name:[\\w\\s]+}'
                     },
                     'mentions': []
                 },

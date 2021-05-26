@@ -34,7 +34,8 @@ export const TEST_INITIATIVE: IInitiative = {
     action: null,
     debug: false,
     user: STANDARD_USER,
-    mentions: []
+    mentions: [],
+    similarity: { similarity: 0.3, action: {} }
 };
 export const TEST_QUEUE_MEMBER: IQueueMember = { person: TEST_OTHER_USER, enqueuedAt: new Date('2020-01-01'), atHeadTime: null };
 /**
