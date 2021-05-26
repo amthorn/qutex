@@ -34,7 +34,7 @@ interface ICommand {
      *
      * @access public
      */
-    check: (command: string) => Promise<Record<string, string> | boolean | string | null | undefined>;
+    check: (command: string) => Promise<[Record<string, string> | boolean | string | null | undefined, number]>;
 
     /**
      * This function should perform the action of the command.

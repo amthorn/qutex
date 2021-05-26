@@ -56,6 +56,9 @@ export class Handler {
                     result = await initiative.action.relax(initiative);
                 } else {
                     result = 'Command not recognized. Try using "help" for more information.';
+                    if (Object.keys(initiative.similarity.action).length > 0) {
+                        result += ` Closest command regex match is: ${initiative.similarity.action}`;
+                    }
                 }
                 if (result) {
                     await this.handleDebug(initiative, request, result);

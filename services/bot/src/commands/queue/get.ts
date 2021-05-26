@@ -23,13 +23,16 @@ export class Get extends CommandBase implements ICommand {
      * @returns The response string.
      */
     public async relax (initiative: IInitiative): Promise<string> {
-        // TODO: list "how long" as part of listing the queue
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
         // Get queue
         const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
-        const queue = project.queues.filter(i => i.name === queueName)[0];
-        return [CommandBase.queueToString(queue), await CommandBase.getHowLong(queue, initiative.user)].join('\n\n');
+        const queue = project.queues.filter(i => i.name === queueName);
+        if (queue.length > 0) {
+            return [CommandBase.queueToString(queue[0]), await CommandBase.getHowLong(queue[0], initiative.user)].join('\n\n');
+        } else {
+            return `Queue "${queueName}" does not exist. Use 'list queues' to show what queues are available.`;
+        }
     }
 }

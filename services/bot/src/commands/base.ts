@@ -8,6 +8,7 @@ import { REGISTRATION_MODEL } from '../models/registration';
 import { LOGGER } from '../logger';
 import { Auth } from '../enum';
 import { BOT } from '../bot';
+import { compareTwoStrings } from 'string-similarity';
 import moment from 'moment';
 import * as settings from '../settings.json';
 
@@ -472,24 +473,26 @@ export abstract class CommandBase {
      * @returns Truthy or falsey value representing whether the check has
      * succeeded and, if so, the data that was parsed.
      */
-    public async check (command: Record<string, string> | string): Promise<Record<string, string> | boolean | string | null | undefined> {
+    public async check (command: Record<string, string> | string): Promise<[Record<string, string> | boolean | string | null | undefined, number]> {
         LOGGER.debug(`Checking command: ${JSON.stringify(command, null, 2)}`);
         LOGGER.debug(`Checking against regex w/o arguments: ${this.command}`);
         LOGGER.debug(`Checking against regex w/ arguments: ${this.commandWithArgs}`);
+        const similarity = compareTwoStrings(typeof command === 'object' ? command.action.toLowerCase() : command.toLowerCase(), this.commandWithArgs);
+        LOGGER.debug(`Similarity is: ${similarity}`);
         if (typeof command === 'object' && command.action.toLowerCase().match(new RegExp(`^\\s*${this.command}\\s*$`))) {
             LOGGER.debug(`Match against command w/o arguments: ${this.command}`);
-            return Object.assign({}, command);
+            return [Object.assign({}, command), similarity];
         } else if (typeof command !== 'object') {
             const template = new RegExp(`^\\s*${this.commandWithArgs.replace(/\{(.*?):(.*?)\}/g, '(?<$1>$2)')}\\s*$`);
             const result = command.toLowerCase().match(template);
             if (result !== null) {
                 LOGGER.verbose(`Match against command w/ arguments: ${this.commandWithArgs}`);
                 LOGGER.verbose(`Match result: ${JSON.stringify(result)}`);
-                return result.groups ? result.groups : true;
+                return [result.groups ? result.groups : true, similarity];
             }
         }
         LOGGER.debug('No match');
-        return null;
+        return [null, similarity];
     }
 
     public abstract relax (initiative: IInitiative): Promise<string>;
