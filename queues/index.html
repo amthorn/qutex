@@ -938,7 +938,7 @@
 </code></pre></div>
 </div>
 <input id="__tabbed_8_4" name="__tabbed_8" type="radio" /><label for="__tabbed_8_4">Regex</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>^\s*add person .+\s*$
+<div class="highlight"><pre><span></span><code>^\s*add person \S+?(\s\S+?)?\s*$
 </code></pre></div>
 </div>
 </div>
@@ -964,7 +964,7 @@
 </code></pre></div>
 </div>
 <input id="__tabbed_9_4" name="__tabbed_9" type="radio" /><label for="__tabbed_9_4">Regex</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>^\s*remove person .+\s*$
+<div class="highlight"><pre><span></span><code>^\s*remove person \S+?(\s\S+?)?\s*$
 </code></pre></div>
 </div>
 </div>
@@ -1013,7 +1013,7 @@
 f(\gamma, n)=\begin{cases}
         0 \quad &amp;\text{if} \, n = 0\\
         \max(g(\gamma, 0) - \alpha,  0)  \quad &amp;\text{if} \, n = 1 \\
-        g(\gamma, n) + f(h(\theta), n-1)) \quad &amp;\text{if} \, n \notin {0,1} \\
+        g(\gamma, n) + f(h(\gamma), n-1)) \quad &amp;\text{if} \, n \notin {0,1} \\
     \end{cases}
 \end{equation*}
 \]</div>
