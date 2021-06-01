@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/services/bot"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     assignees:
       - "avthorn"
   - package-ecosystem: "github-actions"

@@ -32,7 +32,7 @@ You can add individual admins to a project by tagging them using the following c
     ```
 === "Regex"
     ```
-    ^\s*create admin [\S]+\s*$
+    ^\s*create admin \S+?(\s\S+?)?\s*$
     ```
 
 ???+ important
@@ -67,7 +67,7 @@ You can remove individual admins to a project by tagging them using the followin
     ```
 === "Regex"
     ```
-    ^\s*(delete|remove) admin [\S]+\s*$
+    ^\s*(delete|remove) admin \S+?(\s\S+?)?\s*$
     ```
 
 ???+ important

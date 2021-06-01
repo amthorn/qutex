@@ -220,7 +220,7 @@ You can add other members within the same space to the current queue using the f
     ```
 === "Regex"
     ```
-    ^\s*add person .+\s*$
+    ^\s*add person \S+?(\s\S+?)?\s*$
     ```
 
 ???+ important
@@ -249,7 +249,7 @@ You can remove other members within the same space from the current queue using 
     ```
 === "Regex"
     ```
-    ^\s*remove person .+\s*$
+    ^\s*remove person \S+?(\s\S+?)?\s*$
     ```
 
 ???+ important
@@ -305,7 +305,7 @@ Qutex can give you an estimated time remaining until you are moved to the head o
         f(\gamma, n)=\begin{cases}
                 0 \quad &\text{if} \, n = 0\\
                 \max(g(\gamma, 0) - \alpha,  0)  \quad &\text{if} \, n = 1 \\
-                g(\gamma, n) + f(h(\theta), n-1)) \quad &\text{if} \, n \notin {0,1} \\
+                g(\gamma, n) + f(h(\gamma), n-1)) \quad &\text{if} \, n \notin {0,1} \\
             \end{cases}
         \end{equation*}
         $$

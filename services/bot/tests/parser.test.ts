@@ -144,6 +144,14 @@ describe('Parser is working', () => {
             // Not a real command
             expect(result.action).toEqual(undefined);
         });
+        test('create admin with queue specification with spaces in name', async () => {
+            await CREATE_QUEUE(project as ProjectDocument, 'FOOBAR');
+            BOT.messages.get
+                .mockReturnValue({ text: 'create admin FOO BAR BADOO on queue FOOBAR', mentionedPeople: ['fooId2'] });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            // Not a real command
+            expect(result.action).toEqual(undefined);
+        });
     });
     describe('remove admin', () => {
         test('remove admin no queue specification', async () => {
@@ -159,6 +167,14 @@ describe('Parser is working', () => {
             await CREATE_QUEUE(project as ProjectDocument, 'FOOBAR');
             BOT.messages.get
                 .mockReturnValue({ text: 'remove admin FOO on queue FOOBAR', mentionedPeople: ['fooId2'] });
+            const result = await new Parser().parse(MOCK_REQUEST);
+            // Not a real command
+            expect(result.action).toEqual(undefined);
+        });
+        test('remove admin with queue specification with spaces in name', async () => {
+            await CREATE_QUEUE(project as ProjectDocument, 'FOOBAR');
+            BOT.messages.get
+                .mockReturnValue({ text: 'remove admin FOO BAR BADOOOO on queue FOOBAR', mentionedPeople: ['fooId2'] });
             const result = await new Parser().parse(MOCK_REQUEST);
             // Not a real command
             expect(result.action).toEqual(undefined);
