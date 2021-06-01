@@ -14,7 +14,7 @@ export class AddPerson extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'add person';
-    public readonly ARGS: string = '{name:\\S+?}';
+    public readonly ARGS: string = '{name:\\S+?(\\s\\S+?)?}';
     public readonly DESCRIPTION: string = 'Adds a tagged person to the current queue';
     public readonly QUEUE: boolean = true;
     /* eslint-enable jsdoc/require-jsdoc */

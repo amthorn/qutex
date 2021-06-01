@@ -14,7 +14,7 @@ export class Remove extends CommandBase implements ICommand {
     public readonly AUTHORIZATION: Auth = Auth.PROJECT_ADMIN;
     public readonly COMMAND_TYPE: CommandType = CommandType.OPERATION;
     public readonly COMMAND_BASE: string = 'remove admin';
-    public readonly ARGS: string = '{name:\\S+?}';
+    public readonly ARGS: string = '{name:\\S+?(\\s\\S+?)?}';
     public readonly DESCRIPTION: string = 'Removes a user as a project admin';
     /* eslint-enable jsdoc/require-jsdoc */
 
