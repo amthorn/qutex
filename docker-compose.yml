@@ -13,6 +13,7 @@ services:
             RELEASE_DATE: ${QUTEX_RELEASE_DATE}
             AUTHOR_NAME: Ava Thorn
             AUTHOR_EMAIL: avatheavian@gmail.com
+            DEBUG_EMAIL: avthorn@cisco.com
             SUPER_ADMINS: '["Y2lzY29zcGFyazovL3VzL1BFT1BMRS9kODRkZjI1MS1iYmY3LTRlZTEtOTM1OS00Y2I0MGIyOTBhN2I"]'
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_DATABASE: qutex

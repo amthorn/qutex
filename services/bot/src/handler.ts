@@ -10,6 +10,7 @@ import { Parser } from './parser';
 import { BOT } from './bot';
 import { LOGGER } from './logger';
 import { INITIATIVE_MODEL } from './models/initiative';
+import { v4 } from 'uuid';
 
 export class Handler {
     /**
@@ -67,11 +68,20 @@ export class Handler {
                     return await BOT.messages.create(message);
                 }
             } catch (e) {
+                const traceId = v4();
+                const now = new Date();
+                LOGGER.error(`TRACE ID: ${traceId}`);
+                LOGGER.error(`OCCURRED AT: ${now}`);
                 LOGGER.error(e.stack);
                 try {
                     await BOT.messages.create({
                         markdown: `An unexpected error occurred. Please open an issue by using the "help" command:\n${e}`,
                         roomId: request.body.data.roomId
+                    });
+
+                    await BOT.messages.create({
+                        markdown: `An unexpected error occurred at ${now}.\n\`\`\`\nTRACE ID: ${traceId}\n${e.stack}\n\`\`\``,
+                        toPersonEmail: process.env?.DEBUG_EMAIL
                     });
                 } catch (exc) {
                     LOGGER.error(exc);
@@ -98,7 +108,7 @@ export class Handler {
         }, null, 2)}\n\`\`\``;
         LOGGER.debug(debugData);
         if (initiative.debug) {
-            return await BOT.messages.create({ markdown: debugData, ...initiative.destination });
+            return BOT.messages.create({ markdown: debugData, ...initiative.destination });
         }
     }
 }
