@@ -7,10 +7,14 @@
         msg: >
           Release Date: '{{ QUTEX_RELEASE_DATE }}'
           Version: '{{ QUTEX_VERSION }}'
-          Image: 'docker.pkg.github.com/amthorn/qutex/qutex_bot:{{ QUTEX_VERSION }}'
-    - name: Confirm?
-      pause:
-        prompt: Press return to continue. Press Ctrl+c and then "a" to abort
+          Image: 'docker.pkg.github.com/amthorn/qutex/qutex_bot:{{ QUTEX_VERSION }}
+    - name: Copy file with owner and permission, using symbolic representation
+      ansible.builtin.copy:
+        src: ../docker-compose.yml
+        dest: '{{ SRC }}/docker-compose.yml'
+        owner: centos
+        group: centos
+        mode: u=rw,g=r,o=r
     - name: Do deployment
       environment:
         QUTEX_RELEASE_DATE: "{{ QUTEX_RELEASE_DATE }}"

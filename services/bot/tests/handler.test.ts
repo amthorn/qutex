@@ -6,7 +6,8 @@ import { Handler } from '../src/handler';
 import { BOT } from '../src/bot';
 import { Request } from 'express';
 import { PROJECT_MODEL } from '../src/models/project';
-import { CREATE_PROJECT, CREATE_QUEUE } from './util';
+import { CREATE_PROJECT, CREATE_QUEUE, STRICT_DATE } from './util';
+import MockDate from 'mockdate';
 
 const MOCK_REQUEST = {
     'body': {
@@ -239,6 +240,12 @@ describe('Handler is working', () => {
 });
 
 describe('Handler errors as it should', () => {
+    beforeAll(() => {
+        MockDate.set(STRICT_DATE);
+    });
+    afterAll(() => {
+        MockDate.reset();
+    });
     test('Handler sends a response even in the event of a catastrophic error', async () => {
         BOT.messages.get.mockImplementation(() => {
             throw new Error('THIS IS AN EXPECTED ERROR');
@@ -249,6 +256,23 @@ describe('Handler errors as it should', () => {
         expect(BOT.messages.create).toHaveBeenCalledWith({
             roomId: 'mockRequestRoomId',
             markdown: 'An unexpected error occurred. Please open an issue by using the "help" command:\nError: THIS IS AN EXPECTED ERROR'
+        });
+        expect(BOT.messages.create).toHaveBeenCalledWith({
+            toPersonEmail: process.env.DEBUG_EMAIL,
+            markdown: expect.stringMatching(`An unexpected error occurred at Thu May 06 2021 01:43:08 GMT-0400 \\(Eastern Daylight Time\\).
+\`\`\`
+TRACE ID: [\\w\\-]+
+Error: THIS IS AN EXPECTED ERROR
+    at .*?handler.test.ts:\\d+:\\d+\\)
+    at .*?index.js:\\d+:\\d+
+    at .*?index.js:\\d+:\\d+\\)
+    at .*?index.js:\\d+:\\d+\\)
+    at .*?parser.ts:\\d+:\\d+\\)
+    at .*?
+    at .*?parser.ts:\\d+:\\d+\\)
+    at .*?
+    at .*?task_queues:\\d+:\\d+\\)
+\`\`\``)
         });
     });
     test('Handler doesnt die when catastrophic error occurs during handling of catastrophic error', async () => {
