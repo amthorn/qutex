@@ -260,19 +260,19 @@ describe('Handler errors as it should', () => {
         expect(BOT.messages.create).toHaveBeenCalledWith({
             toPersonEmail: process.env.DEBUG_EMAIL,
             // Thu May 06 2021 01:43:08 GMT-0400 (Eastern Daylight Time)
-            markdown: expect.stringMatching(`An unexpected error occurred at .*\.
+            markdown: expect.stringMatching(`An unexpected error occurred at .*.
 \`\`\`
 TRACE ID: [\\w\\-]+
 Error: THIS IS AN EXPECTED ERROR
-    at .*?handler\.test\.ts\:\\d+\:\\d+\\)
-    at .*?index\.js\:\\d+\:\\d+
-    at .*?index\.js\:\\d+\:\\d+\\)
-    at .*?index\.js\:\\d+\:\\d+\\)
-    at .*?parser\.ts\:\\d+\:\\d+\\)
+    at .*?handler.test.ts:\\d+:\\d+\\)
+    at .*?index.js:\\d+:\\d+
+    at .*?index.js:\\d+:\\d+\\)
+    at .*?index.js:\\d+:\\d+\\)
+    at .*?parser.ts:\\d+:\\d+\\)
     at .*?
-    at .*?parser\.ts\:\\d+\:\\d+\\)
+    at .*?parser.ts:\\d+:\\d+\\)
     at .*?
-    at .*?task_queues\:\\d+\:\\d+\\)
+    at .*?task_queues:\\d+:\\d+\\)
 \`\`\``)
         });
     });

@@ -83,7 +83,7 @@ export class Parser {
             const data = checkData[0];
             if (checkData[1] > bestMatch.similarity) {
                 bestMatch.similarity = checkData[1];
-                bestMatch.action = (command as any).commandWithArgs;
+                bestMatch.action = (command as any).commandWithArgs; // eslint-disable-line @typescript-eslint/no-explicit-any
             }
             // TODO: data type should be easier to work with
             if (data instanceof Object && data.action) delete data.action;

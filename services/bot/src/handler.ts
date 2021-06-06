@@ -81,7 +81,7 @@ export class Handler {
 
                     await BOT.messages.create({
                         markdown: `An unexpected error occurred at ${now}.\n\`\`\`\nTRACE ID: ${traceId}\n${e.stack}\n\`\`\``,
-                        toPersonEmail: process.env?.DEBUG_EMAIL
+                        toPersonEmail: process.env.DEBUG_EMAIL
                     });
                 } catch (exc) {
                     LOGGER.error(exc);
