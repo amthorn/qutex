@@ -3,18 +3,30 @@ updates:
   - package-ecosystem: "npm"
     directory: "/services/bot"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    ignore:
+        # Ignore all patch updates
+      - dependency-name: *
+        update-types: ["version-update:semver-patch"]
     assignees:
       - "avthorn"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+        # Ignore all patch updates
+      - dependency-name: *
+        update-types: ["version-update:semver-patch"]
     assignees:
       - "avthorn"
   - package-ecosystem: "docker"
     directory: "/services/bot"
     schedule:
       interval: "daily"
+    ignore:
+        # Ignore all patch updates
+      - dependency-name: *
+        update-types: ["version-update:semver-patch"]
     assignees:
       - "avthorn"
