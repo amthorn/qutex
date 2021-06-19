@@ -1257,19 +1257,18 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mongodb@*", "@types/mongodb@^3.5.27":
+"@types/mongodb@^3.5.27":
   version "3.6.17"
   resolved "https://registry.npmjs.org/@types/mongodb/-/mongodb-3.6.17.tgz"
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
 
-"@types/mongoose@^5.10.5":
-  version "5.10.5"
-  resolved "https://registry.npmjs.org/@types/mongoose/-/mongoose-5.10.5.tgz"
+"@types/mongoose@^5.11.97":
+  version "5.11.97"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.11.97.tgz#80b0357f3de6807eb597262f52e49c3e13ee14d8"
   dependencies:
-    "@types/mongodb" "*"
-    "@types/node" "*"
+    mongoose "*"
 
 "@types/node@*", "@types/node@^15.6.1":
   version "15.6.1"
@@ -5095,9 +5094,9 @@ mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz"
 
-mongoose@^5.12.12:
-  version "5.12.12"
-  resolved "https://registry.npmjs.org/mongoose/-/mongoose-5.12.12.tgz"
+mongoose@*, mongoose@^5.12.12:
+  version "5.12.13"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.12.13.tgz#6707fb2f6284536bb6367c94ccc3ce85475a387d"
   dependencies:
     "@types/mongodb" "^3.5.27"
     bson "^1.1.4"
