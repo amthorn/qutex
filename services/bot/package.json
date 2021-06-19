@@ -75,7 +75,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.14",
     "string-similarity": "^4.0.4",
-    "webex": "1.122.3",
+    "webex": "1.124.3",
     "winston": "^3.3.3"
   }
 }
