@@ -6,7 +6,7 @@ updates:
       interval: "daily"
     ignore:
         # Ignore all patch updates
-      - dependency-name: *
+      - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
     assignees:
       - "avthorn"
@@ -16,7 +16,7 @@ updates:
       interval: "daily"
     ignore:
         # Ignore all patch updates
-      - dependency-name: *
+      - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
     assignees:
       - "avthorn"
@@ -26,7 +26,7 @@ updates:
       interval: "daily"
     ignore:
         # Ignore all patch updates
-      - dependency-name: *
+      - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
     assignees:
       - "avthorn"
