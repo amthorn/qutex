@@ -28,11 +28,11 @@ export class RemoveMe extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
-        // Get queue
-        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+        let queue = await CommandBase.getQueue(initiative, project);
+        if (typeof queue === 'string') return String(queue);
 
         // remove only the first instance
-        const queue = await CommandBase.removeFromQueue(project.queues, queueName, { id: initiative.user.id, displayName: initiative.user.displayName });
+        queue = await CommandBase.removeFromQueue(queue, { id: initiative.user.id, displayName: initiative.user.displayName });
         if (typeof queue === 'string') return String(queue);
 
         // Save the project
@@ -49,6 +49,6 @@ export class RemoveMe extends CommandBase implements ICommand {
             tag += ', you\'re at the front of the queue!';
         }
         // Return response
-        return `Successfully removed "${initiative.user.displayName}" from queue "${queueName}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
+        return `Successfully removed "${initiative.user.displayName}" from queue "${queue.name}".\n\n${CommandBase.queueToString(queue)}${tag ? '\n\n' + tag : ''}`;
     }
 }

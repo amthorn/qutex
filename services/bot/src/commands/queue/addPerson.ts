@@ -32,6 +32,10 @@ export class AddPerson extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative) as ProjectDocument;
         if (typeof project === 'string') return String(project);
 
+        // Get queue
+        let queue = await CommandBase.getQueue(initiative, project);
+        if (typeof queue === 'string') return String(queue);
+
         if (initiative.mentions.length > 1) {
             return 'You cannot add more than one person at once';
         } else if (initiative.mentions.length == 0) {
@@ -43,16 +47,13 @@ export class AddPerson extends CommandBase implements ICommand {
         // Create user if they don't exist
         const user = await CommandBase.addUser(webexId, webexPerson.displayName);
 
-        // Get queue
-        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
-
         // Add to end of queue
-        const queue = CommandBase.addToQueue(project.queues, queueName, user);
+        queue = CommandBase.addToQueue(queue, user);
 
         // Save the project
         await project.save();
 
         // Return response
-        return `Successfully added "${user.displayName}" to queue "${queueName}".\n\n${CommandBase.queueToString(queue)}`;
+        return `Successfully added "${user.displayName}" to queue "${queue.name}".\n\n${CommandBase.queueToString(queue)}`;
     }
 }

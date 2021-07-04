@@ -134,6 +134,23 @@ export abstract class CommandBase {
             return 'There are no projects registered.';
         }
     }
+    /**
+     * Returns the default queue or the queue identified for the given initiative context.
+     *
+     * @param initiative - This is the initiative for which to get the named queue.
+     * @param project - This is the project for which to get the queue on.
+     * @todo Throw errors instead of returning error string.
+     * @returns Queue model or error string for the given initiative context.
+     */
+    public static async getQueue (initiative: IInitiative, project: IProject): Promise<IQueue | string> {
+        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
+        const queueObject = project.queues.filter(i => i.name === queueName);
+        if (queueObject.length > 0) {
+            return queueObject[0];
+        } else {
+            return `A queue with name "${initiative.data.queue?.toUpperCase()}" does not exist.`;
+        }
+    }
 
     /**
      * Adds the invoking user to the database.
@@ -179,28 +196,25 @@ export abstract class CommandBase {
      *
      * @access public
      * @static
-     * @param queues - A list of all queues to search through.
      * @param queue - The name of the queue to which to add the user.
      * @param user - The user to add to the queue.
      * @returns The queue that was updated.
      */
-    public static addToQueue (queues: IQueue[], queue: string, user: IPerson): IQueue {
-        LOGGER.verbose(`Queue Name: ${queue}`);
-        LOGGER.verbose(`Queues: ${queues}`);
-        const queueObject = queues.filter(i => i.name === queue.toUpperCase())[0];
+    public static addToQueue (queue: IQueue, user: IPerson): IQueue {
+        LOGGER.verbose(`Queue Name: ${queue.name}`);
         const now = new Date();
-        const atHeadTime = queueObject.members.length === 0 ? now : null;
-        queueObject.members.push({
+        const atHeadTime = queue.members.length === 0 ? now : null;
+        queue.members.push({
             person: user,
             enqueuedAt: now,
             atHeadTime: atHeadTime
         });
-        queueObject.history.push({
-            name: queueObject.name,
-            members: queueObject.members,
+        queue.history.push({
+            name: queue.name,
+            members: queue.members,
             time: new Date()
         });
-        return queueObject;
+        return queue;
     }
 
     /**
@@ -232,31 +246,29 @@ export abstract class CommandBase {
      * @access public
      * @static
      * @async
-     * @param queues - A list of all queues to search through.
      * @param queue - The name of the queue to which to remove the user.
      * @param user - The user to remove from the queue.
      * @param user.id - The user ID for the user to remove from the queue.
      * @param user.displayName - The display name for the user to remove from the queue.
      * @returns The queue that was updated.
      */
-    public static async removeFromQueue (queues: IQueue[], queue: string, user: IRemoveFromQueueUser): Promise<IQueue | string> {
-        const queueObject = queues.filter(i => i.name === queue)[0];
-        const idx = queueObject.members.findIndex(p => p.person.displayName === user.displayName);
+    public static async removeFromQueue (queue: IQueue, user: IRemoveFromQueueUser): Promise<IQueue | string> {
+        const idx = queue.members.findIndex(p => p.person.displayName === user.displayName);
         if (idx === -1) {
-            return `User "${user.displayName}" was not found in queue "${queueObject.name}"`;
+            return `User "${user.displayName}" was not found in queue "${queue.name}"`;
         } else {
-            const removed = queueObject.members.splice(idx, 1)[0];
-            queueObject.history.push({
-                name: queueObject.name,
-                members: queueObject.members,
+            const removed = queue.members.splice(idx, 1)[0];
+            queue.history.push({
+                name: queue.name,
+                members: queue.members,
                 time: new Date()
             });
             const now = new Date().getTime();
 
             // If we removed the person at the head of the queue and
             // there are more people in the queue
-            if (queueObject.members.length > 0 && idx === 0) {
-                const head = queueObject.members[0];
+            if (queue.members.length > 0 && idx === 0) {
+                const head = queue.members[0];
                 head.atHeadTime = new Date();
             }
             // Update person object
@@ -283,7 +295,7 @@ export abstract class CommandBase {
             LOGGER.verbose(await PERSON_MODEL.find({ id: removed.person.id }).exec());
 
             await PERSON_MODEL.updateOne({ id: removed.person.id }, updateData).exec();
-            return queueObject;
+            return queue;
         }
     }
 

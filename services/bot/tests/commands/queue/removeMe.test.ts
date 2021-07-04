@@ -40,6 +40,17 @@ describe('Removing me from a queue works appropriately', () => {
         expect(await PERSON_MODEL.find({ id: STANDARD_USER.id }).exec()).toHaveLength(0);
     });
 
+    test('errors when non-default queue is specified that does not exist', async () => {
+        const project = await CREATE_PROJECT();
+        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        expect(queue.members).toHaveLength(0);
+        expect(await new RemoveMe().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual(
+            'A queue with name "FOO" does not exist.'
+        );
+        expect(queue.members).toHaveLength(0);
+        expect(await PERSON_MODEL.find({ id: STANDARD_USER.id }).exec()).toHaveLength(0);
+    });
+
     test('errors when there is someone in the queue but its not the user', async () => {
         const project = await CREATE_PROJECT();
         const queue = project.queues.filter(i => i.name === project.currentQueue)[0];

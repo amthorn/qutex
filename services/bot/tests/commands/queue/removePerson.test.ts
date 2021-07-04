@@ -68,6 +68,19 @@ describe('Removing a person from a queue errors when it should', () => {
         project = (await PROJECT_MODEL.find({ name: project.name }).exec())[0];
         expect(project.queues.filter(i => i.name === project.currentQueue)[0].members).toHaveLength(0);
     });
+    test('errors when non-default queue is specified that does not exist', async () => {
+        const project = await CREATE_PROJECT();
+        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        expect(queue.members).toHaveLength(0);
+        expect(await new RemovePerson().relax({
+            ...TEST_INITIATIVE,
+            data: { queue: 'FOO' },
+            user: PROJECT_ADMIN,
+            mentions: ['1', '2']
+        })).toEqual('A queue with name "FOO" does not exist.');
+        expect(queue.members).toHaveLength(0);
+        expect(await PERSON_MODEL.find({ id: STANDARD_USER.id }).exec()).toHaveLength(0);
+    });
 });
 
 describe('Removing a person from a queue works appropriately', () => {
