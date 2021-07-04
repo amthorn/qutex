@@ -27,19 +27,20 @@ export class AddMe extends CommandBase implements ICommand {
         const project = await CommandBase.getProject(initiative);
         if (typeof project === 'string') return String(project);
 
+        // Get queue
+        let queue = await CommandBase.getQueue(initiative, project);
+        if (typeof queue === 'string') return String(queue);
+
         // Create user if they don't exist
         const user = await CommandBase.addUser(initiative.user.id, initiative.user.displayName);
 
-        // Get queue
-        const queueName = initiative.data.queue?.toUpperCase() || project.currentQueue;
-
         // Add to end of queue
-        const queue = CommandBase.addToQueue(project.queues, queueName, user);
+        queue = CommandBase.addToQueue(queue, user);
 
         // Save the project
         await project.save();
 
         // Return response
-        return `Successfully added "${user.displayName}" to queue "${queueName}".\n\n${CommandBase.queueToString(queue)}`;
+        return `Successfully added "${user.displayName}" to queue "${queue.name}".\n\n${CommandBase.queueToString(queue)}`;
     }
 }

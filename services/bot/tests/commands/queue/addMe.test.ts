@@ -28,6 +28,16 @@ describe('Adding me to a queue errors when it should', () => {
         expect(await new AddMe().relax({ ...TEST_INITIATIVE, user: SUPER_ADMIN })).toEqual('There are no projects registered.');
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
     });
+    test('errors when non-default queue is specified that does not exist', async () => {
+        const project = await CREATE_PROJECT();
+        const queue = project.queues.filter(i => i.name === project.currentQueue)[0];
+        expect(queue.members).toHaveLength(0);
+        expect(await new AddMe().relax({ ...TEST_INITIATIVE, data: { queue: 'FOO' } })).toEqual(
+            'A queue with name "FOO" does not exist.'
+        );
+        expect(queue.members).toHaveLength(0);
+        expect(await PERSON_MODEL.find({ id: STANDARD_USER.id }).exec()).toHaveLength(0);
+    });
 });
 
 describe('Adding me to a queue works appropriately', () => {
