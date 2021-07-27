@@ -932,11 +932,11 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@es-joy/jsdoccomment@0.9.0-alpha.1":
-  version "0.9.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.9.0-alpha.1.tgz#f48bd162e185ec7f9f222273a282d10e52fe52f7"
+"@es-joy/jsdoccomment@0.10.2":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.10.2.tgz#7d38bd436000a1a16815a1046ae3ee3120826814"
   dependencies:
-    comment-parser "1.1.6-beta.0"
+    comment-parser "1.2.1"
     esquery "^1.4.0"
     jsdoc-type-pratt-parser "1.0.4"
 
@@ -2761,9 +2761,9 @@ comment-json@^2.2.0:
     has-own-prop "^2.0.0"
     repeat-string "^1.6.1"
 
-comment-parser@1.1.6-beta.0:
-  version "1.1.6-beta.0"
-  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.6-beta.0.tgz#57e503b18d0a5bd008632dcc54b1f95c2fffe8f6"
+comment-parser@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.2.1.tgz#38778b5b2af825cc10099fd5923f8ac151274381"
 
 compare-versions@^3.4.0:
   version "3.6.0"
@@ -3191,12 +3191,12 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-plugin-jsdoc@^35.5.1:
-  version "35.5.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-35.5.1.tgz#45932ee22669bbe06c97b82b936d56361efad370"
+eslint-plugin-jsdoc@^36.0.3:
+  version "36.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-36.0.3.tgz#6aaddd7b44f1f82469d4099d9bba44dda718d373"
   dependencies:
-    "@es-joy/jsdoccomment" "0.9.0-alpha.1"
-    comment-parser "1.1.6-beta.0"
+    "@es-joy/jsdoccomment" "0.10.2"
+    comment-parser "1.2.1"
     debug "^4.3.2"
     esquery "^1.4.0"
     jsdoc-type-pratt-parser "^1.0.4"
