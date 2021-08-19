@@ -1455,19 +1455,19 @@
   dependencies:
     invariant "^2.2.4"
 
-"@webex/common-timers@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/common-timers/-/common-timers-1.133.1.tgz#33cbd439d61a87aa2a9d09070ffb67ff1dbefc84"
+"@webex/common-timers@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/common-timers/-/common-timers-1.135.2.tgz#97a5ad19bfa819ef3c7ba8c1aa261b5bd1b15e68"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
     envify "^4.1.0"
 
-"@webex/common@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/common/-/common-1.133.1.tgz#7175b6abbc840c3e2dceee15b08079349f21baa8"
+"@webex/common@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/common/-/common-1.135.2.tgz#cb3006cb360e011f4f5ca17152e21f000e8e4f04"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
+    "@webex/common" "1.135.2"
     backoff "^2.5.0"
     core-decorators "^0.20.0"
     envify "^4.1.0"
@@ -1475,20 +1475,20 @@
     safe-buffer "^5.2.0"
     urlsafe-base64 "^1.0.0"
 
-"@webex/helper-html@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/helper-html/-/helper-html-1.133.1.tgz#b9e3100984cc886fc2947e4dd09976965e164092"
+"@webex/helper-html@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/helper-html/-/helper-html-1.135.2.tgz#2d3d022a2cff42c730da0ece80579077b58fcd86"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/helper-image@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/helper-image/-/helper-image-1.133.1.tgz#6d1282a9c4d8a57b814f03d0db26c6b443d5914d"
+"@webex/helper-image@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/helper-image/-/helper-image-1.135.2.tgz#1680749838067107dcafc54f329987ba475f7555"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/http-core" "1.133.1"
+    "@webex/http-core" "1.135.2"
     envify "^4.1.0"
     exifr "^5.0.3"
     gm "^1.23.1"
@@ -1496,12 +1496,12 @@
     mime "^2.4.4"
     safe-buffer "^5.2.0"
 
-"@webex/http-core@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/http-core/-/http-core-1.133.1.tgz#cd063de87ee1dc7ed065932466bf4dd97145d408"
+"@webex/http-core@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/http-core/-/http-core-1.135.2.tgz#9f0d98990ea3a4575975fe24e412af76e92a79f4"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
+    "@webex/common" "1.135.2"
     envify "^4.1.0"
     file-type "^16.0.1"
     global "^4.4.0"
@@ -1513,61 +1513,61 @@
     safe-buffer "^5.2.0"
     xtend "^4.0.2"
 
-"@webex/internal-plugin-calendar@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-calendar/-/internal-plugin-calendar-1.133.1.tgz#b35678c0e4ff7490a488a01bd921edca282f9c85"
+"@webex/internal-plugin-calendar@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-calendar/-/internal-plugin-calendar-1.135.2.tgz#a4e377f787424e568a3ff337535f52f1e0dc9e11"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-conversation" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/internal-plugin-encryption" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/internal-plugin-conversation" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/internal-plugin-encryption" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     btoa "^1.2.1"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-conversation@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-conversation/-/internal-plugin-conversation-1.133.1.tgz#8621b67b5a91e033301543b3bd7b62fc7589ba41"
+"@webex/internal-plugin-conversation@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-conversation/-/internal-plugin-conversation-1.135.2.tgz#175fc252df878e64dd371d744b4229038e08d22c"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/helper-html" "1.133.1"
-    "@webex/helper-image" "1.133.1"
-    "@webex/internal-plugin-encryption" "1.133.1"
-    "@webex/internal-plugin-user" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/helper-html" "1.135.2"
+    "@webex/helper-image" "1.135.2"
+    "@webex/internal-plugin-encryption" "1.135.2"
+    "@webex/internal-plugin-user" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     crypto-js "^3.1.9-1"
     envify "^4.1.0"
     lodash "^4.17.21"
     node-scr "^0.3.0"
     uuid "^3.3.2"
 
-"@webex/internal-plugin-device@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-device/-/internal-plugin-device-1.133.1.tgz#0dec10fa3ea3186f6b8696c5b5e72b88e50c25ac"
+"@webex/internal-plugin-device@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-device/-/internal-plugin-device-1.135.2.tgz#6775e404046bdc59f4407805044bef7695c2245a"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/common-timers" "1.133.1"
-    "@webex/http-core" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/common-timers" "1.135.2"
+    "@webex/http-core" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     ampersand-collection "^2.0.2"
     ampersand-state "^5.0.3"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-encryption@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-encryption/-/internal-plugin-encryption-1.133.1.tgz#18d12b7f428b34d4347d82ff0dfdfc2b8c42da9c"
+"@webex/internal-plugin-encryption@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-encryption/-/internal-plugin-encryption-1.135.2.tgz#8f6997fca3537c33d6c55dfaa8e97c23009ac91f"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/common-timers" "1.133.1"
-    "@webex/http-core" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/common-timers" "1.135.2"
+    "@webex/http-core" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     asn1js "^2.0.26"
     debug "^3.2.6"
     envify "^4.1.0"
@@ -1580,178 +1580,178 @@
     safe-buffer "^5.2.0"
     valid-url "^1.0.9"
 
-"@webex/internal-plugin-feature@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-feature/-/internal-plugin-feature-1.133.1.tgz#2505dc0c37ee036461108302184ec1986448c074"
+"@webex/internal-plugin-feature@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-feature/-/internal-plugin-feature-1.135.2.tgz#dfb63795d77f917aa425c2d1d8168db84b4fa035"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-lyra@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-lyra/-/internal-plugin-lyra-1.133.1.tgz#83ace34f901eb5ba36a94a48d339a3d8f2dd9bfd"
+"@webex/internal-plugin-lyra@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-lyra/-/internal-plugin-lyra-1.135.2.tgz#5425477344bbda2d368ff52197d8e240ae9f8eee"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-conversation" "1.133.1"
-    "@webex/internal-plugin-encryption" "1.133.1"
-    "@webex/internal-plugin-feature" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-conversation" "1.135.2"
+    "@webex/internal-plugin-encryption" "1.135.2"
+    "@webex/internal-plugin-feature" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/internal-plugin-mercury@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-mercury/-/internal-plugin-mercury-1.133.1.tgz#6756e14c4a3a30a4a46061f2df5c16a0a7a1848f"
+"@webex/internal-plugin-mercury@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-mercury/-/internal-plugin-mercury-1.135.2.tgz#9be2535a8c27f7ca0d80c92b8f792e8f9c4d18a8"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/common-timers" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/internal-plugin-feature" "1.133.1"
-    "@webex/internal-plugin-metrics" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/common-timers" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/internal-plugin-feature" "1.135.2"
+    "@webex/internal-plugin-metrics" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     backoff "^2.5.0"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
     ws "^4.1.0"
 
-"@webex/internal-plugin-metrics@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-metrics/-/internal-plugin-metrics-1.133.1.tgz#ea90b5391a7bdfd315ab7c1bebb4e9b3260c26e7"
+"@webex/internal-plugin-metrics@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-metrics/-/internal-plugin-metrics-1.135.2.tgz#60d92dadf8b937618d8162edd4641a01b07a3573"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/common-timers" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/common-timers" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/internal-plugin-presence@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-presence/-/internal-plugin-presence-1.133.1.tgz#02dca59a48bbf7c668066d8fe1d8f1ebd5c3572c"
+"@webex/internal-plugin-presence@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-presence/-/internal-plugin-presence-1.135.2.tgz#f092a1301a9dd3d4747c7780cd11f2f460794a32"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/webex-core" "1.133.1"
-    envify "^4.1.0"
-    lodash "^4.17.21"
-
-"@webex/internal-plugin-search@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-search/-/internal-plugin-search-1.133.1.tgz#7e0839a2a3ea40b3d430d501262f1bbb3f15e5bf"
-  dependencies:
-    "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-conversation" "1.133.1"
-    "@webex/internal-plugin-encryption" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-support@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-support/-/internal-plugin-support-1.133.1.tgz#a350ad461022c1fc30b8e0d6ba630e93beae38db"
+"@webex/internal-plugin-search@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-search/-/internal-plugin-search-1.135.2.tgz#c62c91a10214005bf1beebef966732e0c5c1f570"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-conversation" "1.135.2"
+    "@webex/internal-plugin-encryption" "1.135.2"
+    "@webex/webex-core" "1.135.2"
+    envify "^4.1.0"
+    lodash "^4.17.21"
+
+"@webex/internal-plugin-support@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-support/-/internal-plugin-support-1.135.2.tgz#f6ba1f3b06e4420e340256196dd9920da0a8ea91"
+  dependencies:
+    "@babel/runtime-corejs2" "^7.14.8"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
 
-"@webex/internal-plugin-user@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-user/-/internal-plugin-user-1.133.1.tgz#cc3653e265b60518e2c2b8f9af7a7007222c4295"
+"@webex/internal-plugin-user@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-user/-/internal-plugin-user-1.135.2.tgz#c547fc1cca9300c09428243dcffe1671b2c3b138"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-attachment-actions@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-attachment-actions/-/plugin-attachment-actions-1.133.1.tgz#26baf81573a7a5ec25023b1e5e9cead5a4238139"
+"@webex/plugin-attachment-actions@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-attachment-actions/-/plugin-attachment-actions-1.135.2.tgz#2c563d65d041e4d2f48ef21557223e92d8491ec5"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-conversation" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-conversation" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     debug "^3.2.6"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-authorization-browser@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-browser/-/plugin-authorization-browser-1.133.1.tgz#e3cff8931430bbdbe652a6c30126d76cda8b2125"
+"@webex/plugin-authorization-browser@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-browser/-/plugin-authorization-browser-1.135.2.tgz#237df9feabb2bd4707c3221c3fdfdc59389ec564"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
 
-"@webex/plugin-authorization-node@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-node/-/plugin-authorization-node-1.133.1.tgz#84d7533deb1aae7e19b059da29854147de75765e"
+"@webex/plugin-authorization-node@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-node/-/plugin-authorization-node-1.135.2.tgz#c75d287e5e279820a7fe8c3aeb567595c60defe2"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/plugin-authorization@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization/-/plugin-authorization-1.133.1.tgz#9868cb7ee075c30780b177a3f365dd9d5f71f39c"
+"@webex/plugin-authorization@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization/-/plugin-authorization-1.135.2.tgz#0e780111005abff0d7c3eb2d8e484116b249a78d"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/plugin-authorization-browser" "1.133.1"
-    "@webex/plugin-authorization-node" "1.133.1"
+    "@webex/plugin-authorization-browser" "1.135.2"
+    "@webex/plugin-authorization-node" "1.135.2"
     envify "^4.1.0"
 
-"@webex/plugin-device-manager@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-device-manager/-/plugin-device-manager-1.133.1.tgz#7477d901b323cf28190ba0cf3f8fe5865529e585"
+"@webex/plugin-device-manager@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-device-manager/-/plugin-device-manager-1.135.2.tgz#d90bd759ad4a425ea6eb641ad01f8aa3b6bcd450"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/internal-plugin-lyra" "1.133.1"
-    "@webex/internal-plugin-search" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/internal-plugin-lyra" "1.135.2"
+    "@webex/internal-plugin-search" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
 
-"@webex/plugin-logger@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-logger/-/plugin-logger-1.133.1.tgz#4bda48d478bc75424cb29b2b09dc91c7b4aa6b51"
+"@webex/plugin-logger@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-logger/-/plugin-logger-1.135.2.tgz#a841b02aca00db0049a19ef0801b144264ddc63a"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-meetings@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-meetings/-/plugin-meetings-1.133.1.tgz#153380df1cdb101ccb50bcbb7c0a757563f13c36"
+"@webex/plugin-meetings@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-meetings/-/plugin-meetings-1.135.2.tgz#c49f718f59f6140a6b7a2be931ac103ee81b561e"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/common-timers" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/common-timers" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     bowser "^2.11.0"
     btoa "^1.2.1"
     envify "^4.1.0"
@@ -1763,94 +1763,94 @@
     uuid "^3.3.2"
     webrtc-adapter "^7.7.0"
 
-"@webex/plugin-memberships@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-memberships/-/plugin-memberships-1.133.1.tgz#60c455d6a78a1936ae9ca3b9bc360958dcf19d27"
+"@webex/plugin-memberships@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-memberships/-/plugin-memberships-1.135.2.tgz#5f7ba435cc1a793894c0e866b356883595d9613d"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-conversation" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-conversation" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     debug "^3.2.6"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-messages@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-messages/-/plugin-messages-1.133.1.tgz#da57430883d577039512ef322d97d52fbe522d46"
+"@webex/plugin-messages@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-messages/-/plugin-messages-1.135.2.tgz#891382aa786c48a7d367cf32d7399866e28df39c"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-conversation" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-conversation" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-people@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-people/-/plugin-people-1.133.1.tgz#ba591de2cced302af096c5bd210e415513e26a8f"
+"@webex/plugin-people@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-people/-/plugin-people-1.135.2.tgz#e3cdaec99c838e730f28020be50503fa1b719f7d"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/plugin-rooms@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-rooms/-/plugin-rooms-1.133.1.tgz#c4dd3b0c2a49ea4e63f726f5293b68fc84475cf5"
+"@webex/plugin-rooms@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-rooms/-/plugin-rooms-1.135.2.tgz#2edfc0a35189e34aae5bbe480527655bfbf0142f"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/internal-plugin-conversation" "1.133.1"
-    "@webex/internal-plugin-mercury" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/internal-plugin-conversation" "1.135.2"
+    "@webex/internal-plugin-mercury" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     debug "^3.2.6"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-team-memberships@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-team-memberships/-/plugin-team-memberships-1.133.1.tgz#6ec95446ca46314235356c514806950eeb710de9"
+"@webex/plugin-team-memberships@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-team-memberships/-/plugin-team-memberships-1.135.2.tgz#a459ed74c5dc4eecc3a2e10f10e556c622a21c82"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.133.1"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/plugin-teams@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-teams/-/plugin-teams-1.133.1.tgz#5b063e9edf685a2e7782f404b262c412fc571308"
+"@webex/plugin-teams@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-teams/-/plugin-teams-1.135.2.tgz#dc08d4042d45821df45d14e040eb8f14fbe88e1f"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.133.1"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/plugin-webhooks@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-webhooks/-/plugin-webhooks-1.133.1.tgz#31aed22d4791286e355d4783350637caea91cc8a"
+"@webex/plugin-webhooks@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-webhooks/-/plugin-webhooks-1.135.2.tgz#17d65d13683e5d6623a29982a9f3f5ce7bf5e134"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.133.1"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/storage-adapter-local-storage@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/storage-adapter-local-storage/-/storage-adapter-local-storage-1.133.1.tgz#83ca44a285111dde7a9d002545ffe41243390134"
+"@webex/storage-adapter-local-storage@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/storage-adapter-local-storage/-/storage-adapter-local-storage-1.135.2.tgz#cc064564b926e742942f26f334e17066a97e1aae"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.133.1"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
 
-"@webex/webex-core@1.133.1":
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/@webex/webex-core/-/webex-core-1.133.1.tgz#f271a54b2fa06adcff79e5e918b3a438626fadef"
+"@webex/webex-core@1.135.2":
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/@webex/webex-core/-/webex-core-1.135.2.tgz#7cf476f4f63e3873fb31c40544f775bdfa1091ee"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.133.1"
-    "@webex/common-timers" "1.133.1"
-    "@webex/http-core" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/common" "1.135.2"
+    "@webex/common-timers" "1.135.2"
+    "@webex/http-core" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     ampersand-collection "^2.0.2"
     ampersand-events "^2.0.2"
     ampersand-state "^5.0.3"
@@ -6936,30 +6936,30 @@ webcrypto-shim@^0.1.4:
   version "0.1.7"
   resolved "https://registry.npmjs.org/webcrypto-shim/-/webcrypto-shim-0.1.7.tgz"
 
-webex@1.133.1:
-  version "1.133.1"
-  resolved "https://registry.yarnpkg.com/webex/-/webex-1.133.1.tgz#a1d63b0d6a9dfc2bbe413b0daa363f1b743502bc"
+webex@1.135.2:
+  version "1.135.2"
+  resolved "https://registry.yarnpkg.com/webex/-/webex-1.135.2.tgz#ba07e06e6719e667a6cee38cb583a10bfbe42cc1"
   dependencies:
     "@babel/polyfill" "^7.12.1"
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-calendar" "1.133.1"
-    "@webex/internal-plugin-device" "1.133.1"
-    "@webex/internal-plugin-presence" "1.133.1"
-    "@webex/internal-plugin-support" "1.133.1"
-    "@webex/plugin-attachment-actions" "1.133.1"
-    "@webex/plugin-authorization" "1.133.1"
-    "@webex/plugin-device-manager" "1.133.1"
-    "@webex/plugin-logger" "1.133.1"
-    "@webex/plugin-meetings" "1.133.1"
-    "@webex/plugin-memberships" "1.133.1"
-    "@webex/plugin-messages" "1.133.1"
-    "@webex/plugin-people" "1.133.1"
-    "@webex/plugin-rooms" "1.133.1"
-    "@webex/plugin-team-memberships" "1.133.1"
-    "@webex/plugin-teams" "1.133.1"
-    "@webex/plugin-webhooks" "1.133.1"
-    "@webex/storage-adapter-local-storage" "1.133.1"
-    "@webex/webex-core" "1.133.1"
+    "@webex/internal-plugin-calendar" "1.135.2"
+    "@webex/internal-plugin-device" "1.135.2"
+    "@webex/internal-plugin-presence" "1.135.2"
+    "@webex/internal-plugin-support" "1.135.2"
+    "@webex/plugin-attachment-actions" "1.135.2"
+    "@webex/plugin-authorization" "1.135.2"
+    "@webex/plugin-device-manager" "1.135.2"
+    "@webex/plugin-logger" "1.135.2"
+    "@webex/plugin-meetings" "1.135.2"
+    "@webex/plugin-memberships" "1.135.2"
+    "@webex/plugin-messages" "1.135.2"
+    "@webex/plugin-people" "1.135.2"
+    "@webex/plugin-rooms" "1.135.2"
+    "@webex/plugin-team-memberships" "1.135.2"
+    "@webex/plugin-teams" "1.135.2"
+    "@webex/plugin-webhooks" "1.135.2"
+    "@webex/storage-adapter-local-storage" "1.135.2"
+    "@webex/webex-core" "1.135.2"
     envify "^4.1.0"
     lodash "^4.17.21"
 
