@@ -55,7 +55,7 @@
     "@typescript-eslint/parser": "^4.29.0",
     "babel-jest": "^26.0.22",
     "eslint": "^7.32.0",
-    "eslint-plugin-jsdoc": "^35.5.1",
+    "eslint-plugin-jsdoc": "^36.1.0",
     "jest": "^26.6.3",
     "mock-fs": "^5.0.0",
     "mockdate": "^3.0.5",
@@ -73,7 +73,7 @@
     "express": "^4.16.4",
     "migrate-mongo": "^8.2.2",
     "moment": "^2.29.1",
-    "mongoose": "^5.13.0",
+    "mongoose": "^6.0.5",
     "string-similarity": "^4.0.4",
     "webex": "1.133.1",
     "winston": "^3.3.3"
