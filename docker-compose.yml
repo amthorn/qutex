@@ -6,7 +6,9 @@ services:
         depends_on: 
             - mongo
         ports:
-            - 3000:3000
+            -   target: 3000
+                published: 80
+                mode: host
         environment:
             NODE_ENV: production
             VERSION: ${QUTEX_VERSION}
