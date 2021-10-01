@@ -5,8 +5,7 @@ build:
 .PHONY: up
 up:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
-	# yarn --cwd services/bot start:dev-bot
-	yarn --cwd services/bot start:up
+	yarn --cwd services/bot start:dev-bot
 
 .PHONY: deploy $(VERSION)
 deploy:
