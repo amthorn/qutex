@@ -28,7 +28,10 @@ export class Pun extends CommandBase implements ICommand {
         LOGGER.verbose(`Getting pun for user: ${initiative.user.id}`);
         // There's an issue perhaps with the website or the axios library that basically doesn't work properly
         // when the axios is used as the User-Agent. Thus, pretend that we are a curl request.
-        const response = await axios({ url: 'https://icanhazdadjoke.com/', headers: { 'Accept': 'text/plain', 'User-Agent': 'curl/7.64.1' } });
+        const response = await axios({
+            url: 'https://icanhazdadjoke.com/',
+            headers: { 'Accept': 'text/plain', 'User-Agent': 'curl/7.64.1' }
+        });
         LOGGER.info(`Pun: ${JSON.stringify(response.data, null, 2)}`);
         return response.data;
     }

@@ -259,7 +259,7 @@ describe('Handler errors as it should', () => {
         });
         expect(BOT.messages.create).toHaveBeenCalledWith({
             toPersonEmail: process.env.DEBUG_EMAIL,
-            markdown: expect.stringMatching(`An unexpected error occurred at Thu May 06 2021 01:43:08 GMT-0400 \\(Eastern Daylight Time\\).
+            markdown: expect.stringMatching(`An unexpected error occurred at Thu May 06 2021 01:43:08 GMT-0400 \\(Eastern Daylight Time\\)\\.
 \`\`\`
 TRACE ID: [\\w\\-]+
 Error: THIS IS AN EXPECTED ERROR

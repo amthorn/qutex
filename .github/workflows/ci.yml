@@ -39,6 +39,13 @@ jobs:
       - uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/bot lint
+  build-test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Test Docker Container Builds
+        run: docker build -t testing:latest services/bot
   test:
     needs: setup
     runs-on: ubuntu-latest
