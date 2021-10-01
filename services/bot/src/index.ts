@@ -5,7 +5,7 @@
  */
 /// <reference path="../types/index.d.ts" />
 
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import { Handler } from './handler';
 import mongoose from 'mongoose';
 import { GET } from './secrets';
@@ -19,7 +19,9 @@ mongoUri += '?authSource=admin';
 mongoose.connect(mongoUri, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true });
 
 const APP = express();
-APP.use(express.json());
+// without the "as" expression here, there's a bug which yields the error: error TS2769: No overload matches this call
+// https://letscodepare.com/blog/argument-of-type-nexthandlefunction-is-not-assignable-nodejs
+APP.use(express.json() as RequestHandler);
 
 const HOST = '0.0.0.0';
 const PORT = 3000;
