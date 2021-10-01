@@ -72,19 +72,31 @@ export class Handler {
                 const now = new Date();
                 LOGGER.error(`TRACE ID: ${traceId}`);
                 LOGGER.error(`OCCURRED AT: ${now}`);
-                LOGGER.error(e.stack);
+                // Typescript has a quirk where it doesn't know the type of the error object
+                // leading to: Object is of type 'unknown'
+                let errorMessage = "An unknown error has occurred in Qutex";
+                let errorStack: string | undefined = 'Stack Trace not found.';
+                if (e instanceof Error) {
+                    errorMessage = e.message;
+                    errorStack = e.stack;
+                }
+                LOGGER.error(errorMessage);
                 try {
                     await BOT.messages.create({
-                        markdown: `An unexpected error occurred. Please open an issue by using the "help" command:\n${e}`,
+                        markdown: `An unexpected error occurred. Please open an issue by using the "help" command:\nError: ${errorMessage}`,
                         roomId: request.body.data.roomId
                     });
 
                     await BOT.messages.create({
-                        markdown: `An unexpected error occurred at ${now}.\n\`\`\`\nTRACE ID: ${traceId}\n${e.stack}\n\`\`\``,
+                        markdown: `An unexpected error occurred at ${now}.\n\`\`\`\nTRACE ID: ${traceId}\n${errorStack}\n\`\`\``,
                         toPersonEmail: process.env.DEBUG_EMAIL
                     });
                 } catch (exc) {
-                    LOGGER.error(exc);
+                    let innerError = "A very unknown error has occurred in Qutex!!";
+                    if (exc instanceof Error) {
+                        innerError = exc.message;
+                    }
+                    LOGGER.error(innerError);
                 }
             }
         }

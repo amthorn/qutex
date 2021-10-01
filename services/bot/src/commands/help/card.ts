@@ -38,7 +38,7 @@ export class Card extends CommandBase implements ICommand {
         card.attachments[0].content.body[2].actions[2].card.body = superAdminCommands;
 
         // Set "about" information
-        card.attachments[0].content.body[1].columns[1].items[0].text = process.env.VERSION;
+        card.attachments[0].content.body[1].columns[1].items[0].text = `[${process.env.VERSION}](https://github.com/amthorn/qutex/releases/tag/${process.env.VERSION})`;
         card.attachments[0].content.body[1].columns[1].items[1].text = process.env.RELEASE_DATE;
         card.attachments[0].content.body[1].columns[1].items[2].text = `${process.env.AUTHOR_NAME} (${process.env.AUTHOR_EMAIL})`;
 

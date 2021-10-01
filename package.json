@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@types/node": "^8.10.66",
+    "axios": "^0.21.4",
+    "ngrok": "^3.2.3"
+  }
+}
