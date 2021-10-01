@@ -43,6 +43,7 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: Test Docker Container Builds
         run: docker build -t testing:latest services/bot
   test:

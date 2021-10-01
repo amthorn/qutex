@@ -74,7 +74,7 @@ export class Handler {
                 LOGGER.error(`OCCURRED AT: ${now}`);
                 // Typescript has a quirk where it doesn't know the type of the error object
                 // leading to: Object is of type 'unknown'
-                let errorMessage = "An unknown error has occurred in Qutex";
+                let errorMessage = 'An unknown error has occurred in Qutex';
                 let errorStack: string | undefined = 'Stack Trace not found.';
                 if (e instanceof Error) {
                     errorMessage = e.message;
@@ -92,7 +92,7 @@ export class Handler {
                         toPersonEmail: process.env.DEBUG_EMAIL
                     });
                 } catch (exc) {
-                    let innerError = "A very unknown error has occurred in Qutex!!";
+                    let innerError = 'A very unknown error has occurred in Qutex!!';
                     if (exc instanceof Error) {
                         innerError = exc.message;
                     }
