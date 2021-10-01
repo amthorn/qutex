@@ -2,26 +2,23 @@
 build:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml build
 
-.PHONY: build-prod
-build-prod:
-	docker compose build
-
 .PHONY: up
 up:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 	yarn --cwd services/bot start:dev-bot
-	
+
+.PHONY: deploy $(VERSION)
+deploy:
+	${MAKE} build
+	./bin/deploy_stack.sh $(VERSION)
+
 .PHONY: logs
 logs:
-	docker-compose logs -f bot
-
-.PHONY: up-prod
-up-prod:
-	docker-compose up -d
+	docker compose logs -f bot
 
 .PHONY: down
 down:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml down
+	docker compose down
 
 .PHONY: test
 test:

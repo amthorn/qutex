@@ -16,6 +16,6 @@ describe('Pun works appropriately', () => {
     test('Pun is returned appropriately', async () => {
         expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
         expect(await new Pun().relax(TEST_INITIATIVE)).toEqual('mock response');
-        expect(axios).toHaveBeenCalledWith({ url: 'https://icanhazdadjoke.com/', headers: { 'Accept': 'text/plain' } });
+        expect(axios).toHaveBeenCalledWith({ url: 'https://icanhazdadjoke.com/', headers: { 'Accept': 'text/plain', 'User-Agent': 'curl/7.64.1' } });
     });
 });
