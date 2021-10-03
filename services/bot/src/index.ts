@@ -7,9 +7,17 @@
 
 import express, { RequestHandler } from 'express';
 import { Handler } from './handler';
+import { DynamoDB, config } from 'aws-sdk';
 import mongoose from 'mongoose';
 import { GET } from './secrets';
 import { LOGGER } from './logger';
+
+// TODO: Change me
+config.loadFromPath('/app/.aws/credentials.json');
+export const dynamodb = new DynamoDB({
+    credentials: config.credentials,
+    region: 'us-east-2'
+});
 
 let mongoUri = `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}`;
 mongoUri += `:${GET('mongoPassword')}`;
