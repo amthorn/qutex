@@ -39,7 +39,7 @@ export class Handler {
     public async handle (request: Request): Promise<void> {
         const me = await BOT.people.get('me');
         // Don't do anything if the bot is receiving a hook from its own message.
-        if (me.id !== request.body.data.personId) {
+        if (request.body.data.personId && me.id !== request.body.data.personId) {
             // This is the earliest we can put this try catch, any earlier
             // and an error will cause a loop which continuously sends messages
             // since the bot will respond to its own messages.
@@ -99,6 +99,9 @@ export class Handler {
                     LOGGER.error(innerError);
                 }
             }
+        } else if (!request.body.data.personId) {
+            // Sometimes this happens in production where a personId is not coming in from the webex server
+            console.error(request.body.data)
         }
 
     }

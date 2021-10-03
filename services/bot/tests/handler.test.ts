@@ -60,6 +60,14 @@ describe('Handler is working', () => {
         expect(BOT.messages.create).toHaveBeenCalledTimes(0);
     });
 
+    test('handler appropriately errors and logs when message originator can\'t be determined', async () => {
+        BOT.people.get.mockReturnValueOnce({ id: MOCK_REQUEST.body.data.personId });
+        expect(await new Handler().handle({ body: { ...MOCK_REQUEST.body, data: { ...MOCK_REQUEST.body.data, personId: undefined } } } as Request)).toEqual(undefined);
+        expect(BOT.people.get).toHaveBeenCalledWith('me');
+        expect(BOT.messages.get).toHaveBeenCalledTimes(0);
+        expect(BOT.messages.create).toHaveBeenCalledTimes(0);
+    });
+
     test('handler appropriately returns response if command is invalid', async () => {
         BOT.messages.get.mockReturnValueOnce({ text: 'invalid foo command', personId: 'mockPersonId' });
         BOT.people.get.mockReturnValue({ id: MOCK_REQUEST.body.data.personId, displayName: 'mockDisplayName' });
