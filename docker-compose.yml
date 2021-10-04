@@ -54,8 +54,8 @@ services:
             - mongoPassword
 secrets:
     token:
-        file: token
+        file: secrets/prod/token
     mongoPassword:
-        file: mongoPassword
+        file: secrets/prod/mongoPassword
 volumes:
     mongo_volume:

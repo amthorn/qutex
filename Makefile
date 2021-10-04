@@ -9,7 +9,6 @@ up:
 
 .PHONY: deploy $(VERSION)
 deploy:
-	${MAKE} build
 	./bin/deploy_stack.sh $(VERSION)
 
 .PHONY: logs

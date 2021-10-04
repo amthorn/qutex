@@ -17,3 +17,8 @@ services:
     mongo:
         ports:
             - 27017:27017
+secrets:
+    token:
+        file: secrets/local/token
+    mongoPassword:
+        file: secrets/local/mongoPassword
