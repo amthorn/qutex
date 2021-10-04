@@ -67,7 +67,7 @@ jobs:
           mkdir -p secrets/local/
           echo `openssl rand -hex 64` >> secrets/local/mongoPassword
           echo "DOESNTMATTER" >> secrets/local/token
-          sudo docker run -v $(pwd)/mongoPassword:/run/secrets/mongoPassword -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_DATABASE=qutex -e MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongoPassword --name mongo -d -p 27017:27017 mongo:4.4.5
+          sudo docker run -v $(pwd)/secrets/local/mongoPassword:/run/secrets/mongoPassword -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_DATABASE=qutex -e MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongoPassword --name mongo -d -p 27017:27017 mongo:4.4.5
       - env:
           QUTEX_TESTING: true
         run: yarn --cwd services/bot test --verbose
