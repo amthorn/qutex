@@ -101,7 +101,7 @@ export class Handler {
             }
         } else if (!request.body.data.personId) {
             // Sometimes this happens in production where a personId is not coming in from the webex server
-            console.error(request.body.data)
+            console.error(request.body.data);
         }
 
     }
