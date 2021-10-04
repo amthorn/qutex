@@ -9,7 +9,7 @@ import mock from 'mock-fs';
 mock({
     '/run/secrets/': {
         'token': 'some token',
-        'mongoPassword': mock.load('../../mongoPassword')
+        'mongoPassword': mock.load('../../secrets/local/mongoPassword')
     },
     'src': mock.load('src'),
     'tests': mock.load('tests'),
