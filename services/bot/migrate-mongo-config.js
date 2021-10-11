@@ -3,7 +3,7 @@ const GET = (secret) => {
     if (['production', 'development'].includes(process.env.NODE_ENV || '')) {
         return FS.readFileSync(`/run/secrets/${secret}`, 'utf8').trim();
     } else {
-        return FS.readFileSync(`../../${secret}`, 'utf8').trim();
+        return FS.readFileSync(`../../secrets/local/${secret}`, 'utf8').trim();
     }
 };
 
