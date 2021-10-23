@@ -11,14 +11,45 @@ services:
             - ./services/bot:/app
             - ./services/bot/tsconfig.json:/app/tsconfig.json
             - ./services/bot/package.json:/app/package.json
+    ui:
+        env_file:
+            - .local.env
+        volumes:
+            - ./services/ui/src:/qutex/src
+            - ./services/ui/public:/qutex/public
+            - compiled_css:/qutex/src/assets/css
+    projects:
+        env_file:
+            - .local.env
+        tty: true
+        stdin_open: true
+    users:
+        env_file:
+            - .local.env
+        tty: true
+        stdin_open: true
+    auth:
+        volumes:
+            - ./services/auth:/auth
+        tty: true
+        stdin_open: true
+        env_file:
+            - .local.env
     migrate:
         build:
             context: ./services/bot
-    mongo:
-        ports:
-            - 27017:27017
+    # mongo:
+    #     ports:
+    #         - 27017:27017
+volumes:
+    # ignore all css from the docker container and do not mount to my local dir
+    # This is because the CSS files shouldn't be modified. Only the sass files
+    # So no need to store them locally.
+    compiled_css:
 secrets:
     token:
         file: secrets/local/token
     mongoPassword:
         file: secrets/local/mongoPassword
+    privateKey:
+        file: secrets/local/privateKey

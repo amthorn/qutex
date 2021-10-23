@@ -1,5 +1,15 @@
 version: '3.9'
 services:
+    nginx:
+        depends_on:
+            - web
+            - auth
+            - projects
+        restart: always
+        build:
+            context: services/nginx
+        ports:
+            - 80:80
     bot:
         image: ${QUTEX_IMAGE:-qutex_bot:latest}
         restart: always
@@ -7,7 +17,7 @@ services:
             - mongo
         ports:
             -   target: 3000
-                published: 80
+                published: 3000
                 mode: host
         environment:
             NODE_ENV: production
@@ -22,11 +32,63 @@ services:
         secrets:
             - token
             - mongoPassword
-        healthcheck:  
-            test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
-            interval: 1m30s
-            timeout: 10s
-            retries: 3
+    ui:
+        restart: always
+        depends_on:
+            - mongo
+            - bot
+            # - api
+        build:
+            context: services/ui/
+        env_file:
+            - .production.env
+    projects:
+        depends_on:
+            - mongo
+            - auth
+        restart: always
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: projects
+        env_file:
+            - .production.env
+        secrets:
+            - mongoPassword
+    users:
+        depends_on:
+            - auth
+        restart: always
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: users
+        env_file:
+            - .production.env
+        secrets:
+            - token
+            - mongoPassword
+    auth: 
+        depends_on:
+            - redis
+            - mongo
+        restart: always
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: auth
+        env_file:
+            - .production.env
+        secrets:
+            - privateKey
+            - token
+            - mongoPassword
+    redis: 
+        restart: always
+        image: redis:6.2.1
     migrate:
         depends_on: 
             - mongo
@@ -57,5 +119,7 @@ secrets:
         file: secrets/prod/token
     mongoPassword:
         file: secrets/prod/mongoPassword
+    privateKey:
+        file: secrets/prod/privateKey
 volumes:
     mongo_volume:

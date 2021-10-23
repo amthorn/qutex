@@ -1,0 +1,10 @@
+@mixin icon-override {
+	background-image: none;
+	@extend .fa;
+	padding-top: 0.5em;
+}
+
+@mixin no-spacing {
+	padding: 0;
+	margin: 0;
+}

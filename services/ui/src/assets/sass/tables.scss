@@ -1,0 +1,39 @@
+
+.react-strap-table {
+	& tr, select, .table-sort-th {
+	    cursor: pointer;
+	}
+	& .table-sort-icon {
+	    float: right;
+	}
+	& .card-footer {
+	    background-color: rgba(0, 0, 0, 0);
+	    padding-top: 0;
+	    border-top: 0;
+	}
+	& .card-body {
+		padding-left: 0;
+		padding-right: 0;
+	    padding-bottom: 0;
+	}
+}
+
+.table-responsive { 
+	// height:400px; 
+	overflow:auto; 
+}
+
+.table-hover {
+	cursor: pointer;
+}
+
+thead tr th { 
+	background: white; 
+	position: sticky; 
+	top: 0; 
+	z-index: 10; 
+}
+
+.white-content .table-sm > tbody > tr > td {
+	padding: 0px;
+}

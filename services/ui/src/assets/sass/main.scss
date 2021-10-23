@@ -1,0 +1,57 @@
+$fa-font-path: "../../../node_modules/font-awesome/fonts";
+@import "../../../node_modules/font-awesome/scss/font-awesome";
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+@import "./mixins";
+@import "./tables.scss";
+@import "./breadcrumbs.scss";
+@import "./grid.scss";
+@import "./cards.scss";
+@import "./nav.scss";
+@import "./sidebar.scss";
+@import "./forms.scss";
+@import "./pseudo_bootstrap.scss";
+
+.page-item {
+	cursor: pointer;
+}
+.page-link {
+	color: #000;
+}
+
+.footer {
+	padding: 0px 0 24px 0px
+}
+
+*[data="blue"] {
+    background: #3358f4;
+    background: -webkit-linear-gradient(0deg, #3358f4 0%, #1d8cf8 100%);
+    background: -o-linear-gradient(0deg, #3358f4 0%, #1d8cf8 100%);
+    background: -moz-linear-gradient(0deg, #3358f4 0%, #1d8cf8 100%);
+    background: linear-gradient(0deg, #3358f4 0%, #1d8cf8 100%); 
+}
+*[data="green"] {
+    background: #0098f0;
+    background: -webkit-linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
+    background: -o-linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
+    background: -moz-linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
+    background: linear-gradient(0deg, #0098f0 0%, #00f2c3 100%); 
+}
+// *[data="white"] {
+//     background: #ffffff;
+//     background: -webkit-linear-gradient(0deg, #ffffff 0%, #00f2c3 100%);
+//     background: -o-linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
+//     background: -moz-linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
+//     background: linear-gradient(0deg, #0098f0 0%, #00f2c3 100%); 
+// }
+
+.main-panel > .content {
+	padding: 78px 10px 13px 250px
+}
+
+body {
+	font-family: "Poppins", sans-serif;
+	font-size: 0.875rem;
+	color: #525f7f;
+}
