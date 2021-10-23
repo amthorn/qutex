@@ -10,6 +10,7 @@ site/
 secrets
 *.pyc
 __pycache__/
+.vscode
 
 # Jekyll
 docs/_site
