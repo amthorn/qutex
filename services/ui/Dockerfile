@@ -37,10 +37,13 @@ RUN /install.sh
 # CLEAN #
 #########
 
-RUN rm -rf src public jsconfig.json package-lock.json node_modules
+# These should be volume mounted for development
+RUN rm -rf src public
+
 # package.json is needed for running in development mode
-RUN if [ "${DEVELOPMENT}" != "true" ]; then rm -rf package.json; fi;
-# Build folder will be left with static files
+RUN if [ "${DEVELOPMENT}" != "true" ]; then rm -rf package-lock.json package.json jsconfig.json; fi;
+
+# For non-development, build folder will be left with static files
 
 ##############
 # ENTRYPOINT #

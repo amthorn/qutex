@@ -31,7 +31,7 @@ export class Card extends CommandBase implements ICommand {
 
         const cardCommands = commands.filter(i => i.AUTHORIZATION === Auth.NONE).map((i: ICommand) => this.textBlock(i));
         // deep clone to cache bust for testing
-        let card = {};
+        let card = {} as any; // eslint-disable-line @typescript-eslint/no-explicit-any
         if (process.env.BOT_2_0_0 === 'true') {
             card = Object.assign({}, helpCard2_0_0) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
         } else {

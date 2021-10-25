@@ -1,4 +1,4 @@
-import { request } from "functions/request";
+// import { request } from "functions/request";
 import { sendCode } from "functions/auth";
 import { toast } from "react-toastify";
 import { 
@@ -15,18 +15,21 @@ import React, { useState } from "react";
 export const Register = (props) => {
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState();
-    const [emailExists, setEmailExists] = useState(false);
+
+    // const [emailExists, setEmailExists] = useState(false);
 
     const onSubmit = () => {
         if(!email){
             toast.error("A Webex Email must be provided.");
             return;
         }
-        if(emailExists){
+
+
         // TODO: Re-enable when "forgot password" is available
+        // if(emailExists){
         //     toast.error("An account with that Webex Email already exists.")
         //     return;
-        }
+        // }
         setLoading(true);
         sendCode(email).then(success => {
             setLoading(false);
@@ -39,9 +42,10 @@ export const Register = (props) => {
 
     const setEmailWithCheck = (eml) => {
         setEmail(eml);
-        request(`/api/v1/users?email=${encodeURIComponent(eml)}`, { method: "GET" }, { notifications: false }).then(
-            ({ response }) => setEmailExists(response.status !== 404) // eslint-disable-line no-magic-numbers
-        ).catch(alert);
+
+        // request(`/api/v1/users?email=${encodeURIComponent(eml)}`, { method: "GET" }, { notifications: false }).then(
+        //     ({ response }) => setEmailExists(response.status !== 404) // eslint-disable-line no-magic-numbers
+        // ).catch(alert);
     };
 
     const registerForm = () =>

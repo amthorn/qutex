@@ -10,7 +10,7 @@ fi
 today=$(date +"%b %d, %Y")
 
 # Deploy the docs to docs.qutexbot.com
-# mkdocs gh-deploy
+mkdocs gh-deploy
 
 QUTEX_RELEASE_DATE="$today"
 QUTEX_VERSION=$1
@@ -23,8 +23,6 @@ Version: ${QUTEX_VERSION}
 read -p "Press enter to continue"
 
 echo "QUTEX_RELEASE_DATE=${QUTEX_RELEASE_DATE}
-QUTEX_VERSION=${QUTEX_VERSION}
-" > .version.env
+QUTEX_VERSION=${QUTEX_VERSION}" > .version.env
 
-make down up
-# env QUTEX_VERSION=${QUTEX_VERSION} docker --context qutex stack deploy --with-registry-auth qutex -c docker-compose.yml
+env QUTEX_VERSION="${QUTEX_VERSION}" docker --context qutex stack deploy --with-registry-auth qutex -c docker-compose.yml

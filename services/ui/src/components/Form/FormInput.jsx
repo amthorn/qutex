@@ -16,7 +16,7 @@ export const FormInput = ({
     text,
     value
 }) => 
-    <FormGroup controlId={ controlId || `${name}Input` }>
+    <FormGroup id={ controlId || `${name}Input` }>
         <Label for={ id || `${name}Input` }>{ label }</Label>
         <Input 
             type={ type || "text" }

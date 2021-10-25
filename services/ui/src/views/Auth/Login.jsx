@@ -53,7 +53,7 @@ export const Login = (props) => {
         <Container fluid={ true } className="d-flex justify-content-center flex-column min-vh-100">
             <NiceContainer 
                 className="p-4 align-self-center w-25 flex-grow-1" 
-                style={ { "margin": "15%", "margin-bottom": "50%" } }
+                style={ { "margin": "15%", "marginBottom": "50%" } }
             >
                 <Row className="flex-grow-1 align-items-end">
                     <NiceContainer data="blue" className="mb-3">

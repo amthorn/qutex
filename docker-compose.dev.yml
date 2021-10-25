@@ -76,8 +76,8 @@ services:
         env_file: *env_files
     mongo:
         env_file: *env_files
-        # ports:
-        #     - 27017:27017
+        ports:
+            - 27017:27017
 volumes:
     # ignore all css from the docker container and do not mount to my local dir
     # This is because the CSS files shouldn't be modified. Only the sass files

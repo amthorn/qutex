@@ -2,9 +2,10 @@ import { Nav } from "react-bootstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 import { PropTypes } from "prop-types";
 import React from "react";
-// import { NavLink as ReactstrapNavLink } from "reactstrap"; // eslint-disable-line
 import { Alpha, ComingSoon } from "components/Components";
 import { NavLink, useLocation } from "react-router-dom";
+
+// import { NavLink as ReactstrapNavLink } from "reactstrap";
 
 let ps;
 
