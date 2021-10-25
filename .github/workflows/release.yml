@@ -31,7 +31,7 @@ jobs:
           QUTEX_VERSION=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
 
           # Build all containers
-          docker compose -f docker-compose.yml -f docker-compose.build.yml build
-          docker compose -f docker-compose.yml -f docker-compose.build.yml push
+          docker compose -f docker-compose.build.yml build
+          docker compose -f docker-compose.build.yml push
         env:
           DOCKER_TOKEN: ${{ secrets.GITHUB_TOKEN }}

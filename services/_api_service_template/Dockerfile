@@ -12,9 +12,7 @@ WORKDIR /qutex
 COPY services/_api_service_template/src .
 
 # Copy service-specific files
-COPY services/${SERVICE_PREFIX}/api/ ./api/
-COPY services/${SERVICE_PREFIX}/documents ./documents
-COPY services/${SERVICE_PREFIX}/*.py ./
+COPY services/${SERVICE_PREFIX}/* ./
 
 ENV SERVICE_PREFIX=${SERVICE_PREFIX}
 ENTRYPOINT ["flask", "run", "--host=0.0.0.0", "--port=4000"]
