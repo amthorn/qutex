@@ -1,0 +1,36 @@
+.sidenav-icon {
+  margin-left: 0.75em;
+  margin-right: 1.75em;
+}
+
+.navbar {
+  padding: 10px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  min-width: 30%;
+}
+
+.administration-nav-link {
+  position: fixed;
+  padding-bottom: 1.5em;
+  bottom: 0;
+}
+
+nav[aria-label=breadcrumb] {
+  min-width: 230px;
+}
+
+a.dropdown-toggle.nav-link {
+  padding: 0.75rem 1rem;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #ffffff;
+  color: #1d253b;
+}
+.nav-pills .nav-link.active:hover {
+  background-color: #eeeeee;
+}
+
+/*# sourceMappingURL=nav.css.map */

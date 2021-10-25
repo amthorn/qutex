@@ -24,7 +24,7 @@ jobs:
         uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/bot install
-      - name: Build and publish Docker Image to GitHub Packages Registry
+      - name: Build and publish qutex_bot
         uses: VaultVulp/gp-docker-action@1.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -32,3 +32,46 @@ jobs:
           extract-git-tag: true
           build-context: ./services/bot
           dockerfile: ./services/bot/Dockerfile
+      - name: Build and publish qutex_nginx
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: qutex_nginx
+          extract-git-tag: true
+          build-context: ./services/nginx
+          dockerfile: ./services/nginx/Dockerfile
+      - name: Build and publish qutex_ui
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: qutex_ui
+          extract-git-tag: true
+          build-context: ./services/ui
+          dockerfile: ./services/ui/Dockerfile
+      - name: Build and publish qutex_projects
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: qutex_projects
+          extract-git-tag: true
+          build-context: .
+          dockerfile: ./services/_api_service_template/Dockerfile
+          custom-args: --build-arg SERVICE_PREFIX=projects
+      - name: Build and publish qutex_users
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: qutex_users
+          extract-git-tag: true
+          build-context: .
+          dockerfile: ./services/_api_service_template/Dockerfile
+          custom-args: --build-arg SERVICE_PREFIX=users
+      - name: Build and publish qutex_auth
+        uses: VaultVulp/gp-docker-action@1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: qutex_auth
+          extract-git-tag: true
+          build-context: .
+          dockerfile: ./services/_api_service_template/Dockerfile
+          custom-args: --build-arg SERVICE_PREFIX=auth

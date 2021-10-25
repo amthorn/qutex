@@ -26,3 +26,4 @@ RUN yarn build && rm -rf src types
 # Set entrypoint to start express server
 ENTRYPOINT ["npm", "run"]
 CMD ["start"]
+HEALTHCHECK --interval=1m30s --retries=3 --timeout=10s CMD curl -f http://localhost:3000/healthcheck

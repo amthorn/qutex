@@ -8,6 +8,10 @@ coverage/
 .DS_Store
 site/
 secrets
+*.pyc
+__pycache__/
+.vscode
+.version.env
 
 # Jekyll
 docs/_site

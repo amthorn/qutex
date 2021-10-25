@@ -1,40 +1,75 @@
 version: '3.9'
+x-env_files: &env_files
+    - .production.env
+    - .version.env
+x-common: &common
+    restart: always
+    env_file: *env_files
 services:
+    nginx:
+        <<: *common
+        image: docker.pkg.github.com/amthorn/qutex/qutex_nginx:${QUTEX_VERSION:-latest}
+        depends_on:
+            - web
+            - auth
+            - projects
+        ports:
+            - 80:80
     bot:
-        image: ${QUTEX_IMAGE:-qutex_bot:latest}
-        restart: always
+        <<: *common
+        image: docker.pkg.github.com/amthorn/qutex/qutex_bot:${QUTEX_VERSION:-latest}
         depends_on: 
             - mongo
         ports:
             -   target: 3000
-                published: 80
+                published: 3000
                 mode: host
-        environment:
-            NODE_ENV: production
-            VERSION: ${QUTEX_VERSION}
-            RELEASE_DATE: ${QUTEX_RELEASE_DATE}
-            AUTHOR_NAME: Ava Thorn
-            AUTHOR_EMAIL: avatheavian@gmail.com
-            DEBUG_EMAIL: avthorn@cisco.com
-            SUPER_ADMINS: '["Y2lzY29zcGFyazovL3VzL1BFT1BMRS9kODRkZjI1MS1iYmY3LTRlZTEtOTM1OS00Y2I0MGIyOTBhN2I"]'
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_DATABASE: qutex
         secrets:
             - token
             - mongoPassword
-        healthcheck:  
-            test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
-            interval: 1m30s
-            timeout: 10s
-            retries: 3
+    ui:
+        <<: *common
+        image: docker.pkg.github.com/amthorn/qutex/qutex_ui:${QUTEX_VERSION:-latest}
+        depends_on:
+            - mongo
+            - bot
+            # - api
+        build:
+            context: services/ui/
+    projects:
+        <<: *common
+        image: docker.pkg.github.com/amthorn/qutex/qutex_projects:${QUTEX_VERSION:-latest}
+        depends_on:
+            - mongo
+            - auth
+        secrets:
+            - mongoPassword
+    users:
+        <<: *common
+        image: docker.pkg.github.com/amthorn/qutex/qutex_users:${QUTEX_VERSION:-latest}
+        depends_on:
+            - auth
+        secrets:
+            - token
+            - mongoPassword
+    auth: 
+        <<: *common
+        image: docker.pkg.github.com/amthorn/qutex/qutex_auth:${QUTEX_VERSION:-latest}
+        depends_on:
+            - redis
+            - mongo
+        secrets:
+            - privateKey
+            - token
+            - mongoPassword
+    redis: 
+        restart: always
+        image: redis:6.2.1
     migrate:
         depends_on: 
             - mongo
-        image: ${QUTEX_IMAGE:-qutex_bot:latest}
-        environment:
-            NODE_ENV: production
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_DATABASE: qutex
+        image: docker.pkg.github.com/amthorn/qutex/qutex_bot:${QUTEX_VERSION:-latest}
+        env_file: *env_files
         secrets:
             - mongoPassword
         entrypoint: node_modules/migrate-mongo/bin/migrate-mongo.js
@@ -42,12 +77,8 @@ services:
         # command: down  # undo-last
         # command: status  # status
     mongo:
+        <<: *common
         image: mongo:4.4.5
-        restart: always
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_DATABASE: qutex
-            MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongoPassword
         volumes:
             - mongo_volume:/data/db
         secrets:
@@ -57,5 +88,7 @@ secrets:
         file: secrets/prod/token
     mongoPassword:
         file: secrets/prod/mongoPassword
+    privateKey:
+        file: secrets/prod/privateKey
 volumes:
     mongo_volume:

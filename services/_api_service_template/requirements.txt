@@ -1,0 +1,11 @@
+# APP-Related
+pyjwt==2.0.1
+redis==3.5.3
+Flask==1.1.2
+marshmallow==3.10.0
+flask-restx==0.5.1
+Werkzeug==0.16.1
+webexteamssdk==1.6
+
+# DATABASE
+flask-mongoengine==1.0.0

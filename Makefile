@@ -5,7 +5,6 @@ build:
 .PHONY: up
 up:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
-	yarn --cwd services/bot start:dev-bot
 
 .PHONY: deploy $(VERSION)
 deploy:
@@ -28,4 +27,6 @@ test:
 .PHONY: lint
 lint:
 	yarn --cwd services/bot lint
+	yarn --cwd services/ui lint
+	docker run -it -v $(PWD)services:/apps/services alpine/flake8 /apps
 	
