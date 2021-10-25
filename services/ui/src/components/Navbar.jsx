@@ -12,67 +12,72 @@
 // 
 // =========================================================
 // 
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in all 
+// copies or substantial portions of the Software.
 // 
 // 
 // nodejs library that concatenates classes
 import classNames from "classnames/dedupe";
-import React from "react";
 import { Link } from "react-router-dom";
-
-// Reactstrap components
+import { logout } from "functions/auth";
+import React from "react";
+import { request } from "functions/request";
 import {
     Breadcrumb,
     BreadcrumbItem,
-    Button,
     Container,
     DropdownItem,
     DropdownMenu,
-
-  // Collapse,
     DropdownToggle,
     Input,
-    InputGroup,
     Modal,
     ModalHeader,
     Nav,
-    Navbar as NvBr,
     NavbarBrand,
     NavbarToggler,
     NavLink,
-    // Row,
-    UncontrolledDropdown} from "reactstrap";
-import { Row } from "components/base/Row";
-import { logout } from "functions/auth";
-import { request } from "functions/request";
-import { Spinner } from "reactstrap";
+    Navbar as NvBr,
+    Spinner,
+    UncontrolledDropdown
+} from "reactstrap";
 
-function getBreadcrumbs(breadcrumbs){
-    return (
-        <Breadcrumb>
-            { 
-        breadcrumbs.map(index => (
-          <BreadcrumbItem key={ index.to ? index.to : 'active' }>
-          {
-            index.to ? <Link key={ index.to ? index.to : 'active' } active={ index.active } to={ index.to }>
-              { index.name }
-            </Link> : <div key={ index.to ? index.to : 'active' }>
-              { index.name }
-            </div> 
-          }
-          </BreadcrumbItem>
-        ))
-      }
-        </Breadcrumb>
-    );
-}
+const navBarStandardWidth = 993;
 
-export const Navbar = (properties) => {
+const getBreadcrumbs = (breadcrumbs) => 
+    <Breadcrumb>
+        {
+            breadcrumbs.map(index => {
+                let child;
+                let key;
+
+                if(index.to){
+                    key = index.to;
+                    child = <Link key={ key } active={ index.active } to={ index.to }>{ index.name }</Link>;
+                }else{
+                    key = "active";
+                    child = <div key={ key }>{ index.name }</div>;
+                }
+
+                return <BreadcrumbItem key={ key }>{ child }</BreadcrumbItem>;
+            })
+        }
+    </Breadcrumb>;
+
+export const Navbar = ({ breadcrumbs, toggleSidebar, sidebarOpened, hstry }) => {
     const [collapseOpen, setcollapseOpen] = React.useState(false);
     const [modalSearch, setmodalSearch] = React.useState(false);
     const [color, setcolor] = React.useState("");
     const [fetching, setFetching] = React.useState(true);
     const [avatar, setAvatar] = React.useState("");
+
+    // Function that adds color white/transparent to the navbar on resize (this is for the collapse)
+    const updateColor = () => {
+        if (window.innerWidth < navBarStandardWidth && collapseOpen) {
+            setcolor("bg-white");
+        } else {
+            setcolor("navbar-transparent");
+        }
+    };
 
     React.useEffect(() => {
         window.addEventListener("resize", updateColor);
@@ -86,23 +91,14 @@ export const Navbar = (properties) => {
 
     React.useEffect(() => {
         setFetching(true);
-        request('/api/v1/users/me', {method: 'GET'}).then(({ response, data }) => {
-            if (response.status >= 200 && response.status < 300) {
+        request("/api/v1/users/me", {method: "GET"}).then(({ response, data }) => {
+            if (response.status >= 200 && response.status < 300) { // eslint-disable-line no-magic-numbers
                 setAvatar(data.data[0].avatar);
             }
             setFetching(false);
-        });
+            return data;
+        }).catch(alert);
     }, []);
-
-
-    // Function that adds color white/transparent to the navbar on resize (this is for the collapse)
-    const updateColor = () => {
-        if (window.innerWidth < 993 && collapseOpen) {
-            setcolor("bg-white");
-        } else {
-            setcolor("navbar-transparent");
-        }
-    };
 
     // This function opens and closes the collapse on small devices
     const toggleCollapse = () => {
@@ -120,19 +116,17 @@ export const Navbar = (properties) => {
         setmodalSearch(!modalSearch);
     };
 
-    let args = properties.urlData?.params?.map(param => properties.match.params[param])
-
     return (
-        <React.Fragment>
+        <>
             <NvBr className={ classNames("fixed-top white-content", color) } expand="lg">
                 <Container fluid={ true } className="px-0">
                     <div className="navbar-wrapper">
                         <div
                             className={ classNames("navbar-toggle d-inline w-100 h-100", {
-                                toggled: properties.sidebarOpened,
+                                toggled: sidebarOpened,
                             }) }
                         >
-                            <NavbarToggler onClick={ properties.toggleSidebar }>
+                            <NavbarToggler onClick={ toggleSidebar }>
                                 <span className="navbar-toggler-bar bar1" />
                                 <span className="navbar-toggler-bar bar2" />
                                 <span className="navbar-toggler-bar bar3" />
@@ -145,23 +139,22 @@ export const Navbar = (properties) => {
                         <span className="navbar-toggler-bar navbar-kebab" />
                         <span className="navbar-toggler-bar navbar-kebab" />
                     </NavbarToggler>
-                    { properties.breadcrumbs ? getBreadcrumbs(properties.breadcrumbs) : null }
+                    { breadcrumbs ? getBreadcrumbs(breadcrumbs) : undefined }
                     <Nav className="ml-auto" navbar={ true }>
                         <UncontrolledDropdown nav={ true }>
-                             <DropdownToggle
+                            <DropdownToggle
                                 caret={ true }
                                 color="default"
                                 nav={ true }
                                 onClick={ (error) => error.preventDefault() }
-                                style={{ color: "#1d253b" }}
+                                style={ { color: "#1d253b" } }
                             >
                                 <div className="photo">
-                                { fetching ? <Spinner/> : null }
-                                <img
-                                            alt="..."
-                                            src={ avatar }
-                                        />
-                                    
+                                    { fetching ? <Spinner/> : undefined }
+                                    <img
+                                        alt="..."
+                                        src={ avatar }
+                                    />
                                 </div>
                                 <p className="d-lg-none">Log out</p>
                             </DropdownToggle>
@@ -176,7 +169,7 @@ export const Navbar = (properties) => {
                                 <NavLink tag="li">
                                     <DropdownItem onClick={ () => {
                                         logout();
-                                        properties.history.push('/login');
+                                        hstry.push("/login");
                                     } } className="nav-item">Log out</DropdownItem>
                                 </NavLink>
                             </DropdownMenu>
@@ -201,6 +194,6 @@ export const Navbar = (properties) => {
                     </button>
                 </ModalHeader>
             </Modal>
-        </React.Fragment>
+        </>
     );
 };

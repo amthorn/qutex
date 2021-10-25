@@ -11,6 +11,7 @@ secrets
 *.pyc
 __pycache__/
 .vscode
+.version.env
 
 # Jekyll
 docs/_site

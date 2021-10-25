@@ -79,11 +79,16 @@
             2,
             "syntax"
         ],
-        "import/exports-last": 1,
+        "import/exports-last": 0,
         "no-negated-condition": 0,
         "no-fallthrough": 0,
         "max-statements": 0,
-        "init-declarations": "warn"
+        "max-lines": 0,
+        "unicorn/prefer-ternary": 0,
+        "init-declarations": 0,
+        "no-use-extend-native/no-use-extend-native": 0,
+        "sonarjs/cognitive-complexity": 0,
+        "react/no-array-index-key": 0
     },
     "plugins": [
         "react",

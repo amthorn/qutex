@@ -85,6 +85,13 @@
                                         "weight": "Lighter",
                                         "color": "Light",
                                         "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "Website (Alpha):",
+                                        "weight": "Lighter",
+                                        "color": "Light",
+                                        "spacing": "Small"
                                     }
                                 ]
                             },
@@ -122,6 +129,13 @@
                                     {
                                         "type": "TextBlock",
                                         "text": "[Click here:)](https://www.github.com/amthorn/qutex/issues)",
+                                        "color": "Light",
+                                        "weight": "Lighter",
+                                        "spacing": "Small"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "text": "[Click here:)](https://qutexbot.com)",
                                         "color": "Light",
                                         "weight": "Lighter",
                                         "spacing": "Small"

@@ -1,15 +1,9 @@
+import classNames from "classnames";
+import { Card as Crd } from "react-bootstrap";
 import React from "react";
-import { Card as _Card } from "react-bootstrap";
-
-const classes = 'p-2 mb-2';
 
 export const PaddedCard = ({ children, ...props }) => {
-	props.className = props.className || '';
-	props.className += (' ' + classes);
+    const className = classNames(props.className, "p-2", "mb-2");
 
-	return (
-		<_Card { ...props } className={ props.className}>
-			{ children }
-		</_Card>
-	)
-}
+    return <Crd { ...{...props, className } } className={ className }>{ children }</Crd>;
+};

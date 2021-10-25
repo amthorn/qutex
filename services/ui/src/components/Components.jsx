@@ -1,60 +1,59 @@
 // TODO: this page should be commented and better organized
 
-import { NiceContainer } from "components/NiceContainer";
-import { PillContainer } from "components/PillContainer";
-import { TooltipTable } from "components/Tables/TooltipTable";
+import { Accordion } from "components/base/Accordion";
+import { Alpha } from "components/Alpha";
+import { Button } from "components/base/Button";
+import { ComingSoon } from "components/ComingSoon";
+import { DataContainer } from "components/DataContainer";
+import Footer from "components/base/Footer";
+import { Form } from "components/Form/Form";
+import { FormSelect } from "components/Form/FormSelect";
+import { HorizontalRule } from "components/base/HorizontalRule";
 import { Navbar } from "components/Navbar";
 import { NavSidebar } from "components/Sidebar/NavSidebar";
-import { Button } from "components/base/Button";
-import Footer from "components/base/Footer";
-import { Accordion } from "components/base/Accordion";
-import { FormSelect } from "components/Form/FormSelect";
+import { NiceContainer } from "components/NiceContainer";
 import { PaddedCard } from "components/PaddedCard";
-import { DataContainer } from "components/DataContainer";
-import { Tabs } from "components/base/Tabs";
+import { PillContainer } from "components/PillContainer";
 import { RightAlignCol } from "components/base/RightAlignCol";
 import { RightAlignRow } from "components/base/RightAlignRow";
-import { ComingSoon } from "components/ComingSoon";
-import { Alpha } from "components/Alpha";
-import { Table } from "components/base/Table";
-import { Title } from "components/base/Title";
-import { HorizontalRule } from "components/base/HorizontalRule";
 import { Switch } from "components/base/Switch";
-import { Form } from "components/Form/Form";
+import { Table } from "components/base/Table";
+import { Tabs } from "components/base/Tabs";
 import { ThemeContextWrapper } from "components/layout/ThemeWrapper";
-
+import { Title } from "components/base/Title";
+import { TooltipTable } from "components/Tables/TooltipTable";
 import { 
+    Col,
     Container,
     Row,
-    Col,
     Spinner
 } from "components/base/BaseComponents";
 
 export {
     Accordion,
-    NiceContainer,
-    PillContainer,
-    TooltipTable,
+    Alpha,
     Button,
-    Footer,
-    FormSelect,
-    PaddedCard,
-    DataContainer,
-    Tabs,
     Col,
-    Row,
+    ComingSoon,
+    Container,
+    DataContainer,
+    Footer,
+    Form,
+    FormSelect,
+    HorizontalRule,
+    Navbar,
+    NavSidebar, 
+    NiceContainer,
+    PaddedCard,
+    PillContainer,
     RightAlignCol,
     RightAlignRow,
-    Container,
-    ComingSoon,
-    Alpha,
-    Table,
-    Title,
-    HorizontalRule,
-    Switch,
-    Form,
+    Row,
     Spinner,
-    NavSidebar, 
-    Navbar,
-    ThemeContextWrapper
+    Switch,
+    Table,
+    Tabs,
+    ThemeContextWrapper,
+    Title,
+    TooltipTable,
 };

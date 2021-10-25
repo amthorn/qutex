@@ -1,483 +1,48 @@
 import axios from "axios";
-import cloneDeep from "lodash/cloneDeep";
+import classNames from "classnames";
 import PropTypes from "prop-types";
-import React, {Component} from "react";
+import { Button, Label } from "reactstrap";
+import React, { useState } from "react";
 
-class ServerTable extends Component {
-    constructor(properties) {
-        super(properties);
+const defaultTotal = 10;
+const defaultPerPage = 10;
 
-        if (this.props.columns === undefined || this.props.url === undefined) {
-            throw "The prop 'columns' and 'url' is required.";
-        }
+const compareObjects = (o1, o2, key) => {
+    const o12 = (o1[key] || "").toUpperCase();
+    const o22 = (o2[key] || "").toUpperCase();
 
-        const default_texts = Object.assign(ServerTable.defaultProps.options.texts, {});
-        const default_icons = Object.assign(ServerTable.defaultProps.options.icons, {});
-        const default_parameters_names = Object.assign(ServerTable.defaultProps.options.requestParametersNames, {});
-
-        this.state = {
-            options: Object.assign(ServerTable.defaultProps.options, this.props.options),
-
-            requestData: {
-                query: "",
-                limit: 10,
-                page: 1,
-                orderBy: "created_at",
-                direction: 0,
-            },
-
-            data: null,
-            isLoading: true,
-        };
-        this.state.requestData.limit = this.state.options.perPage;
-        this.state.options.texts = Object.assign(default_texts, this.props.options.texts);
-        this.state.options.icons = Object.assign(default_icons, this.props.options.icons);
-        this.state.options.requestParametersNames = Object.assign(default_parameters_names, this.props.options.requestParametersNames);
-
-        
-        this.table_search_input = React.createRef();
+    if (o12 < o22) {
+        return -1; // eslint-disable-line no-magic-numbers
     }
-
-    shouldComponentUpdate(nextProperties, nextState) {
-        if (nextProperties.url !== this.props.url) {
-            this.setState({isLoading: true}, () => {
-                this.handleFetchData();
-            });
-        }
-
-        return true;
+    if (o12 > o22) {
+        return 1;
     }
-
-    componentDidMount() {
-        this.handleFetchData();
-    }
-
-    tableClass() {
-        let classes = "table ";
-
-        classes += this.props.hover ? "table-hover " : "";
-        classes += this.props.bordered ? "table-bordered " : "";
-        classes += this.props.condensed ? "table-condensed " : "";
-        classes += this.props.striped ? "table-striped " : "";
-
-        return classes;
-    }
-
-    renderColumns() {
-        const columns = [...this.props.columns];
-        const {headings} = this.state.options;
-        const {options} = this.state;
-        const columns_width = this.state.options.columnsWidth;
-
-        return columns.map((column) => (
-            <th key={ column }
-                className={ `table-${  column  }-th ${  options.sortable.includes(column) ? " table-sort-th " : "" 
-                }${options.columnsAlign.hasOwnProperty(column) ? ` text-${  options.columnsAlign[column]}` : ""}` }
-                style={ {
-                    maxWidth: columns_width.hasOwnProperty(column) ?
-                        Number.isInteger(columns_width[column]) ?
-                            `${columns_width[column]  }%` :
-                            columns_width[column] : ""
-                } }
-                onClick={ () => this.handleSortColumnClick(column) }>
-                <span>{headings.hasOwnProperty(column) ? headings[column] : column.replace(/^\w/, c => c.toUpperCase())}</span>
-                {
-                    options.sortable.includes(column) && React.createElement(this.state.requestData.orderBy !== column ? options.icons.sortBase : (this.state.requestData.direction === 1 ? options.icons.sortUp : options.icons.sortDown), {"className": "table-sort-icon pull-right"})
-
-                    // Options.sortable.includes(column) && <span
-                    //     className={'table-sort-icon pull-right ' + (this.state.requestData.orderBy !== column ? options.icons.sortBase : (this.state.requestData.direction === 1 ? options.icons.sortUp : options.icons.sortDown))}/>
-                }
-            </th>
-        ));
-    }
-
-    renderData() {
-        const data = [...this.state.data.data];
-        const columns = [...this.props.columns];
-        const has_children = this.props.children !== undefined;
-
-        const self = this;
-
-        return data.map(function (row, row_index) {
-            row.index = row_index;
-
-            return (
-                <tr key={ row_index } onClick={ self.props.onClick } data-id={ row.id } >
-                    {
-                        columns.map((column, index) => (
-                            <td key={ column + index } className={ `table-${  column  }-td` }>
-                                {has_children ?
-                                    self.props.children(row, column) :
-                                    row[column]}
-                            </td>
-                        ))
-                    }
-                </tr>
-            );
-        });
-    }
-
-    renderPagination() {
-        const {options} = this.state;
-
-        const pagination = [];
-
-        pagination.push(
-            <li key="first"
-                className={ `page-item ${  options.currentPage === 1 || options.currentPage === 0 ? "disabled" : ""}` }>
-                <a className="page-link" onClick={ () => this.handlePageChange(1) }>&laquo;</a>
-            </li>
-        );
-
-        for (let index = 1; index <= options.lastPage; index++) {
-            pagination.push(
-                <li key={ index } className={ `page-item ${  options.currentPage === index ? "active" : ""}` }>
-                    <a className="page-link" onClick={ () => this.handlePageChange(index) }>{index}</a>
-                </li>
-            );
-        }
-
-        pagination.push(
-            <li key="last" className={ `page-item ${  options.currentPage === options.lastPage ? "disabled" : ""}` }>
-                <a className="page-link" onClick={ () => this.handlePageChange(options.lastPage) }>&raquo;</a>
-            </li>
-        );
-
-        return pagination;
-    }
-
-    handleSortColumnClick(column) {
-        if (this.state.options.sortable.includes(column)) {
-            const request_data = this.state.requestData;
-
-            if (request_data.orderBy === column) {
-                request_data.direction = request_data.direction === 1 ? 0 : 1;
-            } else {
-                request_data.orderBy = column;
-                request_data.direction = 1;
-            }
-
-            this.setState({requestData: request_data, isLoading: true}, () => {
-                this.handleFetchData();
-            });
-        }
-    }
-
-    refreshData() {
-        this.setState({isLoading: true}, () => {
-            this.handleFetchData({fresh: true});
-        });
-    }
-
-    mapRequestData() {
-        const parametersNames = this.state.options.requestParametersNames;
-        const directionValues = Object.assign(this.props.options.orderDirectionValues || {}, ServerTable.defaultProps.options.orderDirectionValues);
-        const {requestData} = this.state;
-
-        return {
-            [parametersNames.query]: requestData.query,
-            [parametersNames.limit]: requestData.page * requestData.limit,
-
-            // [parametersNames.page]: requestData.page * requestData.limit,
-            "start": (requestData.page * requestData.limit) - requestData.limit + 1,
-            "order_by": requestData.orderBy,
-            [parametersNames.direction]: requestData.direction === 1 ? directionValues.ascending : directionValues.descending,
-        };
-    }
-
-    handleFetchData(fresh=false) {
-        const {url} = this.props;
-
-        const options = { ...this.state.options};
-        const requestData = { ...this.state.requestData};
-
-        const urlParameters = new URLSearchParams(this.mapRequestData());
-
-        const baseUrl = new URL(url, window.location);
-
-        const com = baseUrl.search.length > 0 ? "&" : "?";
-
-        if (this.props.updateUrl) {
-            // History.replaceState(url, null, baseUrl.search + com + urlParams.toString());
-            History.replaceState(url, null, baseUrl.search);
-        }
-
-        if(fresh || this.state.data === null){
-            axios.get(url).then((response) => {
-                const response_data = response.data;
-
-                const out_adapter = this.state.options.responseAdapter(response_data);
-
-                if (out_adapter === undefined || !out_adapter ||
-                    typeof out_adapter !== "object" || out_adapter.constructor !== Object ||
-                    !out_adapter.hasOwnProperty("data") || !out_adapter.hasOwnProperty("total")) {
-                    throw "You must return 'object' contains 'data' and 'total' attributes";
-                } else if (out_adapter.data === undefined || out_adapter.total === undefined) {
-                    throw "Please check from returned data or your 'responseAdapter'. \n response must have 'data' and 'total' attributes.";
-                }
-
-                this.setState({cached: out_adapter});
-                this.setState({
-                    ...this.process(this.configureOptions(this.state.options, this.state.cached.total)),
-                    isLoading: false
-                });
-            });
-        } else {
-            // This function must happen first so that the process function
-            // can have access to the options
-            this.setState({
-                ...this.process(this.configureOptions(options, this.state.cached.total)),
-                isLoading: false
-            });
-        }
-    }
-
-    process(options){
-        // Search, Sort, and Paginate
-        let data = cloneDeep(this.state.cached);
-
-        data = this.search(data);
-
-        // Reset the total value after search is complete
-        options = this.configureOptions(this.state.options, data.data.length);
-
-        if(this.state.requestData.orderBy || this.state.requestData.direction){
-            data = this.sort(data);
-        }
-
-        if(this.state.requestData.limit || this.state.requestData.page){
-            data = this.paginate(data);
-        }
-        
-        return {
-            data, 
-            options
-        };
-    }
-
-    isString(o){
-        return typeof o === "string" || o instanceof String;
-    }
-
-    search(data){
-        if(this.state.requestData.query){
-            data = cloneDeep(data);
-
-            const matches = [];
-
-            for(const record of data.data){
-                for(const entry of Object.entries(record)){
-                    // Ignore ID for searches, they are UUIDs
-                    if(entry[0] != "id" && entry[1] && this.isString(entry[1]) && entry[1].toLowerCase().includes(this.state.requestData.query.toLowerCase())){
-                        matches.push(record);
-
-                        break;
-                    }
-                }
-            }
-
-            return {
-                ...data,
-                data: matches
-            };
-        }
-
-        return data;
-    }
-
-    sort(data){
-        function _compareObjects(object1, object2, key) {
-            const object1_ = (object1[key] || "").toUpperCase();
-            const object2_ = (object2[key] || "").toUpperCase();
-
-            if (object1_ < object2_) {
-                return -1;
-            }
-
-            if (object1_ > object2_) {
-                return 1;
-            }
-
-            return 0;
-        }
-
-        let sorted = data.data.sort((object1, object2) => _compareObjects(object1, object2, this.state.requestData.orderBy));
-
-        if(this.state.requestData.direction === 0){
-            sorted = sorted.reverse();
-        }
-
-        return {
-            ...data,
-            "data": sorted
-        };
-    }
-
-    paginate(data){
-        const start = this.state.requestData.limit * (this.state.requestData.page - 1);
-
-        return {
-            ...data,
-            "data": data.data.slice(start, start + this.state.requestData.limit)
-        };
-    }
-
-    configureOptions(options, total){
-        options = options;
-        options.total = total;
-
-        if (total === 0) {
-            options.currentPage = 0;
-            options.lastPage = 0;
-            options.from = 0;
-            options.to = 0;
-        } else {
-            options.currentPage = this.state.requestData.page;
-            options.lastPage = Math.ceil(total / this.state.requestData.limit);
-            options.from = this.state.requestData.limit * (this.state.requestData.page - 1) + 1;
-            options.to = options.lastPage === options.currentPage ? options.total : this.state.requestData.limit * (this.state.requestData.page);
-        }
-
-        return options;
-    }
-
-    handlePerPageChange = (event) => {
-        const {name, value} = event.target;
-
-        const options = { ...this.state.options};
-        const requestData = { ...this.state.requestData};
-
-        options.perPage = value;
-        requestData.limit = event.target.value;
-        requestData.page = 1;
-
-        this.setState({requestData, options, isLoading: true}, () => {
-            this.handleFetchData();
-        });
-    }
-
-    handlePageChange(page) {
-        const requestData = { ...this.state.requestData};
-
-        requestData.page = page;
-
-        this.setState({requestData, isLoading: true}, () => {
-            this.handleFetchData();
-        });
-    }
-
-    handleSearchClick() {
-        const query = this.table_search_input.current.value;
-        const requestData = { ...this.state.requestData};
-
-        requestData.query = query;
-        requestData.page = 1;
-
-        this.setState({requestData, isLoading: true}, () => {
-            this.handleFetchData();
-        });
-    }
-
-    render() {
-        return (
-            <div className="card react-strap-table">
-                {
-                    (this.props.perPage || this.props.search) &&
-
-                    <div className="card-header text-center">
-                        {
-                            this.props.perPage &&
-                            <div className="float-left">
-    <span>{this.state.options.texts.show} </span>
-    <label>
-    <select className="form-control form-control-sm"
-                                        onChange={ this.handlePerPageChange }>
-    {this.state.options.perPageValues.map(value => (
-    <option key={ value } value={ value }>{value}</option>
-                                        ))}
-                                    </select>
-                                </label>
-    <span> {this.state.options.texts.entries}</span>
-                            </div>
-                        }
-
-                        {this.state.isLoading && (this.state.options.loading)}
-
-                        {
-                            this.props.search &&
-                            <div className="input-icon input-group-sm float-right">
-    <input type="text" className="form-control" style={ {height: 34} }
-                                    placeholder={ this.state.options.texts.search } ref={ this.table_search_input }
-                                    onKeyUp={ () => this.handleSearchClick() }/>
-
-    <span className="input-icon-addon"><i className="fe fe-search" /></span>
-                            </div>
-                        }
-                    </div>
-                }
-                <div className="card-body">
-                    <div className="table-responsive" style={ {maxHeight: this.props.options.maxHeightTable} }>
-                        <table className={ this.tableClass() }>
-                            <thead>
-                                <tr>
-                                    {this.renderColumns()}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.state.options.total > 0 && this.state.data !== null ?
-                                        this.renderData() :
-                                        <tr className="text-center">
-                                            <td colSpan={ this.props.columns.length }>{this.state.isLoading && (this.state.options.loading) || this.state.options.texts.empty}</td>
-                                        </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div className="card-footer clearfix">
-                    {
-                        this.props.pagination ?
-                            <div className="float-left">
-                                {`${this.state.options.texts.showing  } ${  this.state.options.from  } ${  this.state.options.texts.to  } ${ 
-                                    this.state.options.to  } ${  this.state.options.texts.of  } ${  this.state.options.total 
-                                } ${  this.state.options.texts.entries}`}
-                            </div> :
-                            <div className="float-left">
-                                {
-                                    `${this.state.options.total  } ${  this.state.options.texts.entries}`
-                                }
-                            </div>
-                    }
-                    {
-                        this.props.pagination &&
-                        <ul className="pagination m-0 float-right">
-                            {this.renderPagination()}
-                        </ul>
-                    }
-                </div>
-            </div>
-        );
-    }
-}
-
-ServerTable.defaultProps = {
-    options: {
-        headings: {},
-        sortable: [],
-        columnsWidth: {},
-        columnsAlign: {},
-        initialPage: 1,
-        perPage: 10,
-        perPageValues: [10, 20, 25, 100],
-
-        icons: {
-            sortBase: "fa fa-sort",
-            sortUp: "fa fa-sort-amount-up",
-            sortDown: "fa fa-sort-amount-down",
-            search: "fa fa-search"
-        },
-
+    return 0;
+};
+
+const isSearchString = (object, queryString) => (
+    object &&
+    (typeof object === "string" || object instanceof String) &&
+    object.toLowerCase().includes(queryString.toLowerCase())
+);
+
+/* eslint-disable complexity */
+const ServerTable = ({
+    columns,
+    url,
+    options = {},
+    hover,
+    bordered,
+    condensed,
+    striped,
+    onClick,
+    perPage = true,
+    searchEnabled = true,
+    pagination = true,
+    updateUrl = false,
+    children
+}) => {
+    const [options_, setOptions] = useState({
         texts: {
             show: "Show",
             entries: "entries",
@@ -485,7 +50,16 @@ ServerTable.defaultProps = {
             to: "to",
             of: "of",
             search: "Search",
-            empty: "Empty Results"
+            empty: "Empty Results",
+            ...options?.texts
+        }, 
+        
+        icons: {
+            sortBase: "fa fa-sort",
+            sortUp: "fa fa-sort-amount-up",
+            sortDown: "fa fa-sort-amount-down",
+            search: "fa fa-search",
+            ...options?.icons
         },
 
         requestParametersNames: {
@@ -494,14 +68,26 @@ ServerTable.defaultProps = {
             page: "page",
             orderBy: "orderBy",
             direction: "direction",
+            ...options?.requestParametersNames
         },
+
+        headings: options.headings ?? {},
+        columnsWidth: options.columnsWidth ?? {},
+        sortable: options.sortable ?? [],
+        columnsAlign: options.columnsAlign ?? {},
+        perPageValues: options.perPageValues ?? [10, 20, 25, 100], // eslint-disable-line no-magic-numbers
+        maxHeightTable: options.maxHeightTable ?? "unset",
+        perPage: options.perPage ?? defaultPerPage,
+
+        responseAdapter: options.responseAdapter ?? (respData => ({data: respData.data, total: respData.total})),
+        
+        initialPage: 1,
 
         orderDirectionValues: {
             ascending: "asc",
             descending: "desc",
         },
 
-        total: 10,
         currentPage: 1,
         lastPage: 1,
         from: 1,
@@ -510,38 +96,409 @@ ServerTable.defaultProps = {
         loading: (
             <div style={ {fontSize: 14, display: "initial"} }><span style={ {fontSize: 18} }
                 className="fa fa-spinner fa-spin"/> Loading...
-            </div>),
+            </div>
+        ),
+    });
+    const [requestData, setRequestData] = useState({
+        limit: options_.perPage,
+        page: 1,
+        orderBy: "created_at",
+        direction: 0,
+    });
+    const [total, setTotal] = useState(options.total ?? defaultTotal);
+    const [isLoading, setIsLoading] = useState(false);
+    const [cached, setCached] = useState(options.data);
+    const [data, setData] = useState(options.data);
+    const [searchData, setSearchData] = useState("");
+    const emptyOrLoading = (
+        <tr className="text-center">
+            <td colSpan={ columns.length }>
+                { isLoading && (options_.loading) || options_.texts.empty }
+            </td>
+        </tr>
+    );
 
-        responseAdapter (resp_data) {
-            return {data: resp_data.data, total: resp_data.total};
-        },
+    const tableClass = classNames(
+        "table",
+        {"table-hover": hover},
+        {"table-bordered": bordered},
+        {"table-condensed": condensed},
+        {"table-striped": striped},
+    );
 
-        maxHeightTable: "unset"
-    },
+    const renderData = () => 
+        data.data.map((row, rowIndex) => {
+            // Passed to children
+            row.index = rowIndex; // eslint-disable-line no-param-reassign
 
-    perPage: true,
-    search: true,
-    pagination: true,
-    updateUrl: false,
+            return <tr key={ row.index } onClick={ onClick } data-id={ row.id } >
+                {
+                    columns.map((column, index) => 
+                        <td key={ column + index } className={ `table-${column.replaceAll(" ", "")}-td` }> {/* eslint-disable-line */}
+                            { children !== undefined ? children(row, column) : row[column] }
+                        </td>
+                    )
+                }
+            </tr>;
+        });
+
+    const handleSortColumnClick = (column) => {
+        if (options_.sortable.includes(column)) {
+            setIsLoading(true);
+            setRequestData({
+                orderBy: requestData.orderBy === column ? requestData.column : column,
+                direction: requestData.orderBy === column && requestData.direction === 1 ? 0 : 1
+            });
+        }
+    };
+
+    const renderColumns = columns.map(column => {
+        // Determine the table classes
+        const thClasses = classNames(
+            `table-${column.replaceAll(" ", "")}-th`,
+            {"table-sort-th": options_.sortable.includes(column)},
+            {[`text-${options_.columnsAlign[column]}`]: column in options_.columnsAlign}
+        );
+
+        // Determine the maximum width
+        let maxWidth;
+
+        if(column in options_.columnsWidth && Number.isInteger(options_.columnsWidth[column])){
+            maxWidth = `${options_.columnsWidth[column]  }%`;
+        }else if(column in options_.columnsWidth && !Number.isInteger(options_.columnsWidth[column])){
+            maxWidth = options_.columnsWidth[column];
+        }else{
+            maxWidth = "";
+        }
+
+        // Generate the column headings
+        let columnHeadings;
+
+        if(column in options_.headings){
+            columnHeadings = options_.headings[column];
+        }else{
+            columnHeadings = column.replace(/^\w/u, col => col.toUpperCase());
+        }
+
+        // Generate sortable buttons
+        let sortableButtons;
+
+        if(requestData.orderBy !== column){
+            sortableButtons = options_.icons.sortBase;
+        }else if(requestData.direction === 1){
+            sortableButtons = options_.icons.sortUp;
+        }else{
+            sortableButtons = options_.icons.sortDown;
+        }
+
+        return <th
+            key={ column }
+            className={ thClasses }
+            style={ { maxWidth } }
+            onClick={ () => handleSortColumnClick(column) }
+        >
+            <span> { columnHeadings } </span>
+            {
+                options_.sortable.includes(column) && React.createElement(
+                    sortableButtons, 
+                    {className: "table-sort-icon pull-right"}
+                )
+            }
+        </th>;
+    });
+
+    const search = (rawData) => {
+        const ignoredKeys = new Set("id", "_id");
+        const matches = [];
+
+        for(const record of rawData.data){
+            for(const entry of Object.entries(record)){
+                // Ignore ID for searches, they are UUIDs
+                if(!ignoredKeys.has(entry[0]) && isSearchString(entry[1], searchData)){
+                    matches.push(record);
+                    break;
+                }
+            }
+        }
+
+        return {
+            ...rawData,
+            data: matches
+        };
+    };
+
+    const sort = (rawData) => {
+        let sorted = rawData.data.sort((o1, o2) => compareObjects(o1, o2, requestData.orderBy));
+
+        if(requestData.direction === 0){
+            sorted = sorted.reverse();
+        }
+
+        return {
+            ...rawData,
+            data: sorted
+        };
+    };
+
+    const paginate = (rawData) => {
+        const start = requestData.limit * (requestData.page - 1);
+        return {
+            ...rawData,
+            data: rawData.data.slice(start, start + requestData.limit)
+        };
+    };
+
+    const configureOptions = (optns, ttl) => {
+        setTotal(ttl);
+        if (ttl === 0) {
+            return {
+                ...optns,
+                currentPage: 0,
+                lastPage: 0,
+                from: 0,
+                to: 0,
+                ttl
+            };
+        }
+        return {
+            ...optns,
+            currentPage: requestData.page,
+            lastPage: Math.ceil(ttl / requestData.limit),
+            from: requestData.limit * (requestData.page - 1) + 1,
+            to: optns.lastPage === optns.currentPage ? ttl : requestData.limit * (requestData.page),
+
+        };
+    };
+
+    const processData = (optns, dta) => {
+        // Search, Sort, and Paginate
+        let newData = dta;
+
+        if(searchData){
+            newData = search(newData);
+        }
+
+        // Reset the total value after search is complete
+        const newOptions = configureOptions(optns, newData.data.length);
+
+        if(requestData.orderBy || requestData.direction){
+            newData = sort(newData);
+        }
+
+        if(requestData.limit || requestData.page){
+            newData = paginate(newData);
+        }
+        setData(newData);
+        setOptions(newOptions);
+        setIsLoading(false);
+    };
+
+    const handleFetchData = (fresh) => {
+        const baseUrl = new URL(url, window.location);
+
+        if (updateUrl) {
+            History.replaceState(url, undefined, baseUrl.search);
+        }
+
+        if(fresh || data === undefined){
+            axios.get(url).then(response => {
+                const outAdapter = options_.responseAdapter(response.data);
+                const properType = [
+                    outAdapter === undefined,
+                    !outAdapter,
+                    typeof outAdapter !== "object",
+                    outAdapter.constructor !== Object,
+                    !("data" in outAdapter),
+                    !("total" in outAdapter)
+                ];
+                const containsKeys = [
+                    outAdapter.data === undefined,
+                    outAdapter.total === undefined
+                ];
+                
+                if (properType.some(x => x)){ // eslint-disable-line
+                    throw new Error("You must return 'object' contains 'data' and 'total' attributes");
+                } else if(containsKeys.some(x => x)) {
+                    throw new Error(
+                        "Please check from returned data or your 'responseAdapter'. \n" +
+                        " response must have 'data' and 'total' attributes."
+                    );
+                }else{
+                    setCached(outAdapter);
+                    processData(configureOptions(options_, outAdapter.total), outAdapter);
+                }
+            }).catch(alert);
+        } else {
+            // This function must happen first so that the process function
+            // can have access to the options
+            processData(configureOptions(options_, data.total), cached);
+        }
+    };
+
+    const handlePerPageChange = (event) => {
+        setIsLoading(true);
+        setRequestData({
+            ...requestData,
+            limit: event.target.value,
+            page: 1,
+        });
+    };
+
+    const handlePageChange = (page) => {
+        setIsLoading(true);
+        setRequestData({
+            ...requestData,
+            page
+        });
+    };
+
+    const renderPagination = () => {
+        const firstClasses = classNames(
+            "page-item",
+            {"disabled": options_.currentPage === 1 || options_.currentPage === 0}
+        );
+
+        const commonProps = {
+            color: "info",
+            className: "page-link"
+        };
+
+        const paginationButtons = [
+            <li key="first" className={ firstClasses }>
+                <Button { ...commonProps } onClick={ () => handlePageChange(1) }>&laquo;</Button>
+            </li>
+        ];
+
+        for (let ind = 1; ind <= options_.lastPage; ind++) {
+            const classes = classNames("page-item", {"active": options_.currentPage === ind});
+            paginationButtons.push(
+                <li key={ ind } className={ classes }>
+                    <Button { ...commonProps } onClick={ () => handlePageChange(ind) }>{ind}</Button>
+                </li>
+            );
+        }
+
+        const classes = classNames("page-item", {"disabled": options_.currentPage === options_.lastPage});
+        paginationButtons.push(
+            <li key="last" className={ classes }>
+                <Button { ...commonProps } onClick={ () => handlePageChange(options_.lastPage) }>&raquo;</Button>
+            </li>
+        );
+
+        return paginationButtons;
+    };
+
+    const handleSearchClick = () => {
+        setIsLoading(true);
+        setRequestData({
+            ...requestData,
+            query: searchData,
+            page: 1
+        });
+    };
+
+    React.useEffect(() => {
+        setIsLoading(true);
+        handleFetchData();
+    }, []);
+    
+    React.useEffect(handleSearchClick, [searchData]);
+    React.useEffect(handleFetchData, [requestData]);
+
+    // TODO: improve complexity by making this cleaner and better
+    return (
+        <div className="card react-strap-table">
+            {
+                (perPage || searchEnabled) &&
+
+                <div className="card-header text-center">
+                    {
+                        perPage &&
+                        <div className="float-left">
+                            <span>{ options_.texts.show } </span>
+                            <Label>
+                                <select
+                                    className="form-control form-control-sm"
+                                    onChange={ handlePerPageChange }
+                                >
+                                    {
+                                        options_.perPageValues.map(
+                                            value => <option key={ value } value={ value }>{value}</option>
+                                        )
+                                    }
+                                </select>
+                            </Label>
+                            <span> {options_.texts.entries}</span>
+                        </div>
+                    }
+                    { isLoading && (options_.loading) }
+
+                    {
+                        searchEnabled &&
+                        <div className="input-icon input-group-sm float-right">
+                            <input 
+                                type="text"
+                                className="form-control"
+                                style={ {height: 34} }
+                                placeholder={ options_.texts.search }
+                                value={ searchData }
+                                onChange={ event => setSearchData(event.target.value) }
+                            />
+                            <span className="input-icon-addon"><i className="fe fe-search" /></span>
+                        </div>
+                    }
+                </div>
+            }
+            <div className="card-body">
+                <div className="table-responsive" style={ {maxHeight: options_.maxHeightTable} }>
+                    <table className={ tableClass }>
+                        <thead>
+                            <tr>{ renderColumns }</tr>
+                        </thead>
+                        <tbody>
+                            { total > 0 && data ? renderData() : emptyOrLoading }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div className="card-footer clearfix">
+                {
+                    pagination ?
+                        <div className="float-left">
+                            {`${options_.texts.showing  } ${  options_.from  } ${  options_.texts.to  } ${ 
+                                options_.to  } ${  options_.texts.of  } ${  total 
+                            } ${  options_.texts.entries}`}
+                        </div> :
+                        <div className="float-left">
+                            { `${total} ${options_.texts.entries}` }
+                        </div>
+                }
+                {
+                    pagination &&
+                    <ul className="pagination m-0 float-right">{ renderPagination() }</ul>
+                }
+            </div>
+        </div>
+    );
 };
+/* eslint-enable complexity */
 
 ServerTable.propTypes = {
-    id: PropTypes.string.isRequired,
     columns: PropTypes.array.isRequired,
+    id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
 
-    hover: PropTypes.bool,
     bordered: PropTypes.bool,
-    condensed: PropTypes.bool,
-    striped: PropTypes.bool,
-    perPage: PropTypes.bool,
-    search: PropTypes.bool,
-    pagination: PropTypes.bool,
-    updateUrl: PropTypes.bool,
-
-    options: PropTypes.object,
     children: PropTypes.func,
+    condensed: PropTypes.bool,
+    hover: PropTypes.bool,
+    options: PropTypes.object,
+    pagination: PropTypes.bool,
+    perPage: PropTypes.bool,
+    searchEnabled: PropTypes.bool,
+    striped: PropTypes.bool,
+    updateUrl: PropTypes.bool,
 };
 
 
-export default ServerTable;
+export { ServerTable };

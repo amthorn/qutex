@@ -1,46 +1,83 @@
 version: '3.9'
+x-env_files: &env_files
+    - .local.env
+    - .version.env
+x-interactive: &interactive
+    tty: true
+    stdin_open: true
 services:
+    nginx:
+        image: qutex_nginx:latest
+        build:
+            context: services/nginx
     bot:
+        <<: *interactive
+        image: qutex_bot:latest
         build:
             context: ./services/bot
         command: start:dev
-        tty: true
-        environment:
-            NODE_ENV: development
+        env_file: *env_files
         volumes: 
             - ./services/bot:/app
             - ./services/bot/tsconfig.json:/app/tsconfig.json
             - ./services/bot/package.json:/app/package.json
     ui:
-        env_file:
-            - .local.env
+        <<: *interactive
+        image: qutex_ui:latest
+        build:
+            context: services/ui/
+            args: 
+                DEVELOPMENT: "true"
+        env_file: *env_files
         volumes:
             - ./services/ui/src:/qutex/src
             - ./services/ui/public:/qutex/public
             - compiled_css:/qutex/src/assets/css
     projects:
-        env_file:
-            - .local.env
-        tty: true
-        stdin_open: true
-    users:
-        env_file:
-            - .local.env
-        tty: true
-        stdin_open: true
-    auth:
+        <<: *interactive
+        image: qutex_projects:latest
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: projects
+        env_file: *env_files
         volumes:
-            - ./services/auth:/auth
-        tty: true
-        stdin_open: true
-        env_file:
-            - .local.env
+            - ./services/projects/api:/projects/api
+            - ./services/projects/documents:/projects/documents
+    users:
+        <<: *interactive
+        image: qutex_users:latest
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: users
+        env_file: *env_files
+        volumes:
+            - ./services/users/api:/users/api
+            - ./services/users/documents:/users/documents
+    auth:
+        <<: *interactive
+        image: qutex_auth:latest
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: auth
+        env_file: *env_files
+        volumes:
+            - ./services/auth/api:/auth/api
+            - ./services/auth/documents:/auth/documents
     migrate:
+        image: qutex_bot:latest
         build:
             context: ./services/bot
-    # mongo:
-    #     ports:
-    #         - 27017:27017
+        env_file: *env_files
+    mongo:
+        env_file: *env_files
+        # ports:
+        #     - 27017:27017
 volumes:
     # ignore all css from the docker container and do not mount to my local dir
     # This is because the CSS files shouldn't be modified. Only the sass files

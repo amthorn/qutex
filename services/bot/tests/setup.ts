@@ -8,8 +8,8 @@ import { SUPER_ADMIN, STRICT_DATE } from './util';
 import MockDate from 'mockdate';
 
 // Mock ENV vars
-process.env.VERSION = '99.99.99';
-process.env.RELEASE_DATE = 'Today';
+process.env.QUTEX_VERSION = '99.99.99';
+process.env.QUTEX_RELEASE_DATE = 'Today';
 process.env.AUTHOR_NAME = 'My Author Name';
 process.env.AUTHOR_EMAIL = 'email@email.email';
 process.env.SUPER_ADMINS = `["${SUPER_ADMIN.id}"]`;

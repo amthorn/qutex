@@ -2,20 +2,20 @@ import { Nav } from "react-bootstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 import { PropTypes } from "prop-types";
 import React from "react";
-import { NavLink as ReactstrapNavLink } from "reactstrap";
+// import { NavLink as ReactstrapNavLink } from "reactstrap"; // eslint-disable-line lines-around-comment
 import { Alpha, ComingSoon } from "components/Components";
 import { NavLink, useLocation } from "react-router-dom";
 
 let ps;
 
-const getTo = (property, location) => { // eslint-disable-line no-shadow
+const getTo = (property, loc) => {
     if(property.path.startsWith("/")){
         return property.path;
     }
     if(property.path.startsWith("https://")){
         return {pathname: property.path};
     }
-    return [location.pathname, property.path].join("/");
+    return [loc.pathname, property.path].join("/");
 };
 
 export const Sidebar = ({ routes, logoElement, toggleSidebar }) => {
@@ -30,7 +30,6 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar }) => {
                 suppressScrollY: false,
             });
         }
-
 
         // Specify how to clean up after this effect:
         return function cleanup() {
@@ -62,18 +61,23 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar }) => {
                                             <i className={ property.icon } />
                                     }
                                     { property.name }
-                                    { property.coming_soon ? <ComingSoon /> : undefined }
+                                    { property.comingSoon ? <ComingSoon /> : undefined }
                                     { property.alpha ? <Alpha /> : undefined }
                                 </div>
                             </NavLink>
                         </li> : undefined
                     ) }
-                    {<li className="administration-nav-link">
-                        <ReactstrapNavLink href="/admin" className="disabled" active={ false }>
-                            <i className="fa fa-user-o"/>
-                            <p>Administration</p>
-                        </ReactstrapNavLink>
-                    </li>}
+                    {
+                        /* eslint-disable */
+                        // TODO: authenticate this for just administrators (me)
+                            /* <li className="administration-nav-link">
+                                <ReactstrapNavLink href="/admin" className="disabled" active={ false }>
+                                    <i className="fa fa-user-o"/>
+                                    <p>Administration</p>
+                                </ReactstrapNavLink>
+                            </li> */
+                        /* eslint-enable */
+                    } 
                 </Nav>
             </div>
         </div>

@@ -28,6 +28,6 @@ test:
 .PHONY: lint
 lint:
 	yarn --cwd services/bot lint
-	yarn --cwd services/ui 
-	docker run -it -v $(PWD):/apps alpine/flake8
+	yarn --cwd services/ui lint
+	docker run -it -v $(PWD)services:/apps/services alpine/flake8 /apps
 	
