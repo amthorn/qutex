@@ -21,17 +21,6 @@ jobs:
         uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/bot install
-      - name: Build & push containers
-        run: |
-          # Setup Build
-          docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
-          QUTEX_VERSION=1.4.0
-
-          # Build all containers
-          docker compose -f docker-compose.build.yml build
-          docker compose -f docker-compose.build.yml push
-        env:
-          DOCKER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   lint:
     needs: setup
     runs-on: ubuntu-latest
