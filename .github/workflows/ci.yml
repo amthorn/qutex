@@ -28,8 +28,8 @@ jobs:
           QUTEX_VERSION=1.4.0
 
           # Build all containers
-          docker compose -f docker-compose.yml -f docker-compose.build.yml build
-          docker compose -f docker-compose.yml -f docker-compose.build.yml push
+          docker compose -f docker-compose.build.yml build
+          docker compose -f docker-compose.build.yml push
         env:
           DOCKER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   lint:
