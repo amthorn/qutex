@@ -21,16 +21,17 @@ jobs:
         uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/bot install
-      - name: Check Docker Version
-        run: docker version
-      - name: Install Latest Docker
+      - name: Build & push containers
         run: |
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
-          sudo apt-get update
-          sudo apt-get install docker-ce
-      - name: Check Docker Version
-        run: docker version
+          # Setup Build
+          docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
+          QUTEX_VERSION=1.4.0
+
+          # Build all containers
+          docker compose -f docker-compose.yml -f docker-compose.build.yml build
+          docker compose -f docker-compose.yml -f docker-compose.build.yml push
+        env:
+          DOCKER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   lint:
     needs: setup
     runs-on: ubuntu-latest

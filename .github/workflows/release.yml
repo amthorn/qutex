@@ -24,70 +24,14 @@ jobs:
         uses: CultureHQ/actions-yarn@master
         with:
           args: --cwd services/bot install
-      #################################
-      # Use a standard docker version #
-      #################################
-      - name: Check Docker Version
-        run: docker --version
-      - name: Install Latest Docker
+      - name: Build & push containers
         run: |
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
-          sudo apt-get update
-          sudo apt-get install docker-ce
-      - name: Check Docker Version
-        run: docker --version
-      ################
-      # Build & Push #
-      ################
-      - name: Build and publish qutex_bot
-        uses: VaultVulp/gp-docker-action@1.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: qutex_bot
-          extract-git-tag: true
-          build-context: ./services/bot
-          dockerfile: ./services/bot/Dockerfile
-      - name: Build and publish qutex_nginx
-        uses: VaultVulp/gp-docker-action@1.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: qutex_nginx
-          extract-git-tag: true
-          build-context: ./services/nginx
-          dockerfile: ./services/nginx/Dockerfile
-      - name: Build and publish qutex_ui
-        uses: VaultVulp/gp-docker-action@1.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: qutex_ui
-          extract-git-tag: true
-          build-context: ./services/ui
-          dockerfile: ./services/ui/Dockerfile
-      - name: Build and publish qutex_projects
-        uses: VaultVulp/gp-docker-action@1.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: qutex_projects
-          extract-git-tag: true
-          build-context: .
-          dockerfile: ./services/_api_service_template/Dockerfile
-          custom-args: --build-arg SERVICE_PREFIX=projects
-      - name: Build and publish qutex_users
-        uses: VaultVulp/gp-docker-action@1.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: qutex_users
-          extract-git-tag: true
-          build-context: .
-          dockerfile: ./services/_api_service_template/Dockerfile
-          custom-args: --build-arg SERVICE_PREFIX=users
-      - name: Build and publish qutex_auth
-        uses: VaultVulp/gp-docker-action@1.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: qutex_auth
-          extract-git-tag: true
-          build-context: .
-          dockerfile: ./services/_api_service_template/Dockerfile
-          custom-args: --build-arg SERVICE_PREFIX=auth
+          # Setup Build
+          docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
+          QUTEX_VERSION=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
+
+          # Build all containers
+          docker compose -f docker-compose.yml -f docker-compose.build.yml build
+          docker compose -f docker-compose.yml -f docker-compose.build.yml push
+        env:
+          DOCKER_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -8,7 +8,7 @@ x-common: &common
 services:
     nginx:
         <<: *common
-        image: docker.pkg.github.com/amthorn/qutex/qutex_nginx:${QUTEX_VERSION:-latest}
+        image: ghcr.io/amthorn/qutex/qutex/qutex_nginx:${QUTEX_VERSION:-latest}
         depends_on:
             - web
             - auth
@@ -17,7 +17,7 @@ services:
             - 80:80
     bot:
         <<: *common
-        image: docker.pkg.github.com/amthorn/qutex/qutex_bot:${QUTEX_VERSION:-latest}
+        image: ghcr.io/amthorn/qutex/qutex/qutex_bot:${QUTEX_VERSION:-latest}
         depends_on: 
             - mongo
         ports:
@@ -29,7 +29,7 @@ services:
             - mongoPassword
     ui:
         <<: *common
-        image: docker.pkg.github.com/amthorn/qutex/qutex_ui:${QUTEX_VERSION:-latest}
+        image: ghcr.io/amthorn/qutex/qutex/qutex_ui:${QUTEX_VERSION:-latest}
         depends_on:
             - mongo
             - bot
@@ -38,7 +38,7 @@ services:
             context: services/ui/
     projects:
         <<: *common
-        image: docker.pkg.github.com/amthorn/qutex/qutex_projects:${QUTEX_VERSION:-latest}
+        image: ghcr.io/amthorn/qutex/qutex/qutex_projects:${QUTEX_VERSION:-latest}
         depends_on:
             - mongo
             - auth
@@ -46,7 +46,7 @@ services:
             - mongoPassword
     users:
         <<: *common
-        image: docker.pkg.github.com/amthorn/qutex/qutex_users:${QUTEX_VERSION:-latest}
+        image: ghcr.io/amthorn/qutex/qutex/qutex_users:${QUTEX_VERSION:-latest}
         depends_on:
             - auth
         secrets:
@@ -54,7 +54,7 @@ services:
             - mongoPassword
     auth: 
         <<: *common
-        image: docker.pkg.github.com/amthorn/qutex/qutex_auth:${QUTEX_VERSION:-latest}
+        image: ghcr.io/amthorn/qutex/qutex/qutex_auth:${QUTEX_VERSION:-latest}
         depends_on:
             - redis
             - mongo
@@ -68,7 +68,7 @@ services:
     migrate:
         depends_on: 
             - mongo
-        image: docker.pkg.github.com/amthorn/qutex/qutex_bot:${QUTEX_VERSION:-latest}
+        image: ghcr.io/amthorn/qutex/qutex/qutex_bot:${QUTEX_VERSION:-latest}
         env_file: *env_files
         secrets:
             - mongoPassword

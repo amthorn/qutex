@@ -1,10 +1,10 @@
 .PHONY: build
 build:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml build
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.build.yml build
 
 .PHONY: up
 up:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.build.yml up --build -d
 
 .PHONY: deploy $(VERSION)
 deploy:

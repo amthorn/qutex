@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+    nginx:
+        build:
+            context: services/nginx
+    bot:
+        build:
+            context: ./services/bot
+    ui:
+        build:
+            context: services/ui/
+    projects:
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: projects
+    users:
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: users
+    auth:
+        build:
+            context: .
+            dockerfile: services/_api_service_template/Dockerfile
+            args:
+                SERVICE_PREFIX: auth
