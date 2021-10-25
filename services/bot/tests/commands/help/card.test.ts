@@ -5,6 +5,7 @@
 import commands, { HelpCard } from '../../../src/commands';
 import { PROJECT_MODEL } from '../../../src/models/project';
 import * as helpCard from '../../../src/cards/help.json';
+import * as helpCard2 from '../../../src/cards/help2.json';
 import { BOT } from '../../../src/bot';
 import { Auth } from '../../../src/enum';
 import { TEST_INITIATIVE } from '../../util';
@@ -35,6 +36,35 @@ describe('Show card for help works appropriately', () => {
         // card function doesn't return anything
         const card = Object.assign({}, helpCard) as any;  // eslint-disable-line @typescript-eslint/no-explicit-any
         expect(await new HelpCard().relax(TEST_INITIATIVE)).toEqual('');
+
+        const cardCommands = commands.filter(i => i.AUTHORIZATION === Auth.NONE).map((i: ICommand) => TEXT_BLOCK(i));
+        // deep clone to cache bust for testing
+        card.attachments[0].content.body[2].actions[0].card.body = cardCommands;
+        const projectAdminCommands = commands.filter(i => i.AUTHORIZATION === Auth.PROJECT_ADMIN).map((i: ICommand) => TEXT_BLOCK(i));
+        card.attachments[0].content.body[2].actions[1].card.body = projectAdminCommands;
+        const superAdminCommands = commands.filter(i => i.AUTHORIZATION === Auth.SUPER_ADMIN).map((i: ICommand) => TEXT_BLOCK(i));
+        card.attachments[0].content.body[2].actions[2].card.body = superAdminCommands;
+
+        // Set "about" information
+        card.attachments[0].content.body[1].columns[1].items[0].text = '99.99.99';
+        card.attachments[0].content.body[1].columns[1].items[1].text = 'Today';
+        card.attachments[0].content.body[1].columns[1].items[2].text = 'My Author Name (email@email.email)';
+
+        expect(commands).toHaveLength(ALL_COMMANDS);
+        expect(cardCommands).toHaveLength(PUBLIC_COMMANDS);
+        expect(projectAdminCommands).toHaveLength(PROJECT_ADMIN_COMMANDS);
+        expect(superAdminCommands).toHaveLength(SUPER_ADMIN_COMMANDS);
+        expect(cardCommands.concat(projectAdminCommands).concat(superAdminCommands)).toHaveLength(commands.length);
+
+        expect(BOT.messages.create).toHaveBeenCalledWith({ ...card, ...TEST_INITIATIVE.destination });
+    });
+    test('card is sent appropriately when card command is issued: 2.0.0', async () => {
+        expect(await PROJECT_MODEL.find({}).exec()).toHaveLength(0);
+        // card function doesn't return anything
+        const card = Object.assign({}, helpCard2) as any;  // eslint-disable-line @typescript-eslint/no-explicit-any
+        process.env.BOT_2_0_0 = 'true';
+        expect(await new HelpCard().relax(TEST_INITIATIVE)).toEqual('');
+        process.env.BOT_2_0_0 = '';
 
         const cardCommands = commands.filter(i => i.AUTHORIZATION === Auth.NONE).map((i: ICommand) => TEXT_BLOCK(i));
         // deep clone to cache bust for testing
