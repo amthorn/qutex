@@ -24,7 +24,7 @@ read -p "Press enter to continue"
 
 echo "QUTEX_RELEASE_DATE=${QUTEX_RELEASE_DATE}
 QUTEX_VERSION=${QUTEX_VERSION}
-" >> .version.env
+" > .version.env
 
 make down up
 # env QUTEX_VERSION=${QUTEX_VERSION} docker --context qutex stack deploy --with-registry-auth qutex -c docker-compose.yml

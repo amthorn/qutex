@@ -1,6 +1,6 @@
 import { authCheck } from "functions/auth";
 import { NotFoundPage } from "views/Error";
-import { PageLoadRestController } from "components/Controllers/Controllers";
+import { PageLoadRestController } from "components/Controllers/PageLoadRestController";
 import { Redirect } from "react-router-dom";
 import { Spinner } from "components/base/BaseComponents";
 import { themes } from "components/layout/ThemeContext";

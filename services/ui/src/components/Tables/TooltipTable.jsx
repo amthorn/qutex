@@ -16,29 +16,36 @@ export const TooltipTable = ({ title, columns, data, ...props}) =>
         <tbody>
             {
                 data.map(row => (
-                    <tr key={ row.id }>{ row.map(col => ( col.tip ? (
-                        <OverlayTrigger
-                            key={ title }
-                            id={ title }
-                            delay={ { show: 250, hide: 400 } }
-                            overlay={
-                                <Tooltip>
-                                    { col.tip }
-                                </Tooltip>
-                            }
-                        >
-                            <td
-                                key={ col.value }
-                                className={ classNames("text-center", col.className) }
-                                style={ { "cursor": "pointer" } }
-                            >
-                                { col.value }
-                            </td>
-                        </OverlayTrigger>
-                    ) : (
-                        <td key={ col.value } className={ classNames("text-center", col.className) }>{ col.value }</td>
-                    )
-                    )) }</tr>
+                    <tr key={ row.id }>
+                        { 
+                            row.map(col => ( 
+                                col.tip ? (
+                                    <OverlayTrigger
+                                        key={ title }
+                                        id={ title }
+                                        delay={ { show: 250, hide: 400 } }
+                                        overlay={
+                                            <Tooltip>
+                                                { col.tip }
+                                            </Tooltip>
+                                        }
+                                    >
+                                        <td
+                                            key={ col.value }
+                                            className={ classNames("text-center", col.className) }
+                                            style={ { "cursor": "pointer" } }
+                                        >
+                                            { col.value }
+                                        </td>
+                                    </OverlayTrigger>
+                                ) : (
+                                    <td key={ col.value } className={ classNames("text-center", col.className) }>
+                                        { col.value }
+                                    </td>
+                                )
+                            ))
+                        }
+                    </tr>
                 ))
             }
         </tbody>

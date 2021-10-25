@@ -37,7 +37,9 @@ RUN /install.sh
 # CLEAN #
 #########
 
-RUN rm -rf src public jsconfig.json
+RUN rm -rf src public jsconfig.json package-lock.json node_modules
+# package.json is needed for running in development mode
+RUN if [ "${DEVELOPMENT}" != "true" ]; then rm -rf package.json; fi;
 # Build folder will be left with static files
 
 ##############
@@ -46,4 +48,4 @@ RUN rm -rf src public jsconfig.json
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
-# HEALTHCHECK --interval=30s --start-period=5s --timeout=10s --retries=3 CMD ps aux | grep start.js
+HEALTHCHECK --interval=30s --start-period=5s --timeout=10s --retries=3 CMD wget --spider http://localhost:3000/ 2>/dev/null

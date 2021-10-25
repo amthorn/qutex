@@ -63,7 +63,7 @@ const getBreadcrumbs = (breadcrumbs) =>
         }
     </Breadcrumb>;
 
-export const Navbar = ({ breadcrumbs, toggleSidebar, sidebarOpened, hstry }) => {
+export const Navbar = ({ breadcrumbs, toggleSidebar, sidebarOpened, history }) => { // eslint-disable-line no-shadow
     const [collapseOpen, setcollapseOpen] = React.useState(false);
     const [modalSearch, setmodalSearch] = React.useState(false);
     const [color, setcolor] = React.useState("");
@@ -169,7 +169,7 @@ export const Navbar = ({ breadcrumbs, toggleSidebar, sidebarOpened, hstry }) => 
                                 <NavLink tag="li">
                                     <DropdownItem onClick={ () => {
                                         logout();
-                                        hstry.push("/login");
+                                        history.push("/login");
                                     } } className="nav-item">Log out</DropdownItem>
                                 </NavLink>
                             </DropdownMenu>

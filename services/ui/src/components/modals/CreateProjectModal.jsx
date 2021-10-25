@@ -14,7 +14,7 @@ const handleValidate = (event) => {
     event.preventDefault();
 };
 
-const CreateProjectModal = ({ title, help, openModalButtonText, openModalButtonProps, onSubmit }) => {
+const CreateProjectModal = ({ title, help, openModalButtonText, openModalButtonProps }) => {
     const [name, setName] = React.useState("");
     const [show, setShow] = React.useState(false);
 
@@ -22,8 +22,9 @@ const CreateProjectModal = ({ title, help, openModalButtonText, openModalButtonP
         handleValidate(...event);
         Promise.all([
             // request("/api/v1/projects/", { method: "POST", body: JSON.stringify({ name }) }),
-            onSubmit()
-        ]).then(() => setShow(false)).catch(alert);
+            alert(name), // eslint-disable-line no-alert -- this is so linter won't yell about line 24 
+            window.location.reload()
+        ]).catch(alert);
     };
 
     // Issue with console warnings; Should be fixed in 1.5.3

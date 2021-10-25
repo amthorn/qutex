@@ -4,7 +4,7 @@ import { Login } from "views/Auth/Login";
 import { NotFoundPage }  from "views/Error";
 import { Profile } from "views/User/Profile";
 import { Project } from "views/Project/Project";
-import Projects from "views/Project/Projects";
+import { Projects } from "views/Project/Projects";
 import React from "react";
 import { Register } from "views/Auth/Register";
 import { Statistics } from "views/Statistics/Statistics";
