@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-alpine
 LABEL MAINTAINER="Ava Thorn" EMAIL="avatheavian@gmail.com"
 ARG SERVICE_PREFIX
 
