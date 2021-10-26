@@ -1,4 +1,4 @@
-FROM node:16.10.0-alpine3.13
+FROM node:16.10.0-alpine3.13 as build
 LABEL maintainer="Ava Thorn" email="avatheavian@gmail.com"
 ARG DEVELOPMENT
 ENV DEVELOPMENT=${DEVELOPMENT}
@@ -31,7 +31,7 @@ COPY jsconfig.json jsconfig.json
 ###########################
 
 COPY install.sh /install.sh
-RUN /install.sh
+RUN /install.sh && rm -f /install.sh
 
 #########
 # CLEAN #
@@ -48,6 +48,13 @@ RUN if [ "${DEVELOPMENT}" != "true" ]; then rm -rf package-lock.json package.jso
 ##############
 # ENTRYPOINT #
 ##############
+
+
+# Squash
+# FROM scratch
+# WORKDIR /qutex
+# COPY --from=build . .
+# COPY --from=build /usr/local/lib/node_modules /usr/local/lib/node_modules
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
