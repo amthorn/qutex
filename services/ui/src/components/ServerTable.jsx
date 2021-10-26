@@ -145,10 +145,20 @@ const ServerTable = ({
     const handleSortColumnClick = (column) => {
         if (options_.sortable.includes(column)) {
             setIsLoading(true);
-            setRequestData({
-                orderBy: requestData.orderBy === column ? requestData.column : column,
-                direction: requestData.orderBy === column && requestData.direction === 1 ? 0 : 1
-            });
+            if(requestData.orderBy === column){
+                // If the column is already being sorted, reverse the order or revert to base, whatever is next
+                setRequestData({
+                    ...requestData,
+                    orderBy: requestData.direction === 1 ? column : undefined,
+                    direction: requestData.direction === 1 ? 0 : 1
+                })
+            }else{
+                // if the column is not being sorted, set it to be sorted in direction 0
+                setRequestData({
+                    orderBy: column,
+                    direction: 1
+                });
+            }
         }
     };
 
@@ -359,7 +369,7 @@ const ServerTable = ({
         );
 
         const commonProps = {
-            color: "info",
+            color: "link",
             className: "page-link"
         };
 
