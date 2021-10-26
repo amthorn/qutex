@@ -14,7 +14,9 @@ services:
             - auth
             - projects
         ports:
-            - 80:80
+            -   target: 80
+                published: 80
+                mode: host
     bot:
         <<: *common
         image: ghcr.io/amthorn/qutex/qutex_bot:${QUTEX_VERSION:-latest}

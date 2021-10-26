@@ -18,4 +18,4 @@ COPY services/${SERVICE_PREFIX}/*.py ./
 
 ENV SERVICE_PREFIX=${SERVICE_PREFIX}
 ENTRYPOINT ["flask", "run", "--host=0.0.0.0", "--port=4000"]
-HEALTHCHECK --interval=30s --start-period=5s --timeout=30s --retries=3 CMD curl http://localhost:4000/api/v1/${SERVICE_PREFIX}/healthcheck | grep OK
+HEALTHCHECK --interval=30s --start-period=5s --timeout=30s --retries=3 CMD wget http://localhost:4000/api/v1/${SERVICE_PREFIX}/healthcheck -q -O - | grep OK

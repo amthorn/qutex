@@ -27,9 +27,8 @@ class ProjectsApi(Resource):
     def get(self) -> dict[str, list]:
         # TODO: authorize
         page_num = request.args.get('page', 1)
-        limit = request.args.get('limit', 1)
-        # data = [i.to_mongo() for i in ProjectDocument.objects.skip((page_num - 1) * limit).limit(limit)]
-        data = [i.to_mongo() for i in ProjectDocument.objects()] * 100
+        limit = request.args.get('limit', 50)
+        data = [i.to_mongo() for i in ProjectDocument.objects.skip((page_num - 1) * limit).limit(limit)]
         return {'data': data, 'total': len(data)}
 
     def post(self, **kwargs: dict[str, Any]) -> dict[str, Any]:
