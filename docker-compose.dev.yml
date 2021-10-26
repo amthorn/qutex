@@ -10,6 +10,11 @@ services:
         image: qutex_nginx:latest
         build:
             context: services/nginx
+        environment:
+            CERTBOT_EMAIL: avatheavian@gmail.com
+            STAGING: "1"
+            DEBUG: "1"
+            RENEWAL_INTERVAL: 8d
     bot:
         <<: *interactive
         image: qutex_bot:latest
@@ -78,6 +83,19 @@ services:
         env_file: *env_files
         ports:
             - 27017:27017
+    ####################
+    ## -- DEV ONLY -- ## ( FOR NOW )
+    ####################
+    mongo_ui:
+        image: mongo-express:latest
+        environment:
+            ME_CONFIG_MONGODB_SERVER: mongo
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD_FILE: /run/secrets/mongoPassword
+        ports:
+            - 8081:8081
+        secrets:
+            - mongoPassword
 volumes:
     # ignore all css from the docker container and do not mount to my local dir
     # This is because the CSS files shouldn't be modified. Only the sass files
