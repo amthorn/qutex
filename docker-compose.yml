@@ -95,6 +95,16 @@ services:
             - mongo_volume:/data/db
         secrets:
             - mongoPassword
+    mongo_ui:
+        image: mongo-express:1.0.0-alpha
+        depends_on:
+            - mongo
+        environment:
+            ME_CONFIG_MONGODB_SERVER: mongo
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD_FILE: /run/secrets/mongoPassword
+        secrets:
+            - mongoPassword
 secrets:
     token:
         file: secrets/prod/token

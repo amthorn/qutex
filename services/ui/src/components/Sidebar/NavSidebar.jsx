@@ -88,14 +88,15 @@ const getNavItems = (path) => {
     return navItems["^/$"];
 };
 
-const NavSidebar = withRouter(() => (
-    <Sidebar 
+const NavSidebar = withRouter(({ ...props }) => {
+    return <Sidebar 
+        { ...props }
         routes={ getNavItems(window.location.pathname) }
         logoElement={
             <a href="/"><img alt="Qutex Logo" src="/logo.png" /></a>
         }
     />
-));
+});
 
 export {
     getNavItems,

@@ -2,9 +2,9 @@
 build:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml build $(SERVICE)
 
-.PHONY: up
+.PHONY: up $(SERVICE)
 up:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build $(SERVICE) -d
 
 .PHONY: deploy $(VERSION)
 deploy:

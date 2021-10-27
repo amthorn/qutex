@@ -1,11 +1,12 @@
 import { Nav } from "react-bootstrap";
+import { NavLink as ReactstrapNavLink } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 import { PropTypes } from "prop-types";
 import React from "react";
 import { Alpha, ComingSoon } from "components/Components";
 import { NavLink, useLocation } from "react-router-dom";
+import env from 'react-dotenv';
 
-// import { NavLink as ReactstrapNavLink } from "reactstrap";
 
 let ps;
 
@@ -19,9 +20,10 @@ const getTo = (property, loc) => {
     return [loc.pathname, property.path].join("/");
 };
 
-export const Sidebar = ({ routes, logoElement, toggleSidebar }) => {
+export const Sidebar = ({ routes, logoElement, toggleSidebar, identity }) => {
     const location = useLocation(); // eslint-disable-line no-shadow
     const sidebarReference = React.useRef(null);
+    const superAdmins = JSON.parse(env.SUPER_ADMINS);
 
     // Verifies if routeName is the one active (in browser input)
     React.useEffect(() => {
@@ -38,7 +40,10 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar }) => {
                 ps.destroy();
             }
         };
-    });
+    }, []);
+
+    console.log(typeof identity.userId)
+    console.log(identity.userId)
 
     return (
         <div className="sidebar" data="blue">
@@ -69,15 +74,13 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar }) => {
                         </li> : undefined
                     ) }
                     {
-                        /* eslint-disable */
-                        // TODO: authenticate this for just administrators (me)
-                            /* <li className="administration-nav-link">
-                                <ReactstrapNavLink href="/admin" className="disabled" active={ false }>
+                        identity.userId && superAdmins.includes(identity.userId) ?
+                            <li className="administration-nav-link">
+                                <ReactstrapNavLink href="/admin">
                                     <i className="fa fa-user-o"/>
                                     <p>Administration</p>
                                 </ReactstrapNavLink>
-                            </li> */
-                        /* eslint-enable */
+                            </li> : undefined
                     } 
                 </Nav>
             </div>

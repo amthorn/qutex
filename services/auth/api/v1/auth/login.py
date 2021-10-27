@@ -25,6 +25,7 @@ class LoginApi(Resource):
         if not user or user.passwordHash != PersonDocument._hash(data['password']):
             raise Unauthorized('Username or password incorrect')
         else:
+            # TODO: roles?
             token = JWTEncoder().encode(userId=user.id)
             response = jsonify({
                 'data': {'token': token},

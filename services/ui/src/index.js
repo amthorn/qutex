@@ -22,7 +22,6 @@ import "assets/css/main.css";
 /* eslint-enable */
 
 
-
 /* eslint-disable react/jsx-filename-extension */
 ReactDOM.render((
     <BrowserRouter>

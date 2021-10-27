@@ -100,16 +100,15 @@ const ServerTable = ({
         ),
     });
     const [requestData, setRequestData] = useState({
+        ...options_.requestParameterNames,
         limit: options_.perPage,
         page: 1,
-        orderBy: "created_at",
-        direction: 0,
+        query: ''
     });
     const [total, setTotal] = useState(options.total ?? defaultTotal);
     const [isLoading, setIsLoading] = useState(false);
     const [cached, setCached] = useState(options.data);
     const [data, setData] = useState(options.data);
-    const [searchData, setSearchData] = useState("");
     const emptyOrLoading = (
         <tr className="text-center">
             <td colSpan={ columns.length }>
@@ -224,7 +223,7 @@ const ServerTable = ({
         for(const record of rawData.data){
             for(const entry of Object.entries(record)){
                 // Ignore ID for searches, they are UUIDs
-                if(!ignoredKeys.has(entry[0]) && isSearchString(entry[1], searchData)){
+                if(!ignoredKeys.has(entry[0]) && isSearchString(entry[1], requestData.query)){
                     matches.push(record);
                     break;
                 }
@@ -284,14 +283,14 @@ const ServerTable = ({
         // Search, Sort, and Paginate
         let newData = dta;
 
-        if(searchData){
+        if(requestData.query){
             newData = search(newData);
         }
 
         // Reset the total value after search is complete
         const newOptions = configureOptions(optns, newData.data.length);
 
-        if(requestData.orderBy || requestData.direction){
+        if(requestData.orderBy || requestData.direction !== undefined){
             newData = sort(newData);
         }
 
@@ -398,21 +397,11 @@ const ServerTable = ({
         return paginationButtons;
     };
 
-    const handleSearchClick = () => {
-        setIsLoading(true);
-        setRequestData({
-            ...requestData,
-            query: searchData,
-            page: 1
-        });
-    };
-
-    React.useEffect(() => {
-        setIsLoading(true);
-        handleFetchData();
-    }, []);
+    // React.useEffect(() => {
+    //     setIsLoading(true);
+    //     handleFetchData();
+    // }, []);
     
-    React.useEffect(handleSearchClick, [searchData]);
     React.useEffect(handleFetchData, [requestData]);
 
     // TODO: improve complexity by making this cleaner and better
@@ -451,8 +440,8 @@ const ServerTable = ({
                                 className="form-control"
                                 style={ {height: 34} }
                                 placeholder={ options_.texts.search }
-                                value={ searchData }
-                                onChange={ event => setSearchData(event.target.value) }
+                                value={ requestData.query }
+                                onChange={ event => setRequestData({query: event.target.value}) }
                             />
                             <span className="input-icon-addon"><i className="fe fe-search" /></span>
                         </div>

@@ -35,7 +35,7 @@ export const Profile = function() {
             setFetching(false);
         });
     }, []);
-    
+
     if(fetching) {
         return <Spinner lg={ true } />;
     }

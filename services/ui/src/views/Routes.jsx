@@ -1,5 +1,6 @@
 import { Home } from "views/Home";
 import { Layout } from "components/layout/Layout";
+import { AdminLayout } from "components/layout/AdminLayout";
 import { Login } from "views/Auth/Login";
 import { NotFoundPage }  from "views/Error";
 import { Profile } from "views/User/Profile";
@@ -15,6 +16,9 @@ import { Route, Switch } from "react-router-dom";
 const layoutRender = component => properties => 
     <Layout component={ component } urlData={ component?.urlData } { ...properties } />;
 
+const adminLayoutRender = component => properties => 
+    <AdminLayout component={ component } urlData={ component?.urlData } { ...properties } />;
+
 const routes = [
     // Projects //
     { path: "/projects", exact: true, component: layoutRender(Projects) },
@@ -26,7 +30,8 @@ const routes = [
     // User //
     { path: "/user", exact: true, component: layoutRender(Profile) },
 
-    // TODO: Authenticate/authorize //
+    // Admin //
+    { path: "/admin", exact: true, component: adminLayoutRender(Admin) },
 
     { path: "/", exact: true, component: layoutRender(Home) },
     { path: "/login", exact: true, component: Login },

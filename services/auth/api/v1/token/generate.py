@@ -17,8 +17,7 @@ class TokenGenerateApi(Resource):
         if 'email' not in request.json:
             raise BadRequest("'email' key is required.")
 
-        bot = webexteamssdk.WebexTeamsAPI(
-            app.config['WEBEX_TEAMS_ACCESS_TOKEN'])
+        bot = webexteamssdk.WebexTeamsAPI(app.config['WEBEX_TEAMS_ACCESS_TOKEN'])
 
         # Generate the message so that we can use the ID to encode in the JWT token
         try:
@@ -28,8 +27,7 @@ class TokenGenerateApi(Resource):
             )
         except webexteamssdk.exceptions.ApiError as e:
             if e.status_code == 400:
-                raise BadRequest(
-                    f'A Webex Account with email "{request.json["email"]}" does not exist.')
+                raise BadRequest(f'A Webex Account with email "{request.json["email"]}" does not exist.')
 
         # Edit message so that the message ID can be encoded in the JWT
         # This is so that the message in teams can be deleted when it's consumed.

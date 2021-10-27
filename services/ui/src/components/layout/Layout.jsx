@@ -21,6 +21,7 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
     const [authenticated, setAuthenticated] = useState(false);
     const [breadcrumbs, setBreadcrumbs] = useState([]);
     const [pageData, setPageData] = useState();
+    const [identity, setIdentity] = useState({});
 
     const toggleSidebar = () => {
         document.documentElement.classList.toggle("nav-open");
@@ -28,11 +29,11 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
     };
 
     useEffect(() => {
-        authCheck().then(success => {
-            setAuthenticated(success);
+        setIdentity(authCheck().then(({response, data}) => {
+            setAuthenticated(response.status === 200 && data.data.success === true);
             setLoading(false);
-            return success;
-        }).catch(alert);
+            setIdentity(data._token)
+        }).catch(alert));
     }, []);
 
     const content = () => <>
@@ -43,6 +44,7 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
             history={ history }
         />
         <NavSidebar 
+            identity={ identity }
             toggleSidebar={ toggleSidebar } 
             sidebarOpened={ sidebarOpened }
         />
@@ -54,7 +56,7 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
                             setBreadcrumbs= { setBreadcrumbs } 
                             setData={ setPageData }
                         >
-                        { React.createElement(props.component, { ...props, pageData }) }
+                        { React.createElement(props.component, { ...props, pageData, identity }) }
                     </PageLoadRestController>
                 </Row>
                 <Row className="flex-column">
