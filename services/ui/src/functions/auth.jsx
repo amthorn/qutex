@@ -1,7 +1,12 @@
 /* eslint-disable no-magic-numbers */
 import { request } from "./request.jsx";
 
-const authCheck = () => request("/api/v1/auth/token/check", { method: "GET" }, { notifications: false });
+const authCheck = ({ permission }) => 
+    request(
+        `/api/v1/auth/token/check${permission ? "?role=" + permission : ""}`,
+        { method: "GET" },
+        { notifications: false }
+    );
 
 const login = (email, password) =>
     request(

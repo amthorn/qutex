@@ -13,6 +13,7 @@ from bson.objectid import ObjectId
 app.config['SERVICE_PREFIX'] = os.environ.get('SERVICE_PREFIX')
 app.config['AUTH_SERVICE_TOKEN_CHECK_ROUTE'] = os.environ['AUTH_SERVICE_TOKEN_CHECK_ROUTE']
 app.config['AUTH_SERVICE_HOST'] = os.environ['AUTH_SERVICE_HOST']
+app.config['SUPER_ADMINS'] = json.loads(os.environ['SUPER_ADMINS'])
 app.config['TOKEN_COOKIE_NAME'] = 'qutexToken'
 app.config['FQDN'] = os.environ.get('FQDN', 'http://localhost')
 app.config['DEFAULT_PAGE_LENGTH'] = 50

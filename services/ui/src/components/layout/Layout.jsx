@@ -14,11 +14,12 @@ import {
 } from "components/Components";
 import React, { useEffect, useState } from "react";
 
-export const Layout = ({ location, history, ...props}) => { // eslint-disable-line no-shadow
+export const Layout = ({ location, history, permission, ...props}) => { // eslint-disable-line no-shadow
     const [sidebarOpened, setSidebarOpened] = useState(false);
     const [notFound, setNotFound] = useState(false);
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
+    const [authorized, setAuthorized] = useState(false);
     const [breadcrumbs, setBreadcrumbs] = useState([]);
     const [pageData, setPageData] = useState();
     const [identity, setIdentity] = useState({});
@@ -29,11 +30,18 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
     };
 
     useEffect(() => {
-        setIdentity(authCheck().then(({response, data}) => {
+        authCheck({ permission: undefined }).then(({response, data}) => {
             setAuthenticated(response.status === 200 && data.data.success === true);
-            setLoading(false);
+            if (permission) {
+                authCheck({ permission }).then(({response, data}) => {
+                    setAuthorized(response.status === 200 && data.data.success === true);
+                    setLoading(false);
+                }).catch(alert);
+            } else {
+                setLoading(false);
+            }
             setIdentity(data._token)
-        }).catch(alert));
+        }).catch(alert);
     }, []);
 
     const content = () => <>
@@ -72,6 +80,10 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
 
     if (!authenticated && !loading) {
         return <Redirect to={ `/login?redirect=${encodeURIComponent(location.pathname)}` } />;
+    }
+
+    if (permission && !authorized && !loading) {
+        return <Redirect to={ `/access_denied` } />;
     }
 
     return <ThemeContextWrapper theme={ themes.light }>

@@ -18,15 +18,24 @@ logs:
 down:
 	docker compose down
 
-.PHONY: test
-test:
+.PHONY: test-qutex
+test-qutex:
 	export QUTEX_TESTING=true && \
 	yarn --cwd services/bot test --verbose && \
 	unset QUTEX_TESTING
+
+.PHONY: test-nginx
+test-nginx:
+	pytest services/nginx/tests
+
+.PHONY: test
+test:
+	${MAKE} test-qutex
+	${MAKE} test-nginx
 
 .PHONY: lint
 lint:
 	yarn --cwd services/bot lint
 	yarn --cwd services/ui lint
-	docker run -it -v $(PWD)services:/apps/services alpine/flake8 /apps
+	flake8 services
 	

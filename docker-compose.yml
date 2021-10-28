@@ -103,6 +103,9 @@ services:
             ME_CONFIG_MONGODB_SERVER: mongo
             ME_CONFIG_MONGODB_ADMINUSERNAME: root
             ME_CONFIG_MONGODB_ADMINPASSWORD_FILE: /run/secrets/mongoPassword
+            ME_CONFIG_SITE_BASEURL: /admin/mongo/
+            ME_CONFIG_OPTIONS_NO_DELETE: "true"
+            ME_CONFIG_OPTIONS_READONLY: "true"
         secrets:
             - mongoPassword
 secrets:

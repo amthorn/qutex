@@ -22,3 +22,13 @@ export const NotFoundPage = () =>
             </div>
         </div>
     </ThemeContextWrapper>;
+
+export const AccessDenied = () => 
+    <Container fluid={ true } >
+        <Row className="justify-content-center">
+            <h1>Access Denied:(</h1>
+        </Row>
+        <Row className="justify-content-center">
+            <span>403 Access Denied</span>
+        </Row>
+    </Container>

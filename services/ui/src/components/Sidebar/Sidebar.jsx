@@ -1,10 +1,9 @@
 import { Nav } from "react-bootstrap";
-import { NavLink as ReactstrapNavLink } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 import { PropTypes } from "prop-types";
 import React from "react";
 import { Alpha, ComingSoon } from "components/Components";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import env from 'react-dotenv';
 
 
@@ -15,7 +14,7 @@ const getTo = (property, loc) => {
         return property.path;
     }
     if(property.path.startsWith("https://")){
-        return {pathname: property.path};
+        return property.path;
     }
     return [loc.pathname, property.path].join("/");
 };
@@ -23,7 +22,10 @@ const getTo = (property, loc) => {
 export const Sidebar = ({ routes, logoElement, toggleSidebar, identity }) => {
     const location = useLocation(); // eslint-disable-line no-shadow
     const sidebarReference = React.useRef(null);
-    const superAdmins = JSON.parse(env.SUPER_ADMINS);
+    let superAdmins = [];
+    if(env){
+        superAdmins = JSON.parse(env.SUPER_ADMINS);
+    }
 
     // Verifies if routeName is the one active (in browser input)
     React.useEffect(() => {
@@ -42,8 +44,17 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar, identity }) => {
         };
     }, []);
 
-    console.log(typeof identity.userId)
-    console.log(identity.userId)
+    const inner_content = (property) => 
+        <div>
+            { 
+                React.isValidElement(property.icon) ?
+                    property.icon :
+                    <i className={ property.icon } />
+            }
+            { property.name }
+            { property.comingSoon ? <ComingSoon /> : undefined }
+            { property.alpha ? <Alpha /> : undefined }
+        </div>
 
     return (
         <div className="sidebar" data="blue">
@@ -52,35 +63,25 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar, identity }) => {
                     { logoElement }
                 </div>
                 <Nav>
-                    { routes.map(property => !property.redirect ? <li key={ property.path }>
-                            <NavLink
-                                to={ getTo(property, location) }
-                                className="nav-link"
-                                activeClassName="active"
+                    { routes.map(property => <Nav.Item as="li" key={ property.path }>
+                            <Nav.Link
+                                href={ getTo(property, location) }
+                                // activeClassName="active"
                                 onClick={ toggleSidebar }
                                 target={ property.path.startsWith("https://") ? "_blank": "_self" }
                             >
-                                <div>
-                                    { 
-                                        React.isValidElement(property.icon) ?
-                                            property.icon :
-                                            <i className={ property.icon } />
-                                    }
-                                    { property.name }
-                                    { property.comingSoon ? <ComingSoon /> : undefined }
-                                    { property.alpha ? <Alpha /> : undefined }
-                                </div>
-                            </NavLink>
-                        </li> : undefined
+                                { inner_content(property) } 
+                            </Nav.Link>
+                        </Nav.Item>
                     ) }
                     {
                         identity.userId && superAdmins.includes(identity.userId) ?
-                            <li className="administration-nav-link">
-                                <ReactstrapNavLink href="/admin">
+                            <Nav.Item as="li" className="administration-nav-link">
+                                <Nav.Link href="/admin">
                                     <i className="fa fa-user-o"/>
                                     <p>Administration</p>
-                                </ReactstrapNavLink>
-                            </li> : undefined
+                                </Nav.Link>
+                            </Nav.Item> : undefined
                     } 
                 </Nav>
             </div>

@@ -4,9 +4,12 @@ import { withRouter } from "react-router-dom";
 import {
     FaBook,
     FaClipboardCheck,
-    FaCubes, 
+    FaCog,
+    FaCubes,
+    FaDatabase,
     FaGithub,
     FaProjectDiagram,
+    FaUserTie,
 } from "react-icons/fa";
 
 // Import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
@@ -75,7 +78,22 @@ const navItems = {
     ],
 
     "/admin": [
-
+        {
+            path: "/admin",
+            name: "Admin Home",
+            icon: <FaUserTie size="20" className="sidenav-icon" />
+        },
+        {
+            path: "/admin/settings",
+            name: "Settings",
+            icon: <FaCog size="20" className="sidenav-icon" />
+        },
+        {
+            path: "/admin/mongo",
+            name: "Manage Database",
+            icon: <FaDatabase size="20" className="sidenav-icon" />,
+            redirect: true
+        },
     ]
 };
 
