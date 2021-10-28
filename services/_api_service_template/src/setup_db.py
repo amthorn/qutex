@@ -1,5 +1,3 @@
-import json
-
 from app import app
 from flask_mongoengine import MongoEngine
 
@@ -10,10 +8,6 @@ app.config['MONGODB_SETTINGS'] = {
 db = MongoEngine(app)
 app.db = db
 
-class SerializerMixin:
-    def as_dict(self):
-        ugly = json.loads(self.to_json())
-        
 
 class TimestampMixin():
     created_at = db.DateTimeField(auto_now_add=True, auto_now=False)
@@ -21,5 +15,5 @@ class TimestampMixin():
     deleted_at = db.DateTimeField(required=False)
 
 
-class BaseMixin(TimestampMixin, SerializerMixin):
+class BaseMixin(TimestampMixin):
     id = db.StringField(primary_key=True)

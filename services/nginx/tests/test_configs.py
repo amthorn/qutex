@@ -7,7 +7,7 @@ class TestConfig:
     DEV = os.path.join(FOLDER, 'dev_default.conf')
     PROD = os.path.join(FOLDER, 'default.conf')
 
-    def test_configs_mostly_match(self):
+    def test_configs_mostly_match(self) -> None:
         with open(self.DEV) as dev:
             with open(self.PROD) as prod:
                 diff = [

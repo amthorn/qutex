@@ -106,8 +106,17 @@ services:
             ME_CONFIG_SITE_BASEURL: /admin/mongo/
             ME_CONFIG_OPTIONS_NO_DELETE: "true"
             ME_CONFIG_OPTIONS_READONLY: "true"
+            ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
         secrets:
             - mongoPassword
+    redis_ui:
+        image: rediscommander/redis-commander
+        environment:
+            REDIS_HOST: redis
+            REDIS_PORT: "6379"
+            URL_PREFIX: /admin/redis
+        ports:
+            - 8081:8081
 secrets:
     token:
         file: secrets/prod/token

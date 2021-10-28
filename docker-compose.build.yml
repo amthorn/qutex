@@ -33,3 +33,7 @@ services:
             dockerfile: services/_api_service_template/Dockerfile
             args:
                 SERVICE_PREFIX: auth
+    mongo_ui:
+        build:
+            context: .
+            dockerfile: Dockerfile.mongoexpress

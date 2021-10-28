@@ -7,6 +7,7 @@ import {
     FaCog,
     FaCubes,
     FaDatabase,
+    FaBuffer,
     FaGithub,
     FaProjectDiagram,
     FaUserTie,
@@ -90,8 +91,14 @@ const navItems = {
         },
         {
             path: "/admin/mongo",
-            name: "Manage Database",
+            name: "Manage Mongo Database",
             icon: <FaDatabase size="20" className="sidenav-icon" />,
+            redirect: true
+        },
+        {
+            path: "/admin/redis",
+            name: "Manage Redis Database",
+            icon: <FaBuffer size="20" className="sidenav-icon" />,
             redirect: true
         },
     ]

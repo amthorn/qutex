@@ -1,3 +1,3 @@
-from api.v1.auth import login
-from api.v1.auth import logout
-from api.v1.auth import register
+from api.v1.auth import login  # noqa
+from api.v1.auth import logout  # noqa
+from api.v1.auth import register  # noqa

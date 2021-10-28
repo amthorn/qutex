@@ -25,7 +25,7 @@ class PersonDocument(BaseMixin, app.db.Document):
     def _hash(value: str) -> str:
         return hashlib.sha3_512(value.encode(), usedforsecurity=True).hexdigest()
 
-    def to_mongo(self, *args, **kwargs):
+    def to_mongo(self, *args: list, **kwargs: dict) -> dict:
         # Don't expose the password hash
         return {k: v for k, v in super().to_mongo(*args, **kwargs).items() if k != 'passwordHash'}
 

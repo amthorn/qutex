@@ -1,1 +1,1 @@
-from api.v1 import me
+from api.v1 import me  # noqa

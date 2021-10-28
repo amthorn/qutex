@@ -1,6 +1,6 @@
 .PHONY: build $(SERVICE)
 build:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml build $(SERVICE)
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.build.yml build $(SERVICE)
 
 .PHONY: up $(SERVICE)
 up:
