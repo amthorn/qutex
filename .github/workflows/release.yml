@@ -28,6 +28,8 @@ jobs:
         run: |
           # Setup Build
           docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
+
+          ./bin/create_version.sh "${GITHUB_REF##*/}"
           
           # Build all containers
           QUTEX_VERSION=$(echo ${GITHUB_REF##*/}) docker compose -f docker-compose.yml -f docker-compose.build.yml build
