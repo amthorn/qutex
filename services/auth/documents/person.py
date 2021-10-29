@@ -12,7 +12,7 @@ class PersonDocument(BaseMixin, app.db.Document):
     ##########
 
     passwordHash = app.db.StringField(max_length=512, required=False, select=False)
-    email = app.db.StringField(max_length=64, unique=True, required=False)
+    email = app.db.StringField(max_length=64, unique=True, sparse=True, required=False)
 
     # Bot Fields
     displayName = app.db.StringField(required=True)

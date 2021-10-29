@@ -109,6 +109,21 @@ services:
             ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
         secrets:
             - mongoPassword
+    mongo_backup:
+        image: ghcr.io/amthorn/qutex/qutex_mongo_backup:${QUTEX_VERSION:-latest}
+        environment:
+            MONGODB_HOST: mongo
+            MONGODB_PORT: 27017
+            MONGODB_USER: root
+            MONGODB_PASS_FILE: /run/secrets/mongoPassword
+            CRON_TIME: 0 0 * * *
+            EXTRA_OPTS: --authenticationDatabase admin --db qutex --gzip --forceTableScan
+            MAX_BACKUPS: 14
+            INIT_BACKUP: 1
+        volumes: 
+            - ./mongo_backups:/backup
+        secrets:
+            - mongoPassword
     redis_ui:
         image: rediscommander/redis-commander
         environment:

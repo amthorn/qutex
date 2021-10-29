@@ -32,20 +32,26 @@ export const Layout = ({ location, history, permission, ...props}) => { // eslin
     };
 
     useEffect(() => {
+        let isMounted = true;
         authCheck({ permission: undefined }).then(({response, data}) => {
-            setAuthenticated(response.status === successStatusCode && data.data.success === true);
-            if (permission) {
-                authCheck({ permission }).then(({response, data}) => { // eslint-disable-line no-shadow
-                    setAuthorized(response.status === successStatusCode && data.data.success === true);
+            if(isMounted){
+                setAuthenticated(response.status === successStatusCode && data.data.success === true);
+                setIdentity(data.token);
+                if (permission) {
+                    authCheck({ permission }).then(({response, data}) => { // eslint-disable-line no-shadow
+                        if(isMounted){
+                            setAuthorized(response.status === successStatusCode && data.data.success === true);
+                            setLoading(false);
+                        }
+                        return response;
+                    }).catch(alert);
+                } else {
                     setLoading(false);
-                    return response;
-                }).catch(alert);
-            } else {
-                setLoading(false);
+                }
             }
-            setIdentity(data.token);
             return response;
         }).catch(alert);
+        return () => { isMounted = false; }
     }, []);
 
     const content = () => <>

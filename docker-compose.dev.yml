@@ -7,9 +7,12 @@ x-interactive: &interactive
     stdin_open: true
 services:
     nginx:
-        image: nginx:latest
+        image: qutex_nginx:latest
+        environment:
+            STAGING: 1
+            # DEBUG: 1
         volumes:
-            - ./services/nginx/dev_default.conf:/etc/nginx/conf.d/default.conf
+            - ./services/nginx/dev_default.conf:/etc/nginx/user_conf.d/default.conf
         ports:
             - 80:80
     bot:
@@ -76,6 +79,10 @@ services:
         build:
             context: ./services/bot
         env_file: *env_files
+        volumes: 
+            - ./services/bot:/app
+    mongo_backup:
+        image: qutex_mongo_backup:latest
     mongo:
         env_file: *env_files
         ports:

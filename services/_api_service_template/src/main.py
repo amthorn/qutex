@@ -62,6 +62,9 @@ import setup_db  # noqa
 ##########
 from setup_api import v1  # noqa
 
+import documents  # noqa
+import api  # noqa
+
 
 @v1.errorhandler(Exception)
 @app.errorhandler(Exception)
