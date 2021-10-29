@@ -1,1 +1,1 @@
-from api import v1
+from api import v1  # noqa

@@ -19,6 +19,6 @@ class AuthCheckApi(Resource):
             raise Forbidden
 
         return {
-            'data': {'success': True}, 
+            'data': {'success': True},
             '_token': token
         }
