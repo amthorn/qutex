@@ -15,3 +15,5 @@ fi;
 
 echo "QUTEX_RELEASE_DATE=${QUTEX_RELEASE_DATE}
 QUTEX_VERSION=${QUTEX_VERSION}" > .version.env
+
+cat .version.env
