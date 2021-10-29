@@ -1,1 +1,1 @@
-from documents import projects
+from documents import projects  # noqa

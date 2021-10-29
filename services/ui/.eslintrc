@@ -19,7 +19,8 @@
     },
     "ignorePatterns": [
         "node_modules/",
-        "src/assets/js/"
+        "src/assets/js/",
+        "public/env.js"
     ],
     "rules": {
         "react/jsx-curly-spacing": [

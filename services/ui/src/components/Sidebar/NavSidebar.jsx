@@ -3,10 +3,14 @@ import { Sidebar } from "components/Sidebar/Sidebar";
 import { withRouter } from "react-router-dom";
 import {
     FaBook,
+    FaBuffer,
     FaClipboardCheck,
-    FaCubes, 
+    FaCog,
+    FaCubes,
+    FaDatabase,
     FaGithub,
     FaProjectDiagram,
+    FaUserTie,
 } from "react-icons/fa";
 
 // Import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
@@ -75,7 +79,28 @@ const navItems = {
     ],
 
     "/admin": [
-
+        {
+            path: "/admin",
+            name: "Admin Home",
+            icon: <FaUserTie size="20" className="sidenav-icon" />
+        },
+        {
+            path: "/admin/settings",
+            name: "Settings",
+            icon: <FaCog size="20" className="sidenav-icon" />
+        },
+        {
+            path: "/admin/mongo",
+            name: "Manage Mongo Database",
+            icon: <FaDatabase size="20" className="sidenav-icon" />,
+            redirect: true
+        },
+        {
+            path: "/admin/redis",
+            name: "Manage Redis Database",
+            icon: <FaBuffer size="20" className="sidenav-icon" />,
+            redirect: true
+        },
     ]
 };
 
@@ -88,14 +113,15 @@ const getNavItems = (path) => {
     return navItems["^/$"];
 };
 
-const NavSidebar = withRouter(() => (
+const NavSidebar = withRouter(({ ...props }) => 
     <Sidebar 
+        { ...props }
         routes={ getNavItems(window.location.pathname) }
         logoElement={
             <a href="/"><img alt="Qutex Logo" src="/logo.png" /></a>
         }
     />
-));
+);
 
 export {
     getNavItems,

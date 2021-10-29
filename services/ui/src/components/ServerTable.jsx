@@ -100,16 +100,15 @@ const ServerTable = ({
         ),
     });
     const [requestData, setRequestData] = useState({
+        ...options_.requestParameterNames,
         limit: options_.perPage,
         page: 1,
-        orderBy: "created_at",
-        direction: 0,
+        query: ""
     });
     const [total, setTotal] = useState(options.total ?? defaultTotal);
     const [isLoading, setIsLoading] = useState(false);
     const [cached, setCached] = useState(options.data);
     const [data, setData] = useState(options.data);
-    const [searchData, setSearchData] = useState("");
     const emptyOrLoading = (
         <tr className="text-center">
             <td colSpan={ columns.length }>
@@ -145,10 +144,20 @@ const ServerTable = ({
     const handleSortColumnClick = (column) => {
         if (options_.sortable.includes(column)) {
             setIsLoading(true);
-            setRequestData({
-                orderBy: requestData.orderBy === column ? requestData.column : column,
-                direction: requestData.orderBy === column && requestData.direction === 1 ? 0 : 1
-            });
+            if(requestData.orderBy === column){
+                // If the column is already being sorted, reverse the order or revert to base, whatever is next
+                setRequestData({
+                    ...requestData,
+                    orderBy: requestData.direction === 1 ? column : undefined,
+                    direction: requestData.direction === 1 ? 0 : 1
+                });
+            }else{
+                // if the column is not being sorted, set it to be sorted in direction 0
+                setRequestData({
+                    orderBy: column,
+                    direction: 1
+                });
+            }
         }
     };
 
@@ -214,7 +223,7 @@ const ServerTable = ({
         for(const record of rawData.data){
             for(const entry of Object.entries(record)){
                 // Ignore ID for searches, they are UUIDs
-                if(!ignoredKeys.has(entry[0]) && isSearchString(entry[1], searchData)){
+                if(!ignoredKeys.has(entry[0]) && isSearchString(entry[1], requestData.query)){
                     matches.push(record);
                     break;
                 }
@@ -274,14 +283,14 @@ const ServerTable = ({
         // Search, Sort, and Paginate
         let newData = dta;
 
-        if(searchData){
+        if(requestData.query){
             newData = search(newData);
         }
 
         // Reset the total value after search is complete
         const newOptions = configureOptions(optns, newData.data.length);
 
-        if(requestData.orderBy || requestData.direction){
+        if(requestData.orderBy || requestData.direction !== undefined){
             newData = sort(newData);
         }
 
@@ -359,7 +368,7 @@ const ServerTable = ({
         );
 
         const commonProps = {
-            color: "info",
+            color: "link",
             className: "page-link"
         };
 
@@ -388,21 +397,11 @@ const ServerTable = ({
         return paginationButtons;
     };
 
-    const handleSearchClick = () => {
-        setIsLoading(true);
-        setRequestData({
-            ...requestData,
-            query: searchData,
-            page: 1
-        });
-    };
-
-    React.useEffect(() => {
-        setIsLoading(true);
-        handleFetchData();
-    }, []);
+    // React.useEffect(() => {
+    //     setIsLoading(true);
+    //     handleFetchData();
+    // }, []);
     
-    React.useEffect(handleSearchClick, [searchData]);
     React.useEffect(handleFetchData, [requestData]);
 
     // TODO: improve complexity by making this cleaner and better
@@ -441,8 +440,8 @@ const ServerTable = ({
                                 className="form-control"
                                 style={ {height: 34} }
                                 placeholder={ options_.texts.search }
-                                value={ searchData }
-                                onChange={ event => setSearchData(event.target.value) }
+                                value={ requestData.query }
+                                onChange={ event => setRequestData({query: event.target.value}) }
                             />
                             <span className="input-icon-addon"><i className="fe fe-search" /></span>
                         </div>

@@ -12,7 +12,7 @@ class PersonDocument(BaseMixin, app.db.Document):
     ##########
 
     passwordHash = app.db.StringField(max_length=512, required=False, select=False)
-    email = app.db.StringField(max_length=64, unique=True, required=False)
+    email = app.db.StringField(max_length=64, unique=True, sparse=True, required=False)
 
     # Bot Fields
     displayName = app.db.StringField(required=True)
@@ -25,7 +25,7 @@ class PersonDocument(BaseMixin, app.db.Document):
     def _hash(value: str) -> str:
         return hashlib.sha3_512(value.encode(), usedforsecurity=True).hexdigest()
 
-    def to_mongo(self, *args, **kwargs):
+    def to_mongo(self, *args: list, **kwargs: dict) -> dict:
         # Don't expose the password hash
         return {k: v for k, v in super().to_mongo(*args, **kwargs).items() if k != 'passwordHash'}
 

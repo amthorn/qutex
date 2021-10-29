@@ -1,1 +1,1 @@
-from api.v1 import projects
+from api.v1 import projects  # noqa

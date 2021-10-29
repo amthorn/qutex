@@ -1,1 +1,1 @@
-from documents import person
+from documents import person  # noqa

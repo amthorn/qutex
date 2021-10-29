@@ -14,13 +14,17 @@ import {
 } from "components/Components";
 import React, { useEffect, useState } from "react";
 
-export const Layout = ({ location, history, ...props}) => { // eslint-disable-line no-shadow
+const successStatusCode = 200;
+
+export const Layout = ({ location, history, permission, ...props}) => { // eslint-disable-line no-shadow
     const [sidebarOpened, setSidebarOpened] = useState(false);
     const [notFound, setNotFound] = useState(false);
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
+    const [authorized, setAuthorized] = useState(false);
     const [breadcrumbs, setBreadcrumbs] = useState([]);
     const [pageData, setPageData] = useState();
+    const [identity, setIdentity] = useState({});
 
     const toggleSidebar = () => {
         document.documentElement.classList.toggle("nav-open");
@@ -28,11 +32,26 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
     };
 
     useEffect(() => {
-        authCheck().then(success => {
-            setAuthenticated(success);
-            setLoading(false);
-            return success;
+        let isMounted = true;
+        authCheck({ permission: undefined }).then(({response, data}) => {
+            if(isMounted){
+                setAuthenticated(response.status === successStatusCode && data.data.success === true);
+                setIdentity(data.token);
+                if (permission) {
+                    authCheck({ permission }).then(({response, data}) => { // eslint-disable-line no-shadow
+                        if(isMounted){
+                            setAuthorized(response.status === successStatusCode && data.data.success === true);
+                            setLoading(false);
+                        }
+                        return response;
+                    }).catch(alert);
+                } else {
+                    setLoading(false);
+                }
+            }
+            return response;
         }).catch(alert);
+        return () => { isMounted = false; }
     }, []);
 
     const content = () => <>
@@ -43,6 +62,7 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
             history={ history }
         />
         <NavSidebar 
+            identity={ identity }
             toggleSidebar={ toggleSidebar } 
             sidebarOpened={ sidebarOpened }
         />
@@ -54,7 +74,7 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
                             setBreadcrumbs= { setBreadcrumbs } 
                             setData={ setPageData }
                         >
-                        { React.createElement(props.component, { ...props, pageData }) }
+                        { React.createElement(props.component, { ...props, pageData, identity }) }
                     </PageLoadRestController>
                 </Row>
                 <Row className="flex-column">
@@ -70,6 +90,10 @@ export const Layout = ({ location, history, ...props}) => { // eslint-disable-li
 
     if (!authenticated && !loading) {
         return <Redirect to={ `/login?redirect=${encodeURIComponent(location.pathname)}` } />;
+    }
+
+    if (permission && !authorized && !loading) {
+        return <Redirect to="/access_denied" />;
     }
 
     return <ThemeContextWrapper theme={ themes.light }>

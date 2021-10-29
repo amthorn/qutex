@@ -1,35 +1,36 @@
 version: '3.9'
 services:
     nginx:
-        image: ghcr.io/amthorn/qutex/qutex_nginx:${QUTEX_VERSION:-latest}
         build:
             context: services/nginx
     bot:
-        image: ghcr.io/amthorn/qutex/qutex_bot:${QUTEX_VERSION:-latest}
         build:
             context: ./services/bot
     ui:
-        image: ghcr.io/amthorn/qutex/qutex_ui:${QUTEX_VERSION:-latest}
         build:
             context: services/ui/
     projects:
-        image: ghcr.io/amthorn/qutex/qutex_projects:${QUTEX_VERSION:-latest}
         build:
             context: .
             dockerfile: services/_api_service_template/Dockerfile
             args:
                 SERVICE_PREFIX: projects
     users:
-        image: ghcr.io/amthorn/qutex/qutex_users:${QUTEX_VERSION:-latest}
         build:
             context: .
             dockerfile: services/_api_service_template/Dockerfile
             args:
                 SERVICE_PREFIX: users
     auth:
-        image: ghcr.io/amthorn/qutex/qutex_auth:${QUTEX_VERSION:-latest}
         build:
             context: .
             dockerfile: services/_api_service_template/Dockerfile
             args:
                 SERVICE_PREFIX: auth
+    mongo_ui:
+        build:
+            context: .
+            dockerfile: Dockerfile.mongoexpress
+    mongo_backup:
+        build:
+            context: services/mongo_backup

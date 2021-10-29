@@ -4,7 +4,7 @@ import { ThemeContextWrapper } from "components/Components";
 import { themes } from "components/layout/ThemeContext";
 import { Container, Row } from "react-bootstrap";
 
-export const NotFoundPage = () => 
+const NotFoundPage = () => 
     <ThemeContextWrapper theme={ themes.light }>
         <div className="wrapper">
             <div className="main-panel" data="blue">
@@ -22,3 +22,18 @@ export const NotFoundPage = () =>
             </div>
         </div>
     </ThemeContextWrapper>;
+
+const AccessDenied = () => 
+    <Container fluid={ true } >
+        <Row className="justify-content-center">
+            <h1>Access Denied:(</h1>
+        </Row>
+        <Row className="justify-content-center">
+            <span>403 Access Denied</span>
+        </Row>
+    </Container>;
+
+export {
+    AccessDenied,
+    NotFoundPage
+};

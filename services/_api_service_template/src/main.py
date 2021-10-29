@@ -13,6 +13,7 @@ from bson.objectid import ObjectId
 app.config['SERVICE_PREFIX'] = os.environ.get('SERVICE_PREFIX')
 app.config['AUTH_SERVICE_TOKEN_CHECK_ROUTE'] = os.environ['AUTH_SERVICE_TOKEN_CHECK_ROUTE']
 app.config['AUTH_SERVICE_HOST'] = os.environ['AUTH_SERVICE_HOST']
+app.config['SUPER_ADMINS'] = json.loads(os.environ['SUPER_ADMINS'])
 app.config['TOKEN_COOKIE_NAME'] = 'qutexToken'
 app.config['FQDN'] = os.environ.get('FQDN', 'http://localhost')
 app.config['DEFAULT_PAGE_LENGTH'] = 50
@@ -22,10 +23,11 @@ app.config['ERROR_INCLUDE_MESSAGE'] = False
 
 
 class CustomJSONEncoder(flask.json.JSONEncoder):
-    def default(self, o):
+    def default(self, o: object) -> str:
         if isinstance(o, ObjectId):
             return str(o)
         return super().default(o)
+
 
 app.config["RESTX_JSON"] = {"cls": CustomJSONEncoder}
 
@@ -35,34 +37,33 @@ app.config["RESTX_JSON"] = {"cls": CustomJSONEncoder}
 try:
     with open('/run/secrets/privateKey') as f:
         app.secret_key = f.read()
-except Exception as e:
+except Exception:
     print("WARNING: No privateKey secret provided for Flask application")
 
 try:
     with open('/run/secrets/token') as f:
         app.config['WEBEX_TEAMS_ACCESS_TOKEN'] = f.read().strip()
-except Exception as e:
+except Exception:
     print("WARNING: No webex teams access token provided for Flask application")
 
 try:
     with open('/run/secrets/mongoPassword') as f:
         app.config['MONGO_PASSWORD'] = f.read()
-except Exception as e:
+except Exception:
     print("WARNING:  No mongo password provided for Flask application")
 
 ##########
 # MODELS #
 ##########
-import setup_db
+import setup_db  # noqa
 
 ##########
 #  APIS  #
 ##########
 from setup_api import v1  # noqa
 
-
-import documents
-import api
+import documents  # noqa
+import api  # noqa
 
 
 @v1.errorhandler(Exception)
@@ -73,16 +74,24 @@ def handle_exception(e: Exception) -> flask.Response:
         return dump_data(e, flask.make_response(), e.messages, 422)
     elif isinstance(e, werkzeug.exceptions.Unauthorized):
         response = dump_data(e, e.get_response(), {e.name: e.description}, e.code)
-        return response[0], response[1], {**response[2], 'Set-Cookie': f'{app.config.get("TOKEN_COOKIE_NAME")}=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'}
+        return response[0], response[1], {
+            **response[2],
+            'Set-Cookie': app.config.get("TOKEN_COOKIE_NAME") +
+            '=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+        }
     elif isinstance(e, werkzeug.exceptions.HTTPException):
         return dump_data(e, e.get_response(), {e.name: e.description}, e.code)
     return dump_data(e, flask.make_response(), {str(e.__class__.__name__): str(e)}, 500)
 
 
 @app.before_request
-def authenticate():
+def authenticate() -> None:
     # if its not an unauthenticated route
-    if not flask.request.path.startswith('/api/v1/auth/') and not flask.request.path.endswith('/healthcheck'):
+    unauthenticated = [
+        '/api/v1/auth/',
+        'healthcheck'
+    ]
+    if not any([flask.request.path.startswith(i) for i in unauthenticated]):
         # Will throw 401 if not authenticated
         result = requests.get(
             f"{app.config['AUTH_SERVICE_HOST']}/api/v1/auth/token/check",

@@ -30,7 +30,7 @@ jobs:
           docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
           
           # Build all containers
-          QUTEX_VERSION=$(echo ${GITHUB_REF##*/}) docker compose -f docker-compose.build.yml build
-          QUTEX_VERSION=$(echo ${GITHUB_REF##*/}) docker compose -f docker-compose.build.yml push
+          QUTEX_VERSION=$(echo ${GITHUB_REF##*/}) docker compose -f docker-compose.yml -f docker-compose.build.yml build
+          QUTEX_VERSION=$(echo ${GITHUB_REF##*/}) docker compose -f docker-compose.yml -f docker-compose.build.yml push
         env:
           DOCKER_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,5 @@
-from flask import request, jsonify
+import requests
+from flask import request
 from setup_api import v1
 from documents.projects import ProjectDocument
 from flask_restx import Resource
@@ -25,10 +26,22 @@ class ProjectApi(Resource):
 @v1.route('/')
 class ProjectsApi(Resource):
     def get(self) -> dict[str, list]:
-        # TODO: authorize
-        page_num = request.args.get('page', 1)
-        limit = request.args.get('limit', 50)
-        data = [i.to_mongo() for i in ProjectDocument.objects.skip((page_num - 1) * limit).limit(limit)]
+        # Only get projects that user is an admin on
+        # TODO: this should be updated later to potentially all projects where the user has
+        # "read" access (E.G. been in the queue or is an admin) --> alternative
+        # definition: in a room that is registered to the project but is not an admin.
+        # TODO: clean this up
+        result = requests.get('http://users:4000/api/v1/users/me', cookies=request.cookies)
+        result.raise_for_status()
+        usersId = result.json()['data'][0]['id']
+        data = [
+            i.to_mongo() for i in ProjectDocument.objects(
+                __raw__={'admins.id': {'$eq': usersId}}
+            ).paginate(
+                page=request.args.get('page', 1),
+                per_page=request.args.get('limit', 50)
+            ).items
+        ]
         return {'data': data, 'total': len(data)}
 
     def post(self, **kwargs: dict[str, Any]) -> dict[str, Any]:

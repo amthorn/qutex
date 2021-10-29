@@ -1,10 +1,10 @@
 .PHONY: build $(SERVICE)
 build:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml build $(SERVICE)
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.build.yml build $(SERVICE)
 
-.PHONY: up
+.PHONY: up $(SERVICE)
 up:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.build.yml  up --build $(SERVICE) -d
 
 .PHONY: deploy $(VERSION)
 deploy:
@@ -18,15 +18,24 @@ logs:
 down:
 	docker compose down
 
-.PHONY: test
-test:
+.PHONY: test-qutex
+test-qutex:
 	export QUTEX_TESTING=true && \
 	yarn --cwd services/bot test --verbose && \
 	unset QUTEX_TESTING
+
+.PHONY: test-nginx
+test-nginx:
+	pytest services/nginx/tests
+
+.PHONY: test
+test:
+	${MAKE} test-qutex
+	${MAKE} test-nginx
 
 .PHONY: lint
 lint:
 	yarn --cwd services/bot lint
 	yarn --cwd services/ui lint
-	docker run -it -v $(PWD)services:/apps/services alpine/flake8 /apps
+	flake8 services
 	

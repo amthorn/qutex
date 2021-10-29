@@ -19,3 +19,6 @@ docs/.sass-cache
 docs/.jekyll-cache
 docs/.jekyll-metadata
 docs/vendor
+
+# App stuff
+services/ui/public/env.js

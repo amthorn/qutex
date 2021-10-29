@@ -1,0 +1,3 @@
+FROM mongo-express
+
+RUN sed -i 's/req.adminDb = mongo.adminDb;/req.adminDb = mongo.mainClient.adminDb || undefined;/g' lib/router.js

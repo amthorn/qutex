@@ -9,11 +9,11 @@ from blacklist_handler import BlacklistHandler
 
 class JWTEncoder(jwt.api_jwt.PyJWT):
     # 1 day if active
-    def __init__(self, *args, expiration=None, **kwargs):
+    def __init__(self, *args: list, expiration: dict[str, int] = None, **kwargs: dict) -> None:
         self._expiration = expiration or {'days': 1, 'seconds': 0}
         super().__init__(*args, **kwargs)
 
-    def encode(self, **token) -> str:
+    def encode(self, **token: dict) -> str:
         now = datetime.datetime.utcnow()
         expr = now + datetime.timedelta(**self._expiration)
         token = super().encode({
