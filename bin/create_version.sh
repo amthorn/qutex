@@ -15,8 +15,10 @@ if [[ -z $2 ]]; then
     read -p "Press enter to continue"
 fi;
 
-echo "QUTEX_RELEASE_DATE=${QUTEX_RELEASE_DATE}
-QUTEX_VERSION=${QUTEX_VERSION}" > .version.env
+cat > .version.env <<EOF
+QUTEX_RELEASE_DATE='${QUTEX_RELEASE_DATE}'
+QUTEX_VERSION=${QUTEX_VERSION}
+EOF
 
 cat .version.env
 
