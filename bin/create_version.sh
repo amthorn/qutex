@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "=> Creating version"
+
 today=$(date +"%b %d, %Y")
 
 QUTEX_RELEASE_DATE="$today"
@@ -17,3 +19,5 @@ echo "QUTEX_RELEASE_DATE=${QUTEX_RELEASE_DATE}
 QUTEX_VERSION=${QUTEX_VERSION}" > .version.env
 
 cat .version.env
+
+echo "=> Done"
