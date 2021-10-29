@@ -20,5 +20,5 @@ class AuthCheckApi(Resource):
 
         return {
             'data': {'success': True},
-            '_token': token
+            'token': token
         }

@@ -14,6 +14,8 @@ import {
 } from "components/Components";
 import React, { useEffect, useState } from "react";
 
+const successStatusCode = 200;
+
 export const Layout = ({ location, history, permission, ...props}) => { // eslint-disable-line no-shadow
     const [sidebarOpened, setSidebarOpened] = useState(false);
     const [notFound, setNotFound] = useState(false);
@@ -31,16 +33,18 @@ export const Layout = ({ location, history, permission, ...props}) => { // eslin
 
     useEffect(() => {
         authCheck({ permission: undefined }).then(({response, data}) => {
-            setAuthenticated(response.status === 200 && data.data.success === true);
+            setAuthenticated(response.status === successStatusCode && data.data.success === true);
             if (permission) {
-                authCheck({ permission }).then(({response, data}) => {
-                    setAuthorized(response.status === 200 && data.data.success === true);
+                authCheck({ permission }).then(({response, data}) => { // eslint-disable-line no-shadow
+                    setAuthorized(response.status === successStatusCode && data.data.success === true);
                     setLoading(false);
+                    return response;
                 }).catch(alert);
             } else {
                 setLoading(false);
             }
-            setIdentity(data._token)
+            setIdentity(data.token);
+            return response;
         }).catch(alert);
     }, []);
 
@@ -83,7 +87,7 @@ export const Layout = ({ location, history, permission, ...props}) => { // eslin
     }
 
     if (permission && !authorized && !loading) {
-        return <Redirect to={ `/access_denied` } />;
+        return <Redirect to="/access_denied" />;
     }
 
     return <ThemeContextWrapper theme={ themes.light }>

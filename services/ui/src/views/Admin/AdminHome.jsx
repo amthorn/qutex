@@ -12,5 +12,5 @@ export const AdminHome = () =>
             <h5 className="title">Admin</h5>
         </CardHeader>
         <CardBody>idk</CardBody>
-        <CardFooter></CardFooter>
-    </Card>
+        <CardFooter/>
+    </Card>;

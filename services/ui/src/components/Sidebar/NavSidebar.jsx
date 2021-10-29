@@ -3,11 +3,11 @@ import { Sidebar } from "components/Sidebar/Sidebar";
 import { withRouter } from "react-router-dom";
 import {
     FaBook,
+    FaBuffer,
     FaClipboardCheck,
     FaCog,
     FaCubes,
     FaDatabase,
-    FaBuffer,
     FaGithub,
     FaProjectDiagram,
     FaUserTie,
@@ -113,15 +113,15 @@ const getNavItems = (path) => {
     return navItems["^/$"];
 };
 
-const NavSidebar = withRouter(({ ...props }) => {
-    return <Sidebar 
+const NavSidebar = withRouter(({ ...props }) => 
+    <Sidebar 
         { ...props }
         routes={ getNavItems(window.location.pathname) }
         logoElement={
             <a href="/"><img alt="Qutex Logo" src="/logo.png" /></a>
         }
     />
-});
+);
 
 export {
     getNavItems,

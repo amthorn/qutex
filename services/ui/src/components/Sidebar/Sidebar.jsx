@@ -1,10 +1,10 @@
+import env from "react-dotenv";
 import { Nav } from "react-bootstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 import { PropTypes } from "prop-types";
 import React from "react";
-import { Alpha, ComingSoon } from "components/Components";
 import { useLocation } from "react-router-dom";
-import env from 'react-dotenv';
+import { Alpha, ComingSoon } from "components/Components";
 
 
 let ps;
@@ -44,7 +44,7 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar, identity }) => {
         };
     }, []);
 
-    const inner_content = (property) => 
+    const innerContent = (property) => 
         <div>
             { 
                 React.isValidElement(property.icon) ?
@@ -54,7 +54,7 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar, identity }) => {
             { property.name }
             { property.comingSoon ? <ComingSoon /> : undefined }
             { property.alpha ? <Alpha /> : undefined }
-        </div>
+        </div>;
 
     return (
         <div className="sidebar" data="blue">
@@ -66,11 +66,10 @@ export const Sidebar = ({ routes, logoElement, toggleSidebar, identity }) => {
                     { routes.map(property => <Nav.Item as="li" key={ property.path }>
                             <Nav.Link
                                 href={ getTo(property, location) }
-                                // activeClassName="active"
                                 onClick={ toggleSidebar }
                                 target={ property.path.startsWith("https://") ? "_blank": "_self" }
                             >
-                                { inner_content(property) } 
+                                { innerContent(property) } 
                             </Nav.Link>
                         </Nav.Item>
                     ) }

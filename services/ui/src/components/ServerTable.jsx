@@ -103,7 +103,7 @@ const ServerTable = ({
         ...options_.requestParameterNames,
         limit: options_.perPage,
         page: 1,
-        query: ''
+        query: ""
     });
     const [total, setTotal] = useState(options.total ?? defaultTotal);
     const [isLoading, setIsLoading] = useState(false);
@@ -150,7 +150,7 @@ const ServerTable = ({
                     ...requestData,
                     orderBy: requestData.direction === 1 ? column : undefined,
                     direction: requestData.direction === 1 ? 0 : 1
-                })
+                });
             }else{
                 // if the column is not being sorted, set it to be sorted in direction 0
                 setRequestData({

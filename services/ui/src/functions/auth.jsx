@@ -3,7 +3,7 @@ import { request } from "./request.jsx";
 
 const authCheck = ({ permission }) => 
     request(
-        `/api/v1/auth/token/check${permission ? "?role=" + permission : ""}`,
+        `/api/v1/auth/token/check${permission ? `?role=${permission}` : ""}`,
         { method: "GET" },
         { notifications: false }
     );
