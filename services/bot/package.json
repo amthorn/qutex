@@ -73,7 +73,7 @@
     "express": "^4.17.1",
     "migrate-mongo": "^8.2.2",
     "moment": "^2.29.1",
-    "mongoose": "^5.13.0",
+    "mongoose": "^6.0.7",
     "string-similarity": "^4.0.4",
     "webex": "1.142.0",
     "winston": "^3.3.3"
