@@ -1,5 +1,5 @@
 # APP-Related
-pyjwt==2.0.1
+pyjwt==2.4.0
 redis==3.5.3
 Flask==1.1.2
 marshmallow==3.10.0
