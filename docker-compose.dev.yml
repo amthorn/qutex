@@ -26,54 +26,54 @@ services:
             - ./services/bot:/app
             - ./services/bot/tsconfig.json:/app/tsconfig.json
             - ./services/bot/package.json:/app/package.json
-    ui:
-        <<: *interactive
-        image: qutex_ui:latest
-        build:
-            context: services/ui/
-            args: 
-                DEVELOPMENT: "true"
-        env_file: *env_files
-        volumes:
-            - ./services/ui/src:/qutex/src
-            - ./services/ui/public:/qutex/public
-            - compiled_css:/qutex/src/assets/css
-    projects:
-        <<: *interactive
-        image: qutex_projects:latest
-        build:
-            context: .
-            dockerfile: services/_api_service_template/Dockerfile
-            args:
-                SERVICE_PREFIX: projects
-        env_file: *env_files
-        volumes:
-            - ./services/projects/api:/projects/api
-            - ./services/projects/documents:/projects/documents
-    users:
-        <<: *interactive
-        image: qutex_users:latest
-        build:
-            context: .
-            dockerfile: services/_api_service_template/Dockerfile
-            args:
-                SERVICE_PREFIX: users
-        env_file: *env_files
-        volumes:
-            - ./services/users/api:/users/api
-            - ./services/users/documents:/users/documents
-    auth:
-        <<: *interactive
-        image: qutex_auth:latest
-        build:
-            context: .
-            dockerfile: services/_api_service_template/Dockerfile
-            args:
-                SERVICE_PREFIX: auth
-        env_file: *env_files
-        volumes:
-            - ./services/auth/api:/auth/api
-            - ./services/auth/documents:/auth/documents
+    # ui:
+    #     <<: *interactive
+    #     image: qutex_ui:latest
+    #     build:
+    #         context: services/ui/
+    #         args: 
+    #             DEVELOPMENT: "true"
+    #     env_file: *env_files
+    #     volumes:
+    #         - ./services/ui/src:/qutex/src
+    #         - ./services/ui/public:/qutex/public
+    #         - compiled_css:/qutex/src/assets/css
+    # projects:
+    #     <<: *interactive
+    #     image: qutex_projects:latest
+    #     build:
+    #         context: .
+    #         dockerfile: services/_api_service_template/Dockerfile
+    #         args:
+    #             SERVICE_PREFIX: projects
+    #     env_file: *env_files
+    #     volumes:
+    #         - ./services/projects/api:/projects/api
+    #         - ./services/projects/documents:/projects/documents
+    # users:
+    #     <<: *interactive
+    #     image: qutex_users:latest
+    #     build:
+    #         context: .
+    #         dockerfile: services/_api_service_template/Dockerfile
+    #         args:
+    #             SERVICE_PREFIX: users
+    #     env_file: *env_files
+    #     volumes:
+    #         - ./services/users/api:/users/api
+    #         - ./services/users/documents:/users/documents
+    # auth:
+    #     <<: *interactive
+    #     image: qutex_auth:latest
+    #     build:
+    #         context: .
+    #         dockerfile: services/_api_service_template/Dockerfile
+    #         args:
+    #             SERVICE_PREFIX: auth
+    #     env_file: *env_files
+    #     volumes:
+    #         - ./services/auth/api:/auth/api
+    #         - ./services/auth/documents:/auth/documents
     migrate:
         image: qutex_bot:latest
         build:
