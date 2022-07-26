@@ -10,10 +10,11 @@ services:
         <<: *common
         image: ghcr.io/amthorn/qutex/qutex_nginx:${QUTEX_VERSION:-latest}
         depends_on:
-            - ui
-            - auth
-            - projects
-            - users
+            # - ui
+            # - auth
+            # - projects
+            # - users
+            - bot
         environment:
             CERTBOT_EMAIL: avatheavian@gmail.com
             RENEWAL_INTERVAL: 8d
@@ -32,51 +33,51 @@ services:
         image: ghcr.io/amthorn/qutex/qutex_bot:${QUTEX_VERSION:-latest}
         depends_on: 
             - mongo
-        ports:
-            -   target: 3000
-                published: 3000
-                mode: host
+        # ports:
+        #     -   target: 3000
+        #         published: 3000
+        #         mode: host
         secrets:
             - token
             - mongoPassword
-    ui:
-        <<: *common
-        image: ghcr.io/amthorn/qutex/qutex_ui:${QUTEX_VERSION:-latest}
-        depends_on:
-            - mongo
-            - bot
-            # - api
-        build:
-            context: services/ui/
-    projects:
-        <<: *common
-        image: ghcr.io/amthorn/qutex/qutex_projects:${QUTEX_VERSION:-latest}
-        depends_on:
-            - mongo
-            - auth
-        secrets:
-            - mongoPassword
-    users:
-        <<: *common
-        image: ghcr.io/amthorn/qutex/qutex_users:${QUTEX_VERSION:-latest}
-        depends_on:
-            - auth
-        secrets:
-            - token
-            - mongoPassword
-    auth: 
-        <<: *common
-        image: ghcr.io/amthorn/qutex/qutex_auth:${QUTEX_VERSION:-latest}
-        depends_on:
-            - redis
-            - mongo
-        secrets:
-            - privateKey
-            - token
-            - mongoPassword
-    redis: 
-        restart: always
-        image: redis:6.2.1
+    # ui:
+    #     <<: *common
+    #     image: ghcr.io/amthorn/qutex/qutex_ui:${QUTEX_VERSION:-latest}
+    #     depends_on:
+    #         - mongo
+    #         - bot
+    #         # - api
+    #     build:
+    #         context: services/ui/
+    # projects:
+    #     <<: *common
+    #     image: ghcr.io/amthorn/qutex/qutex_projects:${QUTEX_VERSION:-latest}
+    #     depends_on:
+    #         - mongo
+    #         - auth
+    #     secrets:
+    #         - mongoPassword
+    # users:
+    #     <<: *common
+    #     image: ghcr.io/amthorn/qutex/qutex_users:${QUTEX_VERSION:-latest}
+    #     depends_on:
+    #         - auth
+    #     secrets:
+    #         - token
+    #         - mongoPassword
+    # auth: 
+    #     <<: *common
+    #     image: ghcr.io/amthorn/qutex/qutex_auth:${QUTEX_VERSION:-latest}
+    #     depends_on:
+    #         - redis
+    #         - mongo
+    #     secrets:
+    #         - privateKey
+    #         - token
+    #         - mongoPassword
+    # redis: 
+    #     restart: always
+    #     image: redis:6.2.1
     migrate:
         depends_on: 
             - mongo
@@ -95,20 +96,20 @@ services:
             - mongo_volume:/data/db
         secrets:
             - mongoPassword
-    mongo_ui:
-        image: mongo-express:1.0.0-alpha
-        depends_on:
-            - mongo
-        environment:
-            ME_CONFIG_MONGODB_SERVER: mongo
-            ME_CONFIG_MONGODB_ADMINUSERNAME: root
-            ME_CONFIG_MONGODB_ADMINPASSWORD_FILE: /run/secrets/mongoPassword
-            ME_CONFIG_SITE_BASEURL: /admin/mongo/
-            ME_CONFIG_OPTIONS_NO_DELETE: "true"
-            ME_CONFIG_OPTIONS_READONLY: "true"
-            ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
-        secrets:
-            - mongoPassword
+    # mongo_ui:
+    #     image: mongo-express:1.0.0-alpha
+    #     depends_on:
+    #         - mongo
+    #     environment:
+    #         ME_CONFIG_MONGODB_SERVER: mongo
+    #         ME_CONFIG_MONGODB_ADMINUSERNAME: root
+    #         ME_CONFIG_MONGODB_ADMINPASSWORD_FILE: /run/secrets/mongoPassword
+    #         ME_CONFIG_SITE_BASEURL: /admin/mongo/
+    #         ME_CONFIG_OPTIONS_NO_DELETE: "true"
+    #         ME_CONFIG_OPTIONS_READONLY: "true"
+    #         ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+    #     secrets:
+    #         - mongoPassword
     mongo_backup:
         image: ghcr.io/amthorn/qutex/qutex_mongo_backup:${QUTEX_VERSION:-latest}
         environment:
@@ -124,14 +125,14 @@ services:
             - ./mongo_backups:/backup
         secrets:
             - mongoPassword
-    redis_ui:
-        image: rediscommander/redis-commander
-        environment:
-            REDIS_HOST: redis
-            REDIS_PORT: "6379"
-            URL_PREFIX: /admin/redis
-        ports:
-            - 8081:8081
+    # redis_ui:
+    #     image: rediscommander/redis-commander
+    #     environment:
+    #         REDIS_HOST: redis
+    #         REDIS_PORT: "6379"
+    #         URL_PREFIX: /admin/redis
+    #     ports:
+    #         - 8081:8081
 secrets:
     token:
         file: secrets/prod/token

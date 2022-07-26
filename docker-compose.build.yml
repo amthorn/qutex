@@ -6,31 +6,31 @@ services:
     bot:
         build:
             context: ./services/bot
-    ui:
-        build:
-            context: services/ui/
-    projects:
-        build:
-            context: .
-            dockerfile: services/_api_service_template/Dockerfile
-            args:
-                SERVICE_PREFIX: projects
-    users:
-        build:
-            context: .
-            dockerfile: services/_api_service_template/Dockerfile
-            args:
-                SERVICE_PREFIX: users
-    auth:
-        build:
-            context: .
-            dockerfile: services/_api_service_template/Dockerfile
-            args:
-                SERVICE_PREFIX: auth
-    mongo_ui:
-        build:
-            context: .
-            dockerfile: Dockerfile.mongoexpress
+    # ui:
+    #     build:
+    #         context: services/ui/
+    # projects:
+    #     build:
+    #         context: .
+    #         dockerfile: services/_api_service_template/Dockerfile
+    #         args:
+    #             SERVICE_PREFIX: projects
+    # users:
+    #     build:
+    #         context: .
+    #         dockerfile: services/_api_service_template/Dockerfile
+    #         args:
+    #             SERVICE_PREFIX: users
+    # auth:
+    #     build:
+    #         context: .
+    #         dockerfile: services/_api_service_template/Dockerfile
+    #         args:
+    #             SERVICE_PREFIX: auth
+    # mongo_ui:
+    #     build:
+    #         context: .
+    #         dockerfile: Dockerfile.mongoexpress
     mongo_backup:
         build:
             context: services/mongo_backup
