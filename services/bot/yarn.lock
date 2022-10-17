@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@ampproject/remapping@^2.1.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
+  dependencies:
+    "@jridgewell/gen-mapping" "^0.1.0"
+    "@jridgewell/trace-mapping" "^0.3.9"
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.12.11.tgz"
@@ -14,9 +21,19 @@
   dependencies:
     "@babel/highlight" "^7.14.5"
 
+"@babel/code-frame@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.18.6.tgz#3b25d38c89600baa2dcc219edfa88a74eb2c427a"
+  dependencies:
+    "@babel/highlight" "^7.18.6"
+
 "@babel/compat-data@^7.13.11", "@babel/compat-data@^7.14.7", "@babel/compat-data@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.15.0.tgz#2dbaf8b85334796cafbb0f5793a90a2fc010b176"
+
+"@babel/compat-data@^7.19.3":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.19.4.tgz#95c86de137bf0317f3a570e1b6e996b427299747"
 
 "@babel/core@^7.1.0", "@babel/core@^7.15.0", "@babel/core@^7.7.5":
   version "7.15.0"
@@ -38,6 +55,26 @@
     semver "^6.3.0"
     source-map "^0.5.0"
 
+"@babel/core@^7.11.6", "@babel/core@^7.12.3":
+  version "7.19.3"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.19.3.tgz#2519f62a51458f43b682d61583c3810e7dcee64c"
+  dependencies:
+    "@ampproject/remapping" "^2.1.0"
+    "@babel/code-frame" "^7.18.6"
+    "@babel/generator" "^7.19.3"
+    "@babel/helper-compilation-targets" "^7.19.3"
+    "@babel/helper-module-transforms" "^7.19.0"
+    "@babel/helpers" "^7.19.0"
+    "@babel/parser" "^7.19.3"
+    "@babel/template" "^7.18.10"
+    "@babel/traverse" "^7.19.3"
+    "@babel/types" "^7.19.3"
+    convert-source-map "^1.7.0"
+    debug "^4.1.0"
+    gensync "^1.0.0-beta.2"
+    json5 "^2.2.1"
+    semver "^6.3.0"
+
 "@babel/generator@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.15.0.tgz#a7d0c172e0d814974bad5aa77ace543b97917f15"
@@ -45,6 +82,14 @@
     "@babel/types" "^7.15.0"
     jsesc "^2.5.1"
     source-map "^0.5.0"
+
+"@babel/generator@^7.19.3", "@babel/generator@^7.19.4":
+  version "7.19.5"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.19.5.tgz#da3f4b301c8086717eee9cab14da91b1fa5dcca7"
+  dependencies:
+    "@babel/types" "^7.19.4"
+    "@jridgewell/gen-mapping" "^0.3.2"
+    jsesc "^2.5.1"
 
 "@babel/helper-annotate-as-pure@^7.14.5":
   version "7.14.5"
@@ -66,6 +111,15 @@
     "@babel/compat-data" "^7.15.0"
     "@babel/helper-validator-option" "^7.14.5"
     browserslist "^4.16.6"
+    semver "^6.3.0"
+
+"@babel/helper-compilation-targets@^7.19.3":
+  version "7.19.3"
+  resolved "https://registry.yarnpkg.com/@babel/helper-compilation-targets/-/helper-compilation-targets-7.19.3.tgz#a10a04588125675d7c7ae299af86fa1b2ee038ca"
+  dependencies:
+    "@babel/compat-data" "^7.19.3"
+    "@babel/helper-validator-option" "^7.18.6"
+    browserslist "^4.21.3"
     semver "^6.3.0"
 
 "@babel/helper-create-class-features-plugin@^7.14.5":
@@ -99,6 +153,10 @@
     resolve "^1.14.2"
     semver "^6.1.2"
 
+"@babel/helper-environment-visitor@^7.18.9":
+  version "7.18.9"
+  resolved "https://registry.yarnpkg.com/@babel/helper-environment-visitor/-/helper-environment-visitor-7.18.9.tgz#0c0cee9b35d2ca190478756865bb3528422f51be"
+
 "@babel/helper-explode-assignable-expression@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-explode-assignable-expression/-/helper-explode-assignable-expression-7.14.5.tgz#8aa72e708205c7bb643e45c73b4386cdf2a1f645"
@@ -113,6 +171,13 @@
     "@babel/template" "^7.14.5"
     "@babel/types" "^7.14.5"
 
+"@babel/helper-function-name@^7.19.0":
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.19.0.tgz#941574ed5390682e872e52d3f38ce9d1bef4648c"
+  dependencies:
+    "@babel/template" "^7.18.10"
+    "@babel/types" "^7.19.0"
+
 "@babel/helper-get-function-arity@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.14.5.tgz#25fbfa579b0937eee1f3b805ece4ce398c431815"
@@ -124,6 +189,12 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-hoist-variables/-/helper-hoist-variables-7.14.5.tgz#e0dd27c33a78e577d7c8884916a3e7ef1f7c7f8d"
   dependencies:
     "@babel/types" "^7.14.5"
+
+"@babel/helper-hoist-variables@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-hoist-variables/-/helper-hoist-variables-7.18.6.tgz#d4d2c8fb4baeaa5c68b99cc8245c56554f926678"
+  dependencies:
+    "@babel/types" "^7.18.6"
 
 "@babel/helper-member-expression-to-functions@^7.14.5":
   version "7.14.5"
@@ -149,6 +220,12 @@
   dependencies:
     "@babel/types" "^7.14.5"
 
+"@babel/helper-module-imports@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.18.6.tgz#1e3ebdbbd08aad1437b428c50204db13c5a3ca6e"
+  dependencies:
+    "@babel/types" "^7.18.6"
+
 "@babel/helper-module-transforms@^7.14.5", "@babel/helper-module-transforms@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.15.0.tgz#679275581ea056373eddbe360e1419ef23783b08"
@@ -161,6 +238,19 @@
     "@babel/template" "^7.14.5"
     "@babel/traverse" "^7.15.0"
     "@babel/types" "^7.15.0"
+
+"@babel/helper-module-transforms@^7.19.0":
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.19.0.tgz#309b230f04e22c58c6a2c0c0c7e50b216d350c30"
+  dependencies:
+    "@babel/helper-environment-visitor" "^7.18.9"
+    "@babel/helper-module-imports" "^7.18.6"
+    "@babel/helper-simple-access" "^7.18.6"
+    "@babel/helper-split-export-declaration" "^7.18.6"
+    "@babel/helper-validator-identifier" "^7.18.6"
+    "@babel/template" "^7.18.10"
+    "@babel/traverse" "^7.19.0"
+    "@babel/types" "^7.19.0"
 
 "@babel/helper-optimise-call-expression@^7.14.5":
   version "7.14.5"
@@ -204,6 +294,12 @@
   dependencies:
     "@babel/types" "^7.14.8"
 
+"@babel/helper-simple-access@^7.18.6":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/helper-simple-access/-/helper-simple-access-7.19.4.tgz#be553f4951ac6352df2567f7daa19a0ee15668e7"
+  dependencies:
+    "@babel/types" "^7.19.4"
+
 "@babel/helper-skip-transparent-expression-wrappers@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-skip-transparent-expression-wrappers/-/helper-skip-transparent-expression-wrappers-7.14.5.tgz#96f486ac050ca9f44b009fbe5b7d394cab3a0ee4"
@@ -215,6 +311,16 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.14.5.tgz#22b23a54ef51c2b7605d851930c1976dd0bc693a"
   dependencies:
     "@babel/types" "^7.14.5"
+
+"@babel/helper-split-export-declaration@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.18.6.tgz#7367949bc75b20c6d5a5d4a97bba2824ae8ef075"
+  dependencies:
+    "@babel/types" "^7.18.6"
+
+"@babel/helper-string-parser@^7.19.4":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/helper-string-parser/-/helper-string-parser-7.19.4.tgz#38d3acb654b4701a9b77fb0615a96f775c3a9e63"
 
 "@babel/helper-validator-identifier@^7.14.0":
   version "7.14.0"
@@ -228,9 +334,17 @@
   version "7.14.9"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.14.9.tgz#6654d171b2024f6d8ee151bf2509699919131d48"
 
+"@babel/helper-validator-identifier@^7.18.6", "@babel/helper-validator-identifier@^7.19.1":
+  version "7.19.1"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.19.1.tgz#7eea834cf32901ffdc1a7ee555e2f9c27e249ca2"
+
 "@babel/helper-validator-option@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.14.5.tgz#6e72a1fff18d5dfcb878e1e62f1a021c4b72d5a3"
+
+"@babel/helper-validator-option@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.18.6.tgz#bf0d2b5a509b1f336099e4ff36e1a63aa5db4db8"
 
 "@babel/helper-wrap-function@^7.14.5":
   version "7.14.5"
@@ -249,6 +363,14 @@
     "@babel/traverse" "^7.14.8"
     "@babel/types" "^7.14.8"
 
+"@babel/helpers@^7.19.0":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.19.4.tgz#42154945f87b8148df7203a25c31ba9a73be46c5"
+  dependencies:
+    "@babel/template" "^7.18.10"
+    "@babel/traverse" "^7.19.4"
+    "@babel/types" "^7.19.4"
+
 "@babel/highlight@^7.10.4":
   version "7.14.0"
   resolved "https://registry.npmjs.org/@babel/highlight/-/highlight-7.14.0.tgz"
@@ -265,9 +387,21 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
+"@babel/highlight@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.18.6.tgz#81158601e93e2563795adcbfbdf5d64be3f2ecdf"
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.18.6"
+    chalk "^2.0.0"
+    js-tokens "^4.0.0"
+
 "@babel/parser@^7.1.0", "@babel/parser@^7.14.5", "@babel/parser@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.0.tgz#b6d6e29058ca369127b0eeca2a1c4b5794f1b6b9"
+
+"@babel/parser@^7.14.7", "@babel/parser@^7.18.10", "@babel/parser@^7.19.3", "@babel/parser@^7.19.4":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.19.4.tgz#03c4339d2b8971eb3beca5252bafd9b9f79db3dc"
 
 "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@^7.14.5":
   version "7.14.5"
@@ -818,6 +952,14 @@
     "@babel/parser" "^7.14.5"
     "@babel/types" "^7.14.5"
 
+"@babel/template@^7.18.10":
+  version "7.18.10"
+  resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.18.10.tgz#6f9134835970d1dbf0835c0d100c9f38de0c5e71"
+  dependencies:
+    "@babel/code-frame" "^7.18.6"
+    "@babel/parser" "^7.18.10"
+    "@babel/types" "^7.18.10"
+
 "@babel/traverse@^7.1.0", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.5", "@babel/traverse@^7.14.8", "@babel/traverse@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.15.0.tgz#4cca838fd1b2a03283c1f38e141f639d60b3fc98"
@@ -832,11 +974,34 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
+"@babel/traverse@^7.19.0", "@babel/traverse@^7.19.3", "@babel/traverse@^7.19.4":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.19.4.tgz#f117820e18b1e59448a6c1fa9d0ff08f7ac459a8"
+  dependencies:
+    "@babel/code-frame" "^7.18.6"
+    "@babel/generator" "^7.19.4"
+    "@babel/helper-environment-visitor" "^7.18.9"
+    "@babel/helper-function-name" "^7.19.0"
+    "@babel/helper-hoist-variables" "^7.18.6"
+    "@babel/helper-split-export-declaration" "^7.18.6"
+    "@babel/parser" "^7.19.4"
+    "@babel/types" "^7.19.4"
+    debug "^4.1.0"
+    globals "^11.1.0"
+
 "@babel/types@^7.0.0", "@babel/types@^7.13.12", "@babel/types@^7.14.5", "@babel/types@^7.14.8", "@babel/types@^7.15.0", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.15.0.tgz#61af11f2286c4e9c69ca8deb5f4375a73c72dcbd"
   dependencies:
     "@babel/helper-validator-identifier" "^7.14.9"
+    to-fast-properties "^2.0.0"
+
+"@babel/types@^7.18.10", "@babel/types@^7.18.6", "@babel/types@^7.19.0", "@babel/types@^7.19.3", "@babel/types@^7.19.4":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.19.4.tgz#0dd5c91c573a202d600490a35b33246fed8a41c7"
+  dependencies:
+    "@babel/helper-string-parser" "^7.19.4"
+    "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
 "@bcoe/v8-coverage@^0.2.3":
@@ -1019,6 +1184,12 @@
   optionalDependencies:
     node-notifier "^8.0.0"
 
+"@jest/schemas@^29.0.0":
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/@jest/schemas/-/schemas-29.0.0.tgz#5f47f5994dd4ef067fb7b4188ceac45f77fe952a"
+  dependencies:
+    "@sinclair/typebox" "^0.24.1"
+
 "@jest/source-map@^26.6.2":
   version "26.6.2"
   resolved "https://registry.npmjs.org/@jest/source-map/-/source-map-26.6.2.tgz"
@@ -1066,6 +1237,26 @@
     source-map "^0.6.1"
     write-file-atomic "^3.0.0"
 
+"@jest/transform@^29.2.0":
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/@jest/transform/-/transform-29.2.0.tgz#1c55ca549f64810351df999265a29f8ead51be15"
+  dependencies:
+    "@babel/core" "^7.11.6"
+    "@jest/types" "^29.2.0"
+    "@jridgewell/trace-mapping" "^0.3.15"
+    babel-plugin-istanbul "^6.1.1"
+    chalk "^4.0.0"
+    convert-source-map "^1.4.0"
+    fast-json-stable-stringify "^2.1.0"
+    graceful-fs "^4.2.9"
+    jest-haste-map "^29.2.0"
+    jest-regex-util "^29.2.0"
+    jest-util "^29.2.0"
+    micromatch "^4.0.4"
+    pirates "^4.0.4"
+    slash "^3.0.0"
+    write-file-atomic "^4.0.1"
+
 "@jest/types@^26.6.2":
   version "26.6.2"
   resolved "https://registry.npmjs.org/@jest/types/-/types-26.6.2.tgz"
@@ -1075,6 +1266,51 @@
     "@types/node" "*"
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
+
+"@jest/types@^29.2.0":
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-29.2.0.tgz#c0d1ef8bc1e4f4b358e7877e34157371e7881b0b"
+  dependencies:
+    "@jest/schemas" "^29.0.0"
+    "@types/istanbul-lib-coverage" "^2.0.0"
+    "@types/istanbul-reports" "^3.0.0"
+    "@types/node" "*"
+    "@types/yargs" "^17.0.8"
+    chalk "^4.0.0"
+
+"@jridgewell/gen-mapping@^0.1.0":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"
+  dependencies:
+    "@jridgewell/set-array" "^1.0.0"
+    "@jridgewell/sourcemap-codec" "^1.4.10"
+
+"@jridgewell/gen-mapping@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz#c1aedc61e853f2bb9f5dfe6d4442d3b565b253b9"
+  dependencies:
+    "@jridgewell/set-array" "^1.0.1"
+    "@jridgewell/sourcemap-codec" "^1.4.10"
+    "@jridgewell/trace-mapping" "^0.3.9"
+
+"@jridgewell/resolve-uri@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.0.tgz#2203b118c157721addfe69d47b70465463066d78"
+
+"@jridgewell/set-array@^1.0.0", "@jridgewell/set-array@^1.0.1":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@jridgewell/set-array/-/set-array-1.1.2.tgz#7c6cf998d6d20b914c0a55a91ae928ff25965e72"
+
+"@jridgewell/sourcemap-codec@1.4.14", "@jridgewell/sourcemap-codec@^1.4.10":
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.14.tgz#add4c98d341472a289190b424efbdb096991bb24"
+
+"@jridgewell/trace-mapping@^0.3.15", "@jridgewell/trace-mapping@^0.3.9":
+  version "0.3.17"
+  resolved "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.17.tgz#793041277af9073b0951a7fe0f0d8c4c98c36985"
+  dependencies:
+    "@jridgewell/resolve-uri" "3.1.0"
+    "@jridgewell/sourcemap-codec" "1.4.14"
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
@@ -1118,6 +1354,10 @@
     pvtsutils "^1.1.6"
     tslib "^2.2.0"
     webcrypto-core "^1.2.0"
+
+"@sinclair/typebox@^0.24.1":
+  version "0.24.46"
+  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.24.46.tgz#57501b58023776dbbae9e25619146286440be34c"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -1185,9 +1425,9 @@
   dependencies:
     axios "*"
 
-"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
-  version "7.1.14"
-  resolved "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.14.tgz"
+"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14", "@types/babel__core@^7.1.7":
+  version "7.1.19"
+  resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.19.tgz#7b497495b7d1b4812bdb9d02804d0576f43ee460"
   dependencies:
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"
@@ -1263,7 +1503,7 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/graceful-fs@^4.1.2":
+"@types/graceful-fs@^4.1.2", "@types/graceful-fs@^4.1.3":
   version "4.1.5"
   resolved "https://registry.npmjs.org/@types/graceful-fs/-/graceful-fs-4.1.5.tgz"
   dependencies:
@@ -1391,6 +1631,12 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@types/yargs@^17.0.8":
+  version "17.0.13"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.13.tgz#34cced675ca1b1d51fcf4d34c3c6f0fa142a5c76"
+  dependencies:
+    "@types/yargs-parser" "*"
+
 "@typescript-eslint/eslint-plugin@^4.33.0":
   version "4.33.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.33.0.tgz#c24dc7c8069c7706bc40d99f6fa87edcb2005276"
@@ -1466,19 +1712,19 @@
   dependencies:
     invariant "^2.2.4"
 
-"@webex/common-timers@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/common-timers/-/common-timers-1.144.0.tgz#d3d154bb69be60677d093fafb9cc0af3ad89bb32"
+"@webex/common-timers@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/common-timers/-/common-timers-1.142.0.tgz#e8952be265cda31dba4b81c4d8266a3aceadca31"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
     envify "^4.1.0"
 
-"@webex/common@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/common/-/common-1.144.0.tgz#828a55f621b174244411df09d8a857ee85084836"
+"@webex/common@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/common/-/common-1.142.0.tgz#9662b9f753a3b3678870b6024a5fe8d99bd8c581"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
+    "@webex/common" "1.142.0"
     backoff "^2.5.0"
     core-decorators "^0.20.0"
     envify "^4.1.0"
@@ -1486,20 +1732,20 @@
     safe-buffer "^5.2.0"
     urlsafe-base64 "^1.0.0"
 
-"@webex/helper-html@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/helper-html/-/helper-html-1.144.0.tgz#931d51dfbf81ea854e6c9eb0cf36615a861c255f"
+"@webex/helper-html@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/helper-html/-/helper-html-1.142.0.tgz#27c3a720cc75019d4d07de8746914e67fbfa2bb6"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/helper-image@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/helper-image/-/helper-image-1.144.0.tgz#33b8033e2a9db57e71bf90038e241ec8a84edbd8"
+"@webex/helper-image@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/helper-image/-/helper-image-1.142.0.tgz#dd00181ca590f61b23a438aba008cb9b6247225c"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/http-core" "1.144.0"
+    "@webex/http-core" "1.142.0"
     envify "^4.1.0"
     exifr "^5.0.3"
     gm "^1.23.1"
@@ -1507,12 +1753,12 @@
     mime "^2.4.4"
     safe-buffer "^5.2.0"
 
-"@webex/http-core@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/http-core/-/http-core-1.144.0.tgz#bb01167aba112371fb25d701b624055a60ddcc45"
+"@webex/http-core@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/http-core/-/http-core-1.142.0.tgz#cdb816ed26ab4be62538f3ce5a1e7094471b0e68"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
+    "@webex/common" "1.142.0"
     envify "^4.1.0"
     file-type "^16.0.1"
     global "^4.4.0"
@@ -1524,61 +1770,61 @@
     safe-buffer "^5.2.0"
     xtend "^4.0.2"
 
-"@webex/internal-plugin-calendar@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-calendar/-/internal-plugin-calendar-1.144.0.tgz#71ce15e1e4bf986e2d79b12bc4ad152b671177c3"
+"@webex/internal-plugin-calendar@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-calendar/-/internal-plugin-calendar-1.142.0.tgz#01f05ff7708c8edc73252b1dce1d8be4752023fa"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-conversation" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/internal-plugin-encryption" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/internal-plugin-conversation" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/internal-plugin-encryption" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     btoa "^1.2.1"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-conversation@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-conversation/-/internal-plugin-conversation-1.144.0.tgz#cd3d70fab29fc058b28d81488bbc3b58fb72fa42"
+"@webex/internal-plugin-conversation@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-conversation/-/internal-plugin-conversation-1.142.0.tgz#4d9bc56f4826e66ac3884ad7693cb5d7d897cda4"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/helper-html" "1.144.0"
-    "@webex/helper-image" "1.144.0"
-    "@webex/internal-plugin-encryption" "1.144.0"
-    "@webex/internal-plugin-user" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/helper-html" "1.142.0"
+    "@webex/helper-image" "1.142.0"
+    "@webex/internal-plugin-encryption" "1.142.0"
+    "@webex/internal-plugin-user" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     crypto-js "^3.1.9-1"
     envify "^4.1.0"
     lodash "^4.17.21"
     node-scr "^0.3.0"
     uuid "^3.3.2"
 
-"@webex/internal-plugin-device@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-device/-/internal-plugin-device-1.144.0.tgz#4505d04506a73d2b3c8e3ac4a6fce4afc12bfa28"
+"@webex/internal-plugin-device@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-device/-/internal-plugin-device-1.142.0.tgz#f738a71876e03dae568d81ecdc77665df07a12eb"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/common-timers" "1.144.0"
-    "@webex/http-core" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/common-timers" "1.142.0"
+    "@webex/http-core" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     ampersand-collection "^2.0.2"
     ampersand-state "^5.0.3"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-encryption@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-encryption/-/internal-plugin-encryption-1.144.0.tgz#b370b6a742a1114ffe8a625758e9dc6479b6894a"
+"@webex/internal-plugin-encryption@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-encryption/-/internal-plugin-encryption-1.142.0.tgz#7950cace21bd2d18bff4a7eb81fd2f80288f926d"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/common-timers" "1.144.0"
-    "@webex/http-core" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/common-timers" "1.142.0"
+    "@webex/http-core" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     asn1js "^2.0.26"
     debug "^3.2.6"
     envify "^4.1.0"
@@ -1591,178 +1837,178 @@
     safe-buffer "^5.2.0"
     valid-url "^1.0.9"
 
-"@webex/internal-plugin-feature@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-feature/-/internal-plugin-feature-1.144.0.tgz#7299a8b8fd47d9d64836f1de8e4e66e633dc58d3"
+"@webex/internal-plugin-feature@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-feature/-/internal-plugin-feature-1.142.0.tgz#cfa9e040ae7a27eefdcd2dd3e4ad4ef3bba1778a"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-lyra@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-lyra/-/internal-plugin-lyra-1.144.0.tgz#17460c329ac48e1c7ba38b9809ce2c9b83224fc4"
+"@webex/internal-plugin-lyra@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-lyra/-/internal-plugin-lyra-1.142.0.tgz#75ed760072b3152f7bec7754b3baa062749573b9"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-conversation" "1.144.0"
-    "@webex/internal-plugin-encryption" "1.144.0"
-    "@webex/internal-plugin-feature" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-conversation" "1.142.0"
+    "@webex/internal-plugin-encryption" "1.142.0"
+    "@webex/internal-plugin-feature" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/internal-plugin-mercury@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-mercury/-/internal-plugin-mercury-1.144.0.tgz#65250c35909543522c253a43da5ad0076349fa4d"
+"@webex/internal-plugin-mercury@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-mercury/-/internal-plugin-mercury-1.142.0.tgz#50c678213ba27873d1dc1db047d770725f6c08f3"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/common-timers" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/internal-plugin-feature" "1.144.0"
-    "@webex/internal-plugin-metrics" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/common-timers" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/internal-plugin-feature" "1.142.0"
+    "@webex/internal-plugin-metrics" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     backoff "^2.5.0"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
-    ws "^8.2.2"
+    ws "^4.1.0"
 
-"@webex/internal-plugin-metrics@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-metrics/-/internal-plugin-metrics-1.144.0.tgz#a8a1117c201895293c2c2929c8bfffa6f864f686"
+"@webex/internal-plugin-metrics@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-metrics/-/internal-plugin-metrics-1.142.0.tgz#5362406ca363c9d3d62fb7159d2dfb3864ed02bf"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/common-timers" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/common-timers" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/internal-plugin-presence@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-presence/-/internal-plugin-presence-1.144.0.tgz#24c15cc6932784c2082ec74d8a679876d101c65a"
+"@webex/internal-plugin-presence@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-presence/-/internal-plugin-presence-1.142.0.tgz#aa365b95141fe85cbe09f691ddc8e768f8f5e4d5"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/webex-core" "1.144.0"
-    envify "^4.1.0"
-    lodash "^4.17.21"
-
-"@webex/internal-plugin-search@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-search/-/internal-plugin-search-1.144.0.tgz#c41293d3cc9404602bf95c535f716c48dd743a10"
-  dependencies:
-    "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-conversation" "1.144.0"
-    "@webex/internal-plugin-encryption" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/internal-plugin-support@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-support/-/internal-plugin-support-1.144.0.tgz#616a7981a80225be3d390268301863fcb32d8bbe"
+"@webex/internal-plugin-search@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-search/-/internal-plugin-search-1.142.0.tgz#363139d9fd70e11c6ee8127df19c2f1d89078a4b"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-conversation" "1.142.0"
+    "@webex/internal-plugin-encryption" "1.142.0"
+    "@webex/webex-core" "1.142.0"
+    envify "^4.1.0"
+    lodash "^4.17.21"
+
+"@webex/internal-plugin-support@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-support/-/internal-plugin-support-1.142.0.tgz#3455ae3cb8b061c123655cd319d0d381648f86a7"
+  dependencies:
+    "@babel/runtime-corejs2" "^7.14.8"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
 
-"@webex/internal-plugin-user@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-user/-/internal-plugin-user-1.144.0.tgz#1572834d7d64b767af9086ad9b2bf122098b088e"
+"@webex/internal-plugin-user@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/internal-plugin-user/-/internal-plugin-user-1.142.0.tgz#957730ab618cfc0298523473f16f58989bd7c265"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-attachment-actions@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-attachment-actions/-/plugin-attachment-actions-1.144.0.tgz#321caff45d413520681b06a4db8aadcf3a54f415"
+"@webex/plugin-attachment-actions@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-attachment-actions/-/plugin-attachment-actions-1.142.0.tgz#9d13e1a15604a8f296cc044ffb85a9b1001613e8"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-conversation" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-conversation" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     debug "^3.2.6"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-authorization-browser@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-browser/-/plugin-authorization-browser-1.144.0.tgz#4f8ae5f36d20f13e8afae61196c14da463f70144"
+"@webex/plugin-authorization-browser@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-browser/-/plugin-authorization-browser-1.142.0.tgz#ccfc6126c46202ebaad3538719f3c727a79e56c9"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
 
-"@webex/plugin-authorization-node@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-node/-/plugin-authorization-node-1.144.0.tgz#a6f23387f646d266c442b6dc7189b883253887a0"
+"@webex/plugin-authorization-node@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization-node/-/plugin-authorization-node-1.142.0.tgz#cb2cc3420085356300e077369b52bef2476011ee"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/plugin-authorization@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization/-/plugin-authorization-1.144.0.tgz#74ba24f10d6774fa77dc8833f4a442ebad830d2a"
+"@webex/plugin-authorization@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-authorization/-/plugin-authorization-1.142.0.tgz#a2e25bb701a75b2861e43c7c0850b51a5c27a820"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/plugin-authorization-browser" "1.144.0"
-    "@webex/plugin-authorization-node" "1.144.0"
+    "@webex/plugin-authorization-browser" "1.142.0"
+    "@webex/plugin-authorization-node" "1.142.0"
     envify "^4.1.0"
 
-"@webex/plugin-device-manager@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-device-manager/-/plugin-device-manager-1.144.0.tgz#1bc25d24bd262d68fc3637f7fe42d41194c8e616"
+"@webex/plugin-device-manager@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-device-manager/-/plugin-device-manager-1.142.0.tgz#e93f16b19de2428ad4595f11eff7cc13f0cf7eaf"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/internal-plugin-lyra" "1.144.0"
-    "@webex/internal-plugin-search" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/internal-plugin-lyra" "1.142.0"
+    "@webex/internal-plugin-search" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
     uuid "^3.3.2"
 
-"@webex/plugin-logger@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-logger/-/plugin-logger-1.144.0.tgz#a59aa4a7f86fce584289dd8798113cf5eb3c757e"
+"@webex/plugin-logger@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-logger/-/plugin-logger-1.142.0.tgz#412f74eb13e4de8c5bda35b987b795920ce6a9a6"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-meetings@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-meetings/-/plugin-meetings-1.144.0.tgz#0981dd2967dda8586398b62467bb92c3b3a20414"
+"@webex/plugin-meetings@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-meetings/-/plugin-meetings-1.142.0.tgz#91208c7e7fa96add923aaa90bc560f4c2b9cee7e"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/common-timers" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/common-timers" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     bowser "^2.11.0"
     btoa "^1.2.1"
     envify "^4.1.0"
@@ -1774,94 +2020,94 @@
     uuid "^3.3.2"
     webrtc-adapter "^7.7.0"
 
-"@webex/plugin-memberships@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-memberships/-/plugin-memberships-1.144.0.tgz#53db656573358ccc6975e16ed02110bb60243f46"
+"@webex/plugin-memberships@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-memberships/-/plugin-memberships-1.142.0.tgz#1a8c15778f02babd64ea36e6fd861f8ca5c0ba66"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-conversation" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-conversation" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     debug "^3.2.6"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-messages@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-messages/-/plugin-messages-1.144.0.tgz#4215340388ebbd0d6fb655248d5f0fd45c5a8a51"
+"@webex/plugin-messages@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-messages/-/plugin-messages-1.142.0.tgz#84deac6ded0b4d8514c71fa53f09c998daa2f065"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-conversation" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-conversation" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-people@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-people/-/plugin-people-1.144.0.tgz#c551fb1c7606958a02a5d66ab48791640beefc21"
+"@webex/plugin-people@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-people/-/plugin-people-1.142.0.tgz#c1bc1bc7b8a9ed5dffcd8cba7703cc698f13d88e"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/plugin-rooms@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-rooms/-/plugin-rooms-1.144.0.tgz#bd16e2184bade14f7128b543590ab42e24712045"
+"@webex/plugin-rooms@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-rooms/-/plugin-rooms-1.142.0.tgz#6560f8274d85b8d936459b3f06b77e0bdc11d4d3"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/internal-plugin-conversation" "1.144.0"
-    "@webex/internal-plugin-mercury" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/internal-plugin-conversation" "1.142.0"
+    "@webex/internal-plugin-mercury" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     debug "^3.2.6"
     envify "^4.1.0"
     lodash "^4.17.21"
 
-"@webex/plugin-team-memberships@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-team-memberships/-/plugin-team-memberships-1.144.0.tgz#a87e28a30db1dd7dd1f0ee089dc75eac72c68f44"
+"@webex/plugin-team-memberships@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-team-memberships/-/plugin-team-memberships-1.142.0.tgz#6422ef0a688da448c2723b8b5be4c4aa57f67152"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.144.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/plugin-teams@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-teams/-/plugin-teams-1.144.0.tgz#40c1b246066dd53c8de13c995934f578c589e4a7"
+"@webex/plugin-teams@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-teams/-/plugin-teams-1.142.0.tgz#67f4d3305001bed52696cdf27b833a3c5d92bc29"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.144.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/plugin-webhooks@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/plugin-webhooks/-/plugin-webhooks-1.144.0.tgz#15fc700734e2f9427dcb14b8a0db253c57cf24fa"
+"@webex/plugin-webhooks@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/plugin-webhooks/-/plugin-webhooks-1.142.0.tgz#302e367dd44d18df58a55159d280ea838770535f"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.144.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/storage-adapter-local-storage@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/storage-adapter-local-storage/-/storage-adapter-local-storage-1.144.0.tgz#e9d3f0c4e570bf025ec044281bee065ecd6cf93f"
+"@webex/storage-adapter-local-storage@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/storage-adapter-local-storage/-/storage-adapter-local-storage-1.142.0.tgz#4e2b979d7d48957bdfebaf9e5925facbc85a32b7"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/webex-core" "1.144.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
 
-"@webex/webex-core@1.144.0":
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/@webex/webex-core/-/webex-core-1.144.0.tgz#8cb1bcc6b200b319d8ab0f1e80751f4d41a6c920"
+"@webex/webex-core@1.142.0":
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/@webex/webex-core/-/webex-core-1.142.0.tgz#d72f9003d56c1ba4d8896bc8d12d725d95299f37"
   dependencies:
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/common" "1.144.0"
-    "@webex/common-timers" "1.144.0"
-    "@webex/http-core" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/common" "1.142.0"
+    "@webex/common-timers" "1.142.0"
+    "@webex/http-core" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     ampersand-collection "^2.0.2"
     ampersand-events "^2.0.2"
     ampersand-state "^5.0.3"
@@ -2109,6 +2355,10 @@ astral-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/astral-regex/-/astral-regex-2.0.0.tgz"
 
+async-limiter@~1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
+
 async@^3.1.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/async/-/async-3.2.0.tgz"
@@ -2159,7 +2409,7 @@ babel-code-frame@^6.26.0:
     esutils "^2.0.2"
     js-tokens "^3.0.2"
 
-babel-jest@^26.0.22, babel-jest@^26.6.3:
+babel-jest@^26.6.3:
   version "26.6.3"
   resolved "https://registry.npmjs.org/babel-jest/-/babel-jest-26.6.3.tgz"
   dependencies:
@@ -2172,20 +2422,32 @@ babel-jest@^26.0.22, babel-jest@^26.6.3:
     graceful-fs "^4.2.4"
     slash "^3.0.0"
 
+babel-jest@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-29.2.0.tgz#088624f037da90e69a06073305276cbd111d68a8"
+  dependencies:
+    "@jest/transform" "^29.2.0"
+    "@types/babel__core" "^7.1.14"
+    babel-plugin-istanbul "^6.1.1"
+    babel-preset-jest "^29.2.0"
+    chalk "^4.0.0"
+    graceful-fs "^4.2.9"
+    slash "^3.0.0"
+
 babel-plugin-dynamic-import-node@^2.3.3:
   version "2.3.3"
   resolved "https://registry.npmjs.org/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.3.tgz"
   dependencies:
     object.assign "^4.1.0"
 
-babel-plugin-istanbul@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/babel-plugin-istanbul/-/babel-plugin-istanbul-6.0.0.tgz"
+babel-plugin-istanbul@^6.0.0, babel-plugin-istanbul@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-6.1.1.tgz#fa88ec59232fd9b4e36dbbc540a8ec9a9b47da73"
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
     "@istanbuljs/load-nyc-config" "^1.0.0"
     "@istanbuljs/schema" "^0.1.2"
-    istanbul-lib-instrument "^4.0.0"
+    istanbul-lib-instrument "^5.0.4"
     test-exclude "^6.0.0"
 
 babel-plugin-jest-hoist@^26.6.2:
@@ -2195,6 +2457,15 @@ babel-plugin-jest-hoist@^26.6.2:
     "@babel/template" "^7.3.3"
     "@babel/types" "^7.3.3"
     "@types/babel__core" "^7.0.0"
+    "@types/babel__traverse" "^7.0.6"
+
+babel-plugin-jest-hoist@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-29.2.0.tgz#23ee99c37390a98cfddf3ef4a78674180d823094"
+  dependencies:
+    "@babel/template" "^7.3.3"
+    "@babel/types" "^7.3.3"
+    "@types/babel__core" "^7.1.14"
     "@types/babel__traverse" "^7.0.6"
 
 babel-plugin-polyfill-corejs2@^0.2.2:
@@ -2240,6 +2511,13 @@ babel-preset-jest@^26.6.2:
   resolved "https://registry.npmjs.org/babel-preset-jest/-/babel-preset-jest-26.6.2.tgz"
   dependencies:
     babel-plugin-jest-hoist "^26.6.2"
+    babel-preset-current-node-syntax "^1.0.0"
+
+babel-preset-jest@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-29.2.0.tgz#3048bea3a1af222e3505e4a767a974c95a7620dc"
+  dependencies:
+    babel-plugin-jest-hoist "^29.2.0"
     babel-preset-current-node-syntax "^1.0.0"
 
 backoff@^2.5.0:
@@ -2358,7 +2636,7 @@ braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-braces@^3.0.1, braces@~3.0.2:
+braces@^3.0.1, braces@^3.0.2, braces@~3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/braces/-/braces-3.0.2.tgz"
   dependencies:
@@ -2377,6 +2655,15 @@ browserslist@^4.16.6:
     electron-to-chromium "^1.3.723"
     escalade "^3.1.1"
     node-releases "^1.1.71"
+
+browserslist@^4.21.3:
+  version "4.21.4"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.21.4.tgz#e7496bbc67b9e39dd0f98565feccdcb0d4ff6987"
+  dependencies:
+    caniuse-lite "^1.0.30001400"
+    electron-to-chromium "^1.4.251"
+    node-releases "^2.0.6"
+    update-browserslist-db "^1.0.9"
 
 bs-logger@0.x:
   version "0.2.6"
@@ -2494,6 +2781,10 @@ caniuse-lite@^1.0.30001219:
   version "1.0.30001232"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001232.tgz"
 
+caniuse-lite@^1.0.30001400:
+  version "1.0.30001420"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001420.tgz#f62f35f051e0b6d25532cf376776d41e45b47ef6"
+
 capture-exit@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/capture-exit/-/capture-exit-2.0.0.tgz"
@@ -2570,6 +2861,10 @@ chokidar@^3.2.2:
 ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-2.0.0.tgz"
+
+ci-info@^3.2.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.5.0.tgz#bfac2a29263de4c829d806b1ab478e35091e171f"
 
 cjs-module-lexer@^0.6.0:
   version "0.6.0"
@@ -3040,6 +3335,10 @@ electron-to-chromium@^1.3.723:
   version "1.3.743"
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.743.tgz"
 
+electron-to-chromium@^1.4.251:
+  version "1.4.283"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.283.tgz#d4f263f5df402fd799c0a06255d580dcf8aa9a8e"
+
 emittery@^0.7.1:
   version "0.7.2"
   resolved "https://registry.npmjs.org/emittery/-/emittery-0.7.2.tgz"
@@ -3409,7 +3708,7 @@ fast-glob@^3.1.1:
     micromatch "^4.0.2"
     picomatch "^2.2.1"
 
-fast-json-stable-stringify@2.x, fast-json-stable-stringify@^2.0.0:
+fast-json-stable-stringify@2.x, fast-json-stable-stringify@^2.0.0, fast-json-stable-stringify@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz"
 
@@ -3571,7 +3870,7 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
 
-fsevents@^2.1.2, fsevents@~2.3.1:
+fsevents@^2.1.2, fsevents@^2.3.2, fsevents@~2.3.1:
   version "2.3.2"
   resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
 
@@ -3717,9 +4016,9 @@ got@^9.6.0:
     to-readable-stream "^1.0.0"
     url-parse-lax "^3.0.0"
 
-graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
-  version "4.2.6"
-  resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.6.tgz"
+graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@^4.2.9:
+  version "4.2.10"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
 
 growly@^1.3.0:
   version "1.3.0"
@@ -4170,13 +4469,27 @@ istanbul-lib-coverage@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/istanbul-lib-coverage/-/istanbul-lib-coverage-3.0.0.tgz"
 
-istanbul-lib-instrument@^4.0.0, istanbul-lib-instrument@^4.0.3:
+istanbul-lib-coverage@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-3.2.0.tgz#189e7909d0a39fa5a3dfad5b03f71947770191d3"
+
+istanbul-lib-instrument@^4.0.3:
   version "4.0.3"
   resolved "https://registry.npmjs.org/istanbul-lib-instrument/-/istanbul-lib-instrument-4.0.3.tgz"
   dependencies:
     "@babel/core" "^7.7.5"
     "@istanbuljs/schema" "^0.1.2"
     istanbul-lib-coverage "^3.0.0"
+    semver "^6.3.0"
+
+istanbul-lib-instrument@^5.0.4:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/istanbul-lib-instrument/-/istanbul-lib-instrument-5.2.1.tgz#d10c8885c2125574e1c231cacadf955675e1ce3d"
+  dependencies:
+    "@babel/core" "^7.12.3"
+    "@babel/parser" "^7.14.7"
+    "@istanbuljs/schema" "^0.1.2"
+    istanbul-lib-coverage "^3.2.0"
     semver "^6.3.0"
 
 istanbul-lib-report@^3.0.0:
@@ -4331,6 +4644,24 @@ jest-haste-map@^26.6.2:
   optionalDependencies:
     fsevents "^2.1.2"
 
+jest-haste-map@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/jest-haste-map/-/jest-haste-map-29.2.0.tgz#2410f2ec93958e0bd894818de6c8056eb1b4d6fc"
+  dependencies:
+    "@jest/types" "^29.2.0"
+    "@types/graceful-fs" "^4.1.3"
+    "@types/node" "*"
+    anymatch "^3.0.3"
+    fb-watchman "^2.0.0"
+    graceful-fs "^4.2.9"
+    jest-regex-util "^29.2.0"
+    jest-util "^29.2.0"
+    jest-worker "^29.2.0"
+    micromatch "^4.0.4"
+    walker "^1.0.8"
+  optionalDependencies:
+    fsevents "^2.3.2"
+
 jest-jasmine2@^26.6.3:
   version "26.6.3"
   resolved "https://registry.npmjs.org/jest-jasmine2/-/jest-jasmine2-26.6.3.tgz"
@@ -4398,6 +4729,10 @@ jest-pnp-resolver@^1.2.2:
 jest-regex-util@^26.0.0:
   version "26.0.0"
   resolved "https://registry.npmjs.org/jest-regex-util/-/jest-regex-util-26.0.0.tgz"
+
+jest-regex-util@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-29.2.0.tgz#82ef3b587e8c303357728d0322d48bbfd2971f7b"
 
 jest-resolve-dependencies@^26.6.3:
   version "26.6.3"
@@ -4516,6 +4851,17 @@ jest-util@^26.1.0, jest-util@^26.6.2:
     is-ci "^2.0.0"
     micromatch "^4.0.2"
 
+jest-util@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-29.2.0.tgz#797935697e83a5722aeba401ed6cd01264295566"
+  dependencies:
+    "@jest/types" "^29.2.0"
+    "@types/node" "*"
+    chalk "^4.0.0"
+    ci-info "^3.2.0"
+    graceful-fs "^4.2.9"
+    picomatch "^2.2.3"
+
 jest-validate@^26.6.2:
   version "26.6.2"
   resolved "https://registry.npmjs.org/jest-validate/-/jest-validate-26.6.2.tgz"
@@ -4546,6 +4892,15 @@ jest-worker@^26.6.2:
     "@types/node" "*"
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
+
+jest-worker@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-29.2.0.tgz#b2bd1a81fc7a1ae79a500b05f5feb0d1c0b1a19e"
+  dependencies:
+    "@types/node" "*"
+    jest-util "^29.2.0"
+    merge-stream "^2.0.0"
+    supports-color "^8.0.0"
 
 jest@^26.6.3:
   version "26.6.3"
@@ -4655,6 +5010,10 @@ json5@2.x, json5@^2.1.2:
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.0.tgz"
   dependencies:
     minimist "^1.2.5"
+
+json5@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.1.tgz#655d50ed1e6f95ad1a3caababd2b0efda10b395c"
 
 jsonfile@^4.0.0:
   version "4.0.0"
@@ -4971,6 +5330,12 @@ make-error@1.x, make-error@^1.1.1:
   version "1.3.6"
   resolved "https://registry.npmjs.org/make-error/-/make-error-1.3.6.tgz"
 
+makeerror@1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/makeerror/-/makeerror-1.0.12.tgz#3e5dd2079a82e812e983cc6610c4a2cb0eaa801a"
+  dependencies:
+    tmpl "1.0.5"
+
 makeerror@1.0.x:
   version "1.0.11"
   resolved "https://registry.npmjs.org/makeerror/-/makeerror-1.0.11.tgz"
@@ -5035,6 +5400,13 @@ micromatch@^4.0.2:
   dependencies:
     braces "^3.0.1"
     picomatch "^2.2.3"
+
+micromatch@^4.0.4:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
+  dependencies:
+    braces "^3.0.2"
+    picomatch "^2.3.1"
 
 migrate-mongo@^8.2.2:
   version "8.2.2"
@@ -5323,6 +5695,10 @@ node-releases@^1.1.71:
   version "1.1.72"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-1.1.72.tgz"
 
+node-releases@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.6.tgz#8a7088c63a55e493845683ebf3c828d8c51c5503"
+
 node-scr@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npmjs.org/node-scr/-/node-scr-0.3.0.tgz"
@@ -5604,15 +5980,27 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz"
 
+picocolors@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
+
 picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3:
   version "2.3.0"
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.0.tgz"
+
+picomatch@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
 
 pirates@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npmjs.org/pirates/-/pirates-4.0.1.tgz"
   dependencies:
     node-modules-regexp "^1.0.0"
+
+pirates@^4.0.4:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.5.tgz#feec352ea5c3268fb23a37c702ab1699f35a5f3b"
 
 pkg-dir@^4.2.0:
   version "4.2.0"
@@ -6216,6 +6604,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.3.tgz"
 
+signal-exit@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
+
 simple-swizzle@^0.2.2:
   version "0.2.2"
   resolved "https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz"
@@ -6494,6 +6886,12 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
+supports-color@^8.0.0:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-8.1.1.tgz#cd6fc17e28500cff56c1b86c0a7fd4a54a73005c"
+  dependencies:
+    has-flag "^4.0.0"
+
 supports-hyperlinks@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/supports-hyperlinks/-/supports-hyperlinks-2.2.0.tgz"
@@ -6558,7 +6956,7 @@ through@~2.3.4:
   version "2.3.8"
   resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
 
-tmpl@1.0.x:
+tmpl@1.0.5, tmpl@1.0.x:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
 
@@ -6814,6 +7212,13 @@ unset-value@^1.0.0:
     has-value "^0.3.1"
     isobject "^3.0.0"
 
+update-browserslist-db@^1.0.9:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.10.tgz#0f54b876545726f17d00cd9a2561e6dade943ff3"
+  dependencies:
+    escalade "^3.1.1"
+    picocolors "^1.0.0"
+
 update-notifier@^4.1.0:
   version "4.1.3"
   resolved "https://registry.npmjs.org/update-notifier/-/update-notifier-4.1.3.tgz"
@@ -6935,6 +7340,12 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
+walker@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/walker/-/walker-1.0.8.tgz#bd498db477afe573dc04185f011d3ab8a8d7653f"
+  dependencies:
+    makeerror "1.0.12"
+
 webcrypto-core@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/webcrypto-core/-/webcrypto-core-1.2.0.tgz"
@@ -6949,30 +7360,30 @@ webcrypto-shim@^0.1.4:
   version "0.1.7"
   resolved "https://registry.npmjs.org/webcrypto-shim/-/webcrypto-shim-0.1.7.tgz"
 
-webex@1.144.0:
-  version "1.144.0"
-  resolved "https://registry.yarnpkg.com/webex/-/webex-1.144.0.tgz#24657707b26e7e4d710f64072d5a59fbee60dd99"
+webex@1.142.0:
+  version "1.142.0"
+  resolved "https://registry.yarnpkg.com/webex/-/webex-1.142.0.tgz#29f2ff3c19ad7bc880a979b91b4548243dcc078d"
   dependencies:
     "@babel/polyfill" "^7.12.1"
     "@babel/runtime-corejs2" "^7.14.8"
-    "@webex/internal-plugin-calendar" "1.144.0"
-    "@webex/internal-plugin-device" "1.144.0"
-    "@webex/internal-plugin-presence" "1.144.0"
-    "@webex/internal-plugin-support" "1.144.0"
-    "@webex/plugin-attachment-actions" "1.144.0"
-    "@webex/plugin-authorization" "1.144.0"
-    "@webex/plugin-device-manager" "1.144.0"
-    "@webex/plugin-logger" "1.144.0"
-    "@webex/plugin-meetings" "1.144.0"
-    "@webex/plugin-memberships" "1.144.0"
-    "@webex/plugin-messages" "1.144.0"
-    "@webex/plugin-people" "1.144.0"
-    "@webex/plugin-rooms" "1.144.0"
-    "@webex/plugin-team-memberships" "1.144.0"
-    "@webex/plugin-teams" "1.144.0"
-    "@webex/plugin-webhooks" "1.144.0"
-    "@webex/storage-adapter-local-storage" "1.144.0"
-    "@webex/webex-core" "1.144.0"
+    "@webex/internal-plugin-calendar" "1.142.0"
+    "@webex/internal-plugin-device" "1.142.0"
+    "@webex/internal-plugin-presence" "1.142.0"
+    "@webex/internal-plugin-support" "1.142.0"
+    "@webex/plugin-attachment-actions" "1.142.0"
+    "@webex/plugin-authorization" "1.142.0"
+    "@webex/plugin-device-manager" "1.142.0"
+    "@webex/plugin-logger" "1.142.0"
+    "@webex/plugin-meetings" "1.142.0"
+    "@webex/plugin-memberships" "1.142.0"
+    "@webex/plugin-messages" "1.142.0"
+    "@webex/plugin-people" "1.142.0"
+    "@webex/plugin-rooms" "1.142.0"
+    "@webex/plugin-team-memberships" "1.142.0"
+    "@webex/plugin-teams" "1.142.0"
+    "@webex/plugin-webhooks" "1.142.0"
+    "@webex/storage-adapter-local-storage" "1.142.0"
+    "@webex/webex-core" "1.142.0"
     envify "^4.1.0"
     lodash "^4.17.21"
 
@@ -7083,13 +7494,23 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
+write-file-atomic@^4.0.1:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/write-file-atomic/-/write-file-atomic-4.0.2.tgz#a9df01ae5b77858a027fd2e80768ee433555fcfd"
+  dependencies:
+    imurmurhash "^0.1.4"
+    signal-exit "^3.0.7"
+
+ws@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-4.1.0.tgz#a979b5d7d4da68bf54efe0408967c324869a7289"
+  dependencies:
+    async-limiter "~1.0.0"
+    safe-buffer "~5.1.0"
+
 ws@^7.4.5:
   version "7.4.6"
   resolved "https://registry.npmjs.org/ws/-/ws-7.4.6.tgz"
-
-ws@^8.2.2:
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.2.tgz#ca684330c6dd6076a737250ed81ac1606cb0a63e"
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
