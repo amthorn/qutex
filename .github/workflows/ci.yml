@@ -50,7 +50,7 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: szenius/set-timezone@v1.0
+      - uses: szenius/set-timezone@v1.1
         with:
           timezoneLinux: "America/New_York"
       - name: Setup Node.js environment
