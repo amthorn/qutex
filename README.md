@@ -4,6 +4,9 @@
 <img src="https://img.shields.io/uptimerobot/status/m788024541-def6483d2531449dded3603f"/> <a href="https://codecov.io/gh/amthorn/qutex"><img src="https://codecov.io/gh/amthorn/qutex/branch/master/graph/badge.svg?token=S5Q2H672OI"/>
 </a>
 
+# Qutex's Production APIs will be turned down on July 26th, 2023.
+
+## You are more than welcome to deploy your own instance to continue using Qutex
 
 Qutex is a basic webex queue management system which can be used to manage a resource between many people in a common webex space or web UI.
 
